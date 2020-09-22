@@ -12,6 +12,27 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-    </body>
+        <jsp:include page="../fragments/menu.jsp"></jsp:include>
+        <h1>Number of questions: ${totalElement}</h1>
+        <table border="0">
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Date Created</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            <c:if test="${not empty quizs}">
+                <c:forEach items="${quizs}" var="item">
+                    <tr>
+                        <td>${item.content}</td>
+                        <td>${item.dateCreated}</td>
+                    </tr>
+                </c:forEach>
+            </c:if>
+        </tbody>
+    </table>
+
+</body>
 </html>

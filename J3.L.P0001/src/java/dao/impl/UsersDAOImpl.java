@@ -31,14 +31,14 @@ public class UsersDAOImpl implements UsersDAO {
     }
 
     @Override
-    public List<Users> getUsers(int page, int limit) {
+    public List<Users> findUsers(int page, int limit) {
+        List<Users> users = new ArrayList<>();
         try {
             String sql = "SELECT u.id, u.username, u.email, u.role_id FROM Users u ORDER BY u.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, (page - 1) * limit);
             pstm.setInt(2, limit);
 
-            List<Users> users = new ArrayList<>();
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -51,18 +51,18 @@ public class UsersDAOImpl implements UsersDAO {
                 user.setUsername(username);
                 user.setEmail(email);
 
-                Roles role = rolesDAOImpl.getRole(role_id);
+                Roles role = rolesDAOImpl.findRoleById(role_id);
                 user.setRoles(Arrays.asList(role));
                 users.add(user);
             }
-            return users;
         } catch (Exception e) {
-            return null;
         }
+        return users;
+
     }
 
     @Override
-    public Users getUser(int user_id) {
+    public Users findUserById(int user_id) {
         try {
             String sql = "SELECT u.id, u.username, u.email, u.role_id FROM Users u WHERE u.id=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
@@ -80,7 +80,7 @@ public class UsersDAOImpl implements UsersDAO {
                 user.setUsername(username);
                 user.setEmail(email);
 
-                Roles role = rolesDAOImpl.getRole(role_id);
+                Roles role = rolesDAOImpl.findRoleById(role_id);
                 user.setRoles(Arrays.asList(role));
                 return user;
             }
@@ -90,7 +90,37 @@ public class UsersDAOImpl implements UsersDAO {
     }
 
     @Override
-    public void createUser(Users user) {
+    public Users findUserByUsername(String user_username) {
+        try {
+            String sql = "SELECT u.id, u.username, u.password, u.email, u.role_id FROM Users u WHERE u.username=?;";
+            PreparedStatement pstm = this.conn.prepareStatement(sql);
+            pstm.setString(1, user_username);
+
+            ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String email = rs.getString("username");
+                int role_id = rs.getInt("role_id");
+
+                Users user = new Users();
+                user.setId(id);
+                user.setUsername(username);
+                user.setPassword(password);
+                user.setEmail(email);
+
+                Roles role = rolesDAOImpl.findRoleById(role_id);
+                user.setRoles(Arrays.asList(role));
+                return user;
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    @Override
+    public void saveUser(Users user) {
         try {
             String sql = "INSERT INTO Users(username, password, email, role_id) VALUES(?,?,?,?)";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
@@ -100,7 +130,7 @@ public class UsersDAOImpl implements UsersDAO {
             pstm.setInt(4, user.getRoles().get(0).getId());
             pstm.executeQuery();
         } catch (Exception e) {
-            
+
         }
     }
 

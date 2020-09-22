@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
-
-import java.util.List;
-import model.Roles;
+package model;
 
 /**
  *
  * @author nguyenvanan
  */
-public interface RolesDAO {
-    List<Roles> findRoles(int page, int limit);
+public class QA {
     
-    Roles findRoleById(int id);
 }

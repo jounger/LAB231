@@ -27,14 +27,14 @@ public class RolesDAOImpl implements RolesDAO {
     }
 
     @Override
-    public List<Roles> getRoles(int page, int limit) {
+    public List<Roles> findRoles(int page, int limit) {
+        List<Roles> roles = new ArrayList<>();
         try {
             String sql = "SELECT r.id, r.name FROM Roles r ORDER BY r.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, (page - 1) * limit);
             pstm.setInt(2, limit);
 
-            List<Roles> roles = new ArrayList<>();
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -44,14 +44,14 @@ public class RolesDAOImpl implements RolesDAO {
                 role.setName(name);
                 roles.add(role);
             }
-            return roles;
         } catch (Exception e) {
-            return null;
+
         }
+        return roles;
     }
 
     @Override
-    public Roles getRole(int role_id) {
+    public Roles findRoleById(int role_id) {
         try {
             String sql = "SELECT r.id, r.name FROM Roles r WHERE r.id=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);

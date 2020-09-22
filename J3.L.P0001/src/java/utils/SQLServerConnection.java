@@ -18,7 +18,10 @@ public class SQLServerConnection {
 
     public static Connection getSQLServerConnection() throws ClassNotFoundException, SQLException, NamingException {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        Connection conn = DriverManager.getConnection(Env.getVariable("datasource.url"), Env.getVariable("datasource.username"), Env.getVariable("datasource.password"));
+        String uri = Env.getVariable("datasource.url");
+        String username = Env.getVariable("datasource.username");
+        String password = Env.getVariable("datasource.password");
+        Connection conn = DriverManager.getConnection(uri, username, password);
         return conn;
     }
 

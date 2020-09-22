@@ -10,6 +10,7 @@ package model;
  * @author nguyenvanan
  */
 public class Roles {
+
     private int id;
     private String name;
 
@@ -31,6 +32,5 @@ public class Roles {
     public void setName(String name) {
         this.name = name;
     }
-    
-    
+
 }

@@ -3,21 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package common;
 
+import java.util.Arrays;
 import java.util.List;
-import model.Users;
 
 /**
  *
  * @author nguyenvanan
  */
-public interface UsersDAO {
-    List<Users> findUsers(int page, int limit);
-    
-    Users findUserById(int id);
-    
-    Users findUserByUsername(String username);
-    
-    void saveUser(Users user);
+public class Router {
+    public static final List<String> TEACHER = Arrays.asList("/take-quiz", "/make-quiz", "/manage-quiz");
+    public static final List<String> STUDENT = Arrays.asList("/take-quiz");
 }

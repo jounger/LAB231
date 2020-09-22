@@ -12,6 +12,7 @@ import java.util.List;
  * @author nguyenvanan
  */
 public class Users {
+
     private int id;
     private String username;
     private String password;
@@ -60,6 +61,5 @@ public class Users {
     public void setRoles(List<Roles> roles) {
         this.roles = roles;
     }
-    
-    
+
 }

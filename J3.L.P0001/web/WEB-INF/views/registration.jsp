@@ -13,7 +13,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Registration Page</title>
-        <style><%@include file="/WEB-INF/resources/css/register.css"%></style>
+        <style><%@include file="/WEB-INF/resources/css/registration.css"%></style>
     </head>
     <body>
         <jsp:include page="../fragments/menu.jsp"></jsp:include>
@@ -29,7 +29,7 @@
                     <td><input type="password" name="password" value="${user.password}" /></td>
                 </tr>
                 <tr>
-                    <td>User Role:</td>
+                    <td>User Type:</td>
                     <td style="width: 100px">
                         <select name="role_id" class="capitalize">
                             <c:if test="${not empty roles}">
@@ -44,9 +44,11 @@
                     <td>Email:</td>
                     <td><input type="email" name="email" value="${user.email}" /></td>
                 </tr>
+                <tr>
+                    <td></td>
+                    <td><button type="submit" name="submit">Register</button></td>
+                </tr>
             </table>
-            <button type="submit" name="registration">Submit</button>
         </form>
-
     </body>
 </html>

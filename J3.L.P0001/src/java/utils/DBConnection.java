@@ -7,6 +7,7 @@ package utils;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import javax.naming.NamingException;
 
 /**
  *
@@ -14,26 +15,19 @@ import java.sql.SQLException;
  */
 public class DBConnection {
 
-    public static Connection getConnection(){
+    public static Connection getConnection() {
         try {
             return SQLServerConnection.getSQLServerConnection();
-        } catch (Exception ex) {
+        } catch (ClassNotFoundException | SQLException | NamingException ex) {
             return null;
         }
     }
-    
-    public static void closeConnect(Connection conn) {
-        if (conn != null) {
-            try {
-                conn.close();
-            } catch (SQLException ex) {
-            }
-        }
-    }
 
-    public static void rollback(Connection conn) {
+    public static void closeConnect(Connection conn) {
         try {
-            conn.rollback();
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+            }
         } catch (SQLException ex) {
         }
     }

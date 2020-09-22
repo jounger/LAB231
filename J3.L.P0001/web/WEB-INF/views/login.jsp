@@ -20,17 +20,23 @@
                     <td>Username:</td>
                     <td>
                         <input type="text" name="username" value="${user.username}" />
-                        <c:if test="${not empty errorMessage}">
-                            <c:out value="${errorMessage}"/>
-                        </c:if>
-                    </td>
+                <c:if test="${not empty errorMessage}">
+                    <c:out value="${errorMessage}"/>
+                </c:if>
+                </td>
                 </tr>
                 <tr>
                     <td>Password:</td>
                     <td><input type="password" name="password" value="${user.password}" /></td>
                 </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <button type="submit" name="submit">Login</button>
+                        <a href="${pageContext.request.contextPath}/registration">Register</a>
+                    </td>
+                </tr>
             </table>
-            <button type="submit" name="login">Submit</button>
         </form>
     </body>
 </html>

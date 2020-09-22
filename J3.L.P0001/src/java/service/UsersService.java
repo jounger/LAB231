@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package service;
 
 import java.util.List;
 import model.Users;
@@ -12,12 +12,11 @@ import model.Users;
  *
  * @author nguyenvanan
  */
-public interface UsersDAO {
-    List<Users> findUsers(int page, int limit);
-    
-    Users findUserById(int id);
-    
-    Users findUserByUsername(String username);
-    
-    void saveUser(Users user);
+public interface UsersService {
+
+    List<Users> getUsers(int page, int limit);
+
+    Users getUserByUsername(String username);
+
+    void createUser(Users user);
 }
