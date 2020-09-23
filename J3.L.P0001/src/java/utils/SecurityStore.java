@@ -7,7 +7,7 @@ package utils;
 
 import common.Constant;
 import javax.servlet.http.HttpSession;
-import model.Users;
+import model.User;
 
 /**
  *
@@ -15,12 +15,12 @@ import model.Users;
  */
 public class SecurityStore {
 
-    public static void saveAuth(HttpSession session, Users user) {
+    public static void saveAuth(HttpSession session, User user) {
         session.setAttribute(Constant.AUTH_USER_ATTR, user);
     }
 
-    public static Users getAuth(HttpSession session) {
-        Users user = (Users) session.getAttribute(Constant.AUTH_USER_ATTR);
+    public static User getAuth(HttpSession session) {
+        User user = (User) session.getAttribute(Constant.AUTH_USER_ATTR);
         return user;
     }
 

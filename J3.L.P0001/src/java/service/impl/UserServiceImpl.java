@@ -5,29 +5,29 @@
  */
 package service.impl;
 
-import dao.impl.UsersDAOImpl;
+import dao.impl.UserDAOImpl;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import model.Users;
-import service.UsersService;
+import model.User;
 import utils.DBConnection;
+import service.UserService;
 
 /**
  *
  * @author nguyenvanan
  */
-public class UsersServiceImpl implements UsersService {
+public class UserServiceImpl implements UserService {
 
     Connection conn;
-    private final UsersDAOImpl usersDAOImpl = new UsersDAOImpl();
+    private final UserDAOImpl userDAOImpl = new UserDAOImpl();
 
     @Override
-    public List<Users> getUsers(int page, int limit) {
-        List<Users> users = new ArrayList<>();
+    public List<User> getUsers(int page, int limit) {
+        List<User> users = new ArrayList<>();
         try {
             this.conn = DBConnection.getConnection();
-            users = usersDAOImpl.findUsers(1, 10);
+            users = userDAOImpl.find(1, 10);
         } catch (Exception ex) {
         } finally {
             DBConnection.closeConnect(conn);
@@ -36,11 +36,11 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Users getUserByUsername(String username) {
-        Users user = null;
+    public User getUserByUsername(String username) {
+        User user = null;
         try {
             this.conn = DBConnection.getConnection();
-            user = usersDAOImpl.findUserByUsername(username);
+            user = userDAOImpl.findByUsername(username);
         } catch (Exception ex) {
         } finally {
             DBConnection.closeConnect(conn);
@@ -49,10 +49,10 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public void createUser(Users user) {
+    public void createUser(User user) {
         try {
             this.conn = DBConnection.getConnection();
-            usersDAOImpl.saveUser(user);
+            userDAOImpl.save(user);
         } catch (Exception ex) {
         } finally {
             DBConnection.closeConnect(conn);

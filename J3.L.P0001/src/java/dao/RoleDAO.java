@@ -6,18 +6,15 @@
 package dao;
 
 import java.util.List;
-import model.Users;
+import model.Role;
 
 /**
  *
  * @author nguyenvanan
  */
-public interface UsersDAO {
-    List<Users> findUsers(int page, int limit);
-    
-    Users findUserById(int id);
-    
-    Users findUserByUsername(String username);
-    
-    void saveUser(Users user);
+public interface RoleDAO {
+
+    List<Role> find(int page, int limit);
+
+    Role findById(int id);
 }

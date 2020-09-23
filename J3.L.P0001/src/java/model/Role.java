@@ -9,12 +9,12 @@ package model;
  *
  * @author nguyenvanan
  */
-public class Roles {
+public class Role {
 
     private int id;
     private String name;
 
-    public Roles() {
+    public Role() {
     }
 
     public int getId() {

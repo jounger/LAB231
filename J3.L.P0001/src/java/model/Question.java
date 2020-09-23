@@ -12,15 +12,15 @@ import java.util.List;
  *
  * @author nguyenvanan
  */
-public class Questions {
+public class Question {
 
     private int id;
     private String content;
-    private List<Answers> answers;
+    private List<Answer> answers;
     private Date dateCreated;
-    private Users user;
+    private User user;
 
-    public Questions() {
+    public Question() {
     }
 
     public int getId() {
@@ -39,11 +39,11 @@ public class Questions {
         this.content = content;
     }
 
-    public List<Answers> getAnswers() {
+    public List<Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<Answers> answers) {
+    public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
 
@@ -55,11 +55,11 @@ public class Questions {
         this.dateCreated = dateCreated;
     }
 
-    public Users getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Users user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

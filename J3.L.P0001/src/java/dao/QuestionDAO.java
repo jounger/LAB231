@@ -3,18 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package dao;
 
 import java.util.List;
-import model.Roles;
+import model.Question;
 
 /**
  *
  * @author nguyenvanan
  */
-public interface RolesService {
+public interface QuestionDAO {
 
-    List<Roles> getRoles(int page, int limit);
+    List<Question> find(int page, int limit);
 
-    Roles getRoleById(int id);
+    Question findById(int id);
+    
+    void save(Question question);
 }

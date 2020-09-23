@@ -13,6 +13,8 @@ import java.util.List;
  * @author nguyenvanan
  */
 public class Router {
+
+    public static final List<String> NOT_AUTH = Arrays.asList("/home", "/login", "/logout", "/registration", "/error");
     public static final List<String> TEACHER = Arrays.asList("/take-quiz", "/make-quiz", "/manage-quiz");
     public static final List<String> STUDENT = Arrays.asList("/take-quiz");
 }

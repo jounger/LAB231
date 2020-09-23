@@ -9,14 +9,14 @@ package model;
  *
  * @author nguyenvanan
  */
-public class Answers {
+public class Answer {
 
     private int id;
     private String content;
-    private boolean isCorrect;
-    private Questions question;
+    private boolean correct;
 
-    public Answers() {
+    public Answer() {
+        this.correct = false;
     }
 
     public int getId() {
@@ -35,20 +35,12 @@ public class Answers {
         this.content = content;
     }
 
-    public boolean isIsCorrect() {
-        return isCorrect;
+    public boolean isCorrect() {
+        return correct;
     }
 
-    public void setIsCorrect(boolean isCorrect) {
-        this.isCorrect = isCorrect;
-    }
-
-    public Questions getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Questions question) {
-        this.question = question;
+    public void setCorrect(boolean isCorrect) {
+        this.correct = isCorrect;
     }
 
 }

@@ -5,29 +5,29 @@
  */
 package service.impl;
 
-import dao.impl.RolesDAOImpl;
+import dao.impl.RoleDAOImpl;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import model.Roles;
-import service.RolesService;
+import model.Role;
 import utils.DBConnection;
+import service.RoleService;
 
 /**
  *
  * @author nguyenvanan
  */
-public class RolesServiceImpl implements RolesService {
+public class RoleServiceImpl implements RoleService {
 
     Connection conn;
-    private final RolesDAOImpl rolesDAOImpl = new RolesDAOImpl();
+    private final RoleDAOImpl roleDAOImpl = new RoleDAOImpl();
 
     @Override
-    public List<Roles> getRoles(int page, int limit) {
-        List<Roles> roles = new ArrayList<>();
+    public List<Role> getRoles(int page, int limit) {
+        List<Role> roles = new ArrayList<>();
         try {
             this.conn = DBConnection.getConnection();
-            roles = rolesDAOImpl.findRoles(page, limit);
+            roles = roleDAOImpl.find(page, limit);
         } catch (Exception ex) {
         } finally {
             DBConnection.closeConnect(conn);
@@ -36,11 +36,11 @@ public class RolesServiceImpl implements RolesService {
     }
 
     @Override
-    public Roles getRoleById(int id) {
-        Roles role = null;
+    public Role getRoleById(int id) {
+        Role role = null;
         try {
             this.conn = DBConnection.getConnection();
-            role = rolesDAOImpl.findRoleById(id);
+            role = roleDAOImpl.findById(id);
         } catch (Exception ex) {
         } finally {
             DBConnection.closeConnect(conn);

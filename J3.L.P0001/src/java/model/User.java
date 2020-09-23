@@ -11,15 +11,15 @@ import java.util.List;
  *
  * @author nguyenvanan
  */
-public class Users {
+public class User {
 
     private int id;
     private String username;
     private String password;
     private String email;
-    private List<Roles> roles;
+    private List<Role> roles;
 
-    public Users() {
+    public User() {
     }
 
     public int getId() {
@@ -54,11 +54,11 @@ public class Users {
         this.email = email;
     }
 
-    public List<Roles> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Roles> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 

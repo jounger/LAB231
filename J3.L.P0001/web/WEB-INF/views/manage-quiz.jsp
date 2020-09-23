@@ -9,11 +9,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Manage Quiz Page</title>
     </head>
     <body>
         <jsp:include page="../fragments/menu.jsp"></jsp:include>
-        <h1>Number of questions: ${totalElement}</h1>
+        <p>Number of questions: ${totalElement}</p>
         <table border="0">
             <thead>
                 <tr>
@@ -23,8 +23,8 @@
             </thead>
             <tbody>
 
-            <c:if test="${not empty quizs}">
-                <c:forEach items="${quizs}" var="item">
+            <c:if test="${not empty questions}">
+                <c:forEach items="${questions}" var="item">
                     <tr>
                         <td>${item.content}</td>
                         <td>${item.dateCreated}</td>

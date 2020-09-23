@@ -6,17 +6,15 @@
 package service;
 
 import java.util.List;
-import model.Users;
+import model.Role;
 
 /**
  *
  * @author nguyenvanan
  */
-public interface UsersService {
+public interface RoleService {
 
-    List<Users> getUsers(int page, int limit);
+    List<Role> getRoles(int page, int limit);
 
-    Users getUserByUsername(String username);
-
-    void createUser(Users user);
+    Role getRoleById(int id);
 }

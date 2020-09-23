@@ -6,14 +6,13 @@
 package controller;
 
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Users;
-import service.impl.UsersServiceImpl;
+import model.User;
+import service.impl.UserServiceImpl;
 import utils.SecurityStore;
 
 /**
@@ -23,7 +22,7 @@ import utils.SecurityStore;
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
 
-    private final UsersServiceImpl usersServiceImpl = new UsersServiceImpl();
+    private final UserServiceImpl usersServiceImpl = new UserServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -37,7 +36,7 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        Users user = usersServiceImpl.getUserByUsername(username);
+        User user = usersServiceImpl.getUserByUsername(username);
         System.out.println("user" + user.getPassword());
         if (user != null && user.getPassword().equals(password)) {
             System.out.println("Login Success");

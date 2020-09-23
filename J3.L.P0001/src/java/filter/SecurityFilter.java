@@ -17,7 +17,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Users;
+import model.User;
 import utils.SecurityStore;
 import utils.Tool;
 
@@ -38,14 +38,14 @@ public class SecurityFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         String path = req.getServletPath();
         System.out.println("Path: " + path);
-        if (path.contains("/login") || path.contains("/logout") || path.contains("/registration") || path.contains("/error")) {
+        if (Tool.includes(Router.NOT_AUTH, path)) {
             chain.doFilter(request, response);
             return;
         }
-        Users user = SecurityStore.getAuth(req.getSession());
+        User user = SecurityStore.getAuth(req.getSession());
         if (user != null) {
             String roleName = user.getRoles().get(0).getName();
-            if ((roleName.equals("TEACHER") && Tool.includes(Router.TEACHER, path)) 
+            if ((roleName.equals("TEACHER") && Tool.includes(Router.TEACHER, path))
                     || (roleName.equals("STUDENT") && Tool.includes(Router.STUDENT, path))) {
                 chain.doFilter(request, response);
             } else {

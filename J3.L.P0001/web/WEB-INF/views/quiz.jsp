@@ -13,8 +13,8 @@
     </head>
     <body>
         <jsp:include page="../fragments/menu.jsp"></jsp:include>
-        <h4>Welcome ${sessionScope.LOGGED_USER.username}</h4>
-        <h4>Time remaining: <span style="color:red">10:00</span></h4>
+        <p>Welcome ${sessionScope.LOGGED_USER.username}</p>
+        <p>Time remaining: <span style="color:red">10:00</span></p>
         <form method="POST" action="${pageContext.request.contextPath}/quiz?qa=${qa.id}">
             <h5>${question.content}</h5>
             <input type="checkbox" name="answers" value="${question.answers[0].id}" /> ${question.answers[0].content}

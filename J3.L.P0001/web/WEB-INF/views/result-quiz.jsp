@@ -13,7 +13,7 @@
     </head>
     <body>
         <jsp:include page="../fragments/menu.jsp"></jsp:include>
-        <h4>Your score ${quiz.score} (${quiz.score * 10}%) - Passed</h4>
+        <p>Your score ${quiz.score} (${quiz.score * 10}%) - ${quiz.score >= 4 ? 'Passed' : 'Failed'}</p>
         <p>Take another test</p>
         <form action="${pageContext.request.contextPath}/take-quiz">
             <input type="submit" value="Start" />

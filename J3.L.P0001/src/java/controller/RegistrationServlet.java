@@ -8,16 +8,15 @@ package controller;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Roles;
-import model.Users;
-import service.impl.RolesServiceImpl;
-import service.impl.UsersServiceImpl;
+import model.Role;
+import model.User;
+import service.impl.RoleServiceImpl;
+import service.impl.UserServiceImpl;
 
 /**
  *
@@ -26,13 +25,13 @@ import service.impl.UsersServiceImpl;
 @WebServlet(name = "RegistrationServlet", urlPatterns = {"/registration"})
 public class RegistrationServlet extends HttpServlet {
 
-    private final RolesServiceImpl rolesServiceImpl = new RolesServiceImpl();
-    private final UsersServiceImpl usersServiceImpl = new UsersServiceImpl();
+    private final RoleServiceImpl rolesServiceImpl = new RoleServiceImpl();
+    private final UserServiceImpl usersServiceImpl = new UserServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Roles> roles = rolesServiceImpl.getRoles(1, 10);
+        List<Role> roles = rolesServiceImpl.getRoles(1, 10);
 
         request.setAttribute("roles", roles);
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
@@ -46,8 +45,8 @@ public class RegistrationServlet extends HttpServlet {
         String email = request.getParameter("email");
         String role_id = request.getParameter("role_id");
 
-        Roles role = rolesServiceImpl.getRoleById(Integer.parseInt(role_id));
-        Users user = new Users();
+        Role role = rolesServiceImpl.getRoleById(Integer.parseInt(role_id));
+        User user = new User();
         user.setUsername(username);
         user.setPassword(password);
         user.setRoles(Arrays.asList(role));
@@ -57,7 +56,7 @@ public class RegistrationServlet extends HttpServlet {
 
         request.setAttribute("user", user);
 
-        List<Roles> roles = rolesServiceImpl.getRoles(1, 10);
+        List<Role> roles = rolesServiceImpl.getRoles(1, 10);
         request.setAttribute("roles", roles);
 
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
