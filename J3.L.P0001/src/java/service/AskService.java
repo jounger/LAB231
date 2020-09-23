@@ -6,19 +6,15 @@
 package service;
 
 import java.util.List;
-import model.Question;
+import model.Ask;
 
 /**
  *
  * @author nguyenvanan
  */
-public interface QuestionService {
+public interface AskService {
 
-    List<Question> getQuestions(int page, int limit);
-    
-    List<Question> getRandomQuestions(int page, int limit);
+    List<Ask> getByQuiz(int page, int limit, int quiz_id);
 
-    Question getQuestionById(int id);
-
-    void createQuestion(Question question);
+    void createAskInQuiz(Ask ask, int quiz_id);
 }

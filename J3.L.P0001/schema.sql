@@ -2,46 +2,52 @@ CREATE DATABASE P0001;
 
 USE P0001;
 
-CREATE TABLE Roles (
+CREATE TABLE [Role] (
 	id int IDENTITY(1,1) PRIMARY KEY,
 	name nvarchar(255)
 );
 
-CREATE TABLE Users (
+CREATE TABLE [User] (
 	id int IDENTITY(1,1) PRIMARY KEY,
 	username nvarchar(255),
 	password nvarchar(255),
 	email nvarchar(255),
-	role_id int UNIQUE FOREIGN KEY REFERENCES Roles(id)
+	role_id int UNIQUE FOREIGN KEY REFERENCES [Role](id)
 );
 
-CREATE TABLE Quizs (
+CREATE TABLE Quiz (
 	id int IDENTITY(1,1) PRIMARY KEY,
 	quantity int,
 	date_started datetime,
-	users_id int UNIQUE FOREIGN KEY REFERENCES Users(id)
+	[user_id] int UNIQUE FOREIGN KEY REFERENCES [User](id)
 );
 
-CREATE TABLE Questions (
+CREATE TABLE Question (
 	id int IDENTITY(1,1) PRIMARY KEY,
 	content nvarchar(255),
 	date_created datetime,
-	users_id int UNIQUE FOREIGN KEY REFERENCES Users(id)
+	[user_id] int UNIQUE FOREIGN KEY REFERENCES [User](id)
 );
 
-CREATE TABLE Answers (
+CREATE TABLE [Option] (
 	id int IDENTITY(1,1) PRIMARY KEY,
 	content int,
-	isCorrect bit,
-	questions_id int UNIQUE FOREIGN KEY REFERENCES Questions(id)
+	is_correct bit,
+	question_id int UNIQUE FOREIGN KEY REFERENCES Question(id)
 );
 
-CREATE TABLE QA (
+CREATE TABLE Ask (
 	id int IDENTITY(1,1) PRIMARY KEY,
-	questions_id int UNIQUE FOREIGN KEY REFERENCES Questions(id),
-	answers_id int UNIQUE FOREIGN KEY REFERENCES Answers(id),
+	question_id int UNIQUE FOREIGN KEY REFERENCES Question(id),
 	date_answered datetime,
-	quizs_id int UNIQUE FOREIGN KEY REFERENCES Quizs(id)
+	quiz_id int UNIQUE FOREIGN KEY REFERENCES Quiz(id)
 );
 
-INSERT INTO Roles VALUES ('TEACHER'), ('STUDENT');
+CREATE TABLE Answer (
+  id int IDENTITY(1,1) PRIMARY KEY,
+  option_id int UNIQUE FOREIGN KEY REFERENCES [Option](id),
+  ask_id int UNIQUE FOREIGN KEY REFERENCES Ask(id)
+);
+
+INSERT INTO [Role] VALUES ('TEACHER'), ('STUDENT');
+INSERT INTO [User] (username ,password ,email ,role_id) VALUES('teacher', '123', 'teacher@mail.com', 1), ('student', '123', 'student@mail.com', 2);

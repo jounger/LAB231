@@ -13,7 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import model.Answer;
+import model.Option;
 import model.Question;
 import model.User;
 import utils.DBConnection;
@@ -28,7 +28,7 @@ public class QuestionDAOImpl implements QuestionDAO {
 
     private final UserDAOImpl userDAOImpl = new UserDAOImpl();
 
-    private final AnswerDAOImpl answerDAOImpl = new AnswerDAOImpl();
+    private final OptionDAOImpl optionDAOImpl = new OptionDAOImpl();
 
     public QuestionDAOImpl() {
         this.conn = DBConnection.getConnection();
@@ -38,7 +38,38 @@ public class QuestionDAOImpl implements QuestionDAO {
     public List<Question> find(int page, int limit) {
         List<Question> questions = new ArrayList<>();
         try {
-            String sql = "SELECT q.id, q.content, q.date_created, q.user_id FROM Question q ORDER BY q.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
+            String sql = "SELECT q.id, q.content, q.date_created, q.user_id FROM Question q "
+                    + "ORDER BY q.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
+            PreparedStatement pstm = this.conn.prepareStatement(sql);
+            pstm.setInt(1, (page - 1) * limit);
+            pstm.setInt(2, limit);
+
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String content = rs.getString("content");
+                Date dateCreated = rs.getDate("date_created");
+                int userId = rs.getInt("user_id");
+                Question question = new Question();
+                question.setId(id);
+                question.setContent(content);
+                question.setDateCreated(dateCreated);
+                User user = userDAOImpl.findById(userId);
+                question.setUser(user);
+                questions.add(question);
+            }
+        } catch (Exception e) {
+
+        }
+        return questions;
+    }
+    
+    @Override
+    public List<Question> findByRandom(int page, int limit) {
+        List<Question> questions = new ArrayList<>();
+        try {
+            String sql = "SELECT q.id, q.content, q.date_created, q.user_id FROM Question q "
+                    + "ORDER BY NEWID() OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, (page - 1) * limit);
             pstm.setInt(2, limit);
@@ -99,8 +130,9 @@ public class QuestionDAOImpl implements QuestionDAO {
             pstm.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = pstm.getGeneratedKeys();
             int questionId = rs.getInt(1);
-            for (Answer ans : question.getAnswers()) {
-                answerDAOImpl.saveInQuestion(ans, questionId);
+            // SAVE question's options
+            for (Option ans : question.getOptions()) {
+                optionDAOImpl.saveInQuestion(ans, questionId);
             }
         } catch (Exception e) {
 

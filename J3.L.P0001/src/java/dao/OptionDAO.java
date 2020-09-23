@@ -6,19 +6,17 @@
 package dao;
 
 import java.util.List;
-import model.Question;
+import model.Option;
 
 /**
  *
  * @author nguyenvanan
  */
-public interface QuestionDAO {
+public interface OptionDAO {
 
-    List<Question> find(int page, int limit);
+    List<Option> findAllByQuestion(int question_id);
     
-    List<Question> findByRandom(int page, int limit);
+    Option findById(int id);
 
-    Question findById(int id);
-    
-    void save(Question question);
+    void saveInQuestion(Option answer, int question_id);
 }

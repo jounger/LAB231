@@ -16,7 +16,7 @@ public class Question {
 
     private int id;
     private String content;
-    private List<Answer> answers;
+    private List<Option> options;
     private Date dateCreated;
     private User user;
 
@@ -39,12 +39,12 @@ public class Question {
         this.content = content;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public List<Option> getOptions() {
+        return options;
     }
 
-    public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
+    public void setOptions(List<Option> answers) {
+        this.options = answers;
     }
 
     public Date getDateCreated() {

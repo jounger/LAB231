@@ -12,11 +12,9 @@ package model;
 public class Answer {
 
     private int id;
-    private String content;
-    private boolean correct;
+    private Option option;
 
     public Answer() {
-        this.correct = false;
     }
 
     public int getId() {
@@ -27,20 +25,12 @@ public class Answer {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public Option getOption() {
+        return option;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public boolean isCorrect() {
-        return correct;
-    }
-
-    public void setCorrect(boolean isCorrect) {
-        this.correct = isCorrect;
+    public void setOption(Option option) {
+        this.option = option;
     }
 
 }

@@ -7,17 +7,16 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Answer;
+import model.Option;
 import model.Question;
 import model.User;
+import service.impl.QuestionServiceImpl;
 import utils.SecurityStore;
 
 /**
@@ -26,6 +25,8 @@ import utils.SecurityStore;
  */
 @WebServlet(name = "MakeQuizServlet", urlPatterns = {"/make-quiz"})
 public class MakeQuizServlet extends HttpServlet {
+    
+    private final QuestionServiceImpl questionServiceImpl = new QuestionServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -41,37 +42,40 @@ public class MakeQuizServlet extends HttpServlet {
         String option2 = request.getParameter("option2");
         String option3 = request.getParameter("option3");
         String option4 = request.getParameter("option4");
-        String[] correctAnswers = request.getParameterValues("answers");
+        String[] answers = request.getParameterValues("answers");
 
         User currentUser = SecurityStore.getAuth(request.getSession());
-        List<Answer> answers = new ArrayList<>();
-        Answer ans1 = new Answer();
-        ans1.setContent(option1);
+        List<Option> options = new ArrayList<>();
+        Option opt1 = new Option();
+        opt1.setContent(option1);
 
-        Answer ans2 = new Answer();
-        ans2.setContent(option2);
+        Option opt2 = new Option();
+        opt2.setContent(option2);
 
-        Answer ans3 = new Answer();
-        ans3.setContent(option3);
+        Option opt3 = new Option();
+        opt3.setContent(option3);
 
-        Answer ans4 = new Answer();
-        ans4.setContent(option4);
+        Option opt4 = new Option();
+        opt4.setContent(option4);
         // Add to answers list
-        answers.add(ans1);
-        answers.add(ans2);
-        answers.add(ans3);
-        answers.add(ans4);
+        options.add(opt1);
+        options.add(opt2);
+        options.add(opt3);
+        options.add(opt4);
 
-        for (String ans : correctAnswers) {
-            answers.get(Integer.parseInt(ans)).setCorrect(true);
+        for (String ans : answers) {
+            options.get(Integer.parseInt(ans)).setCorrect(true);
         }
 
         Question q = new Question();
         q.setContent(question);
-        q.setAnswers(answers);
+        q.setOptions(options);
         q.setUser(currentUser);
+        
+        questionServiceImpl.createQuestion(q);
 
         request.setAttribute("question", q);
+        request.setAttribute("message", "CREATE QUESTION SUCCESSFUL!");
 
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/make-quiz.jsp").forward(request, response);
     }

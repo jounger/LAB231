@@ -5,16 +5,15 @@
  */
 package dao;
 
-import java.util.List;
-import model.Answer;
+import model.Quiz;
 
 /**
  *
  * @author nguyenvanan
  */
-public interface AnswerDAO {
+public interface QuizDAO {
 
-    List<Answer> findAllByAsk(int ask_id);
+    Quiz findById(int id);
 
-    void saveInAsk(Answer answer, int ask_id);
+    void save(Quiz quiz);
 }

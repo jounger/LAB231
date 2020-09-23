@@ -30,7 +30,7 @@ public class RoleDAOImpl implements RoleDAO {
     public List<Role> find(int page, int limit) {
         List<Role> roles = new ArrayList<>();
         try {
-            String sql = "SELECT r.id, r.name FROM Role r ORDER BY r.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
+            String sql = "SELECT r.id, r.name FROM [Role] r ORDER BY r.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, (page - 1) * limit);
             pstm.setInt(2, limit);
@@ -53,7 +53,7 @@ public class RoleDAOImpl implements RoleDAO {
     @Override
     public Role findById(int role_id) {
         try {
-            String sql = "SELECT r.id, r.name FROM Role r WHERE r.id=?;";
+            String sql = "SELECT r.id, r.name FROM [Role] r WHERE r.id=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, role_id);
 

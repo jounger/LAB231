@@ -34,7 +34,7 @@ public class UserDAOImpl implements UserDAO {
     public List<User> find(int page, int limit) {
         List<User> users = new ArrayList<>();
         try {
-            String sql = "SELECT u.id, u.username, u.email, u.role_id FROM User u ORDER BY u.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
+            String sql = "SELECT u.id, u.username, u.email, u.role_id FROM [User] u ORDER BY u.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, (page - 1) * limit);
             pstm.setInt(2, limit);
@@ -64,7 +64,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User findById(int user_id) {
         try {
-            String sql = "SELECT u.id, u.username, u.email, u.role_id FROM User u WHERE u.id=?;";
+            String sql = "SELECT u.id, u.username, u.email, u.role_id FROM [User] u WHERE u.id=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, user_id);
 
@@ -92,7 +92,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User findByUsername(String user_username) {
         try {
-            String sql = "SELECT u.id, u.username, u.password, u.email, u.role_id FROM User u WHERE u.username=?;";
+            String sql = "SELECT u.id, u.username, u.password, u.email, u.role_id FROM [User] u WHERE u.username=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setString(1, user_username);
 
@@ -122,7 +122,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void save(User user) {
         try {
-            String sql = "INSERT INTO Users(username, password, email, role_id) VALUES(?,?,?,?)";
+            String sql = "INSERT INTO [User](username, password, email, role_id) VALUES(?,?,?,?)";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setString(1, user.getUsername());
             pstm.setString(2, user.getPassword());
@@ -130,7 +130,6 @@ public class UserDAOImpl implements UserDAO {
             pstm.setInt(4, user.getRoles().get(0).getId());
             int executeUpdate = pstm.executeUpdate();
         } catch (Exception e) {
-
         }
     }
 

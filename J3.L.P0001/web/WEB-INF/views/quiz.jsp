@@ -17,10 +17,10 @@
         <p>Time remaining: <span style="color:red">10:00</span></p>
         <form method="POST" action="${pageContext.request.contextPath}/quiz?qa=${qa.id}">
             <h5>${question.content}</h5>
-            <input type="checkbox" name="answers" value="${question.answers[0].id}" /> ${question.answers[0].content}
-            <input type="checkbox" name="answers" value="${question.answers[1].id}" /> ${question.answers[1].content}
-            <input type="checkbox" name="answers" value="${question.answers[2].id}" /> ${question.answers[2].content}
-            <input type="checkbox" name="answers" value="${question.answers[3].id}" /> ${question.answers[3].content}
+            <input type="checkbox" name="answers" value="${question.options[0].id}" /> ${question.options[0].content}
+            <input type="checkbox" name="answers" value="${question.options[1].id}" /> ${question.options[1].content}
+            <input type="checkbox" name="answers" value="${question.options[2].id}" /> ${question.options[2].content}
+            <input type="checkbox" name="answers" value="${question.options[3].id}" /> ${question.options[3].content}
 
             <button type="submit" name="submit">Next</button>
         </form>

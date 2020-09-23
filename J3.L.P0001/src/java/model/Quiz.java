@@ -16,7 +16,7 @@ public class Quiz {
 
     private int id;
     private int quantity;
-    private List<QA> qa;
+    private List<Ask> asks;
     private Date dateStarted;
     private User user;
 
@@ -39,12 +39,12 @@ public class Quiz {
         this.quantity = quantity;
     }
 
-    public List<QA> getQa() {
-        return qa;
+    public List<Ask> getAsks() {
+        return asks;
     }
 
-    public void setQa(List<QA> qa) {
-        this.qa = qa;
+    public void setAsks(List<Ask> asks) {
+        this.asks = asks;
     }
 
     public Date getDateStarted() {

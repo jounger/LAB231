@@ -3,12 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package dao;
+
+import java.util.List;
+import model.Ask;
 
 /**
  *
  * @author nguyenvanan
  */
-public class QA {
-    
+public interface AskDAO {
+
+    List<Ask> findByQuiz(int page, int limit, int quiz_id);
+
+    void saveInQuiz(Ask ask, int quiz_id);
 }

@@ -37,7 +37,6 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         User user = usersServiceImpl.getUserByUsername(username);
-        System.out.println("user" + user.getPassword());
         if (user != null && user.getPassword().equals(password)) {
             System.out.println("Login Success");
             SecurityStore.saveAuth(request.getSession(), user);

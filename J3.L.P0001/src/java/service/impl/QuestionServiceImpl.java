@@ -6,13 +6,10 @@
 package service.impl;
 
 import dao.impl.QuestionDAOImpl;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import model.Question;
-import model.Question;
 import service.QuestionService;
-import utils.DBConnection;
 
 /**
  *
@@ -20,45 +17,30 @@ import utils.DBConnection;
  */
 public class QuestionServiceImpl implements QuestionService {
 
-    Connection conn;
     private final QuestionDAOImpl questionDAOImpl = new QuestionDAOImpl();
 
     @Override
     public List<Question> getQuestions(int page, int limit) {
         List<Question> questions = new ArrayList<>();
-        try {
-            this.conn = DBConnection.getConnection();
-            questions = questionDAOImpl.find(page, limit);
-        } catch (Exception ex) {
-        } finally {
-            DBConnection.closeConnect(conn);
-        }
+        questions = questionDAOImpl.find(page, limit);
+        return questions;
+    }
+    
+    @Override
+    public List<Question> getRandomQuestions(int page, int limit) {
+        List<Question> questions = new ArrayList<>();
+        questions = questionDAOImpl.findByRandom(page, limit);
         return questions;
     }
 
     @Override
     public Question getQuestionById(int id) {
-        Question question = null;
-        try {
-            this.conn = DBConnection.getConnection();
-            question = questionDAOImpl.findById(id);
-            return question;
-        } catch (Exception ex) {
-        } finally {
-            DBConnection.closeConnect(conn);
-        }
-        return question;
+        return questionDAOImpl.findById(id);
     }
 
     @Override
     public void createQuestion(Question question) {
-        try {
-            this.conn = DBConnection.getConnection();
-            questionDAOImpl.save(question);
-        } catch (Exception ex) {
-        } finally {
-            DBConnection.closeConnect(conn);
-        }
+        questionDAOImpl.save(question);
     }
 
 }
