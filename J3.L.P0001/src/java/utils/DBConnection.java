@@ -19,6 +19,7 @@ public class DBConnection {
         try {
             return SQLServerConnection.getSQLServerConnection();
         } catch (ClassNotFoundException | SQLException | NamingException ex) {
+            ex.printStackTrace();
             return null;
         }
     }
@@ -29,6 +30,7 @@ public class DBConnection {
                 conn.close();
             }
         } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 }

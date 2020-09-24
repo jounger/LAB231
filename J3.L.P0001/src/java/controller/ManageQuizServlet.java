@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Question;
-import service.impl.QuestionServiceImpl;
+import dao.impl.QuestionDAOImpl;
+import model.User;
+import utils.SecurityStore;
 
 /**
  *
@@ -22,7 +24,7 @@ import service.impl.QuestionServiceImpl;
 @WebServlet(name = "ManageQuizServlet", urlPatterns = {"/manage-quiz"})
 public class ManageQuizServlet extends HttpServlet {
 
-    private final QuestionServiceImpl questionServiceImpl = new QuestionServiceImpl();
+    private final QuestionDAOImpl questionDAOImpl = new QuestionDAOImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -30,7 +32,12 @@ public class ManageQuizServlet extends HttpServlet {
         String page = request.getParameter("page");
         String limit = request.getParameter("limit");
 
-        List<Question> questions = questionServiceImpl.getQuestions(Integer.parseInt(page), Integer.parseInt(limit));
+        int pageReq = page == null ? 1 : Integer.parseInt(page);
+        int limitReq = limit == null ? 10 : Integer.parseInt(limit);
+
+        User user = SecurityStore.getAuth(request.getSession());
+        List<Question> questions = questionDAOImpl.findByUser(pageReq, limitReq, user.getId());
+        System.out.println("Length " + questions.size());
         request.setAttribute("questions", questions);
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/manage-quiz.jsp").forward(request, response);
     }

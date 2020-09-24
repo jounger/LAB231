@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Role;
 import model.User;
-import service.impl.RoleServiceImpl;
-import service.impl.UserServiceImpl;
+import dao.impl.RoleDAOImpl;
+import dao.impl.UserDAOImpl;
 
 /**
  *
@@ -25,13 +25,13 @@ import service.impl.UserServiceImpl;
 @WebServlet(name = "RegistrationServlet", urlPatterns = {"/registration"})
 public class RegistrationServlet extends HttpServlet {
 
-    private final RoleServiceImpl rolesServiceImpl = new RoleServiceImpl();
-    private final UserServiceImpl usersServiceImpl = new UserServiceImpl();
+    private final RoleDAOImpl rolesDAOImpl = new RoleDAOImpl();
+    private final UserDAOImpl usersDAOImpl = new UserDAOImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Role> roles = rolesServiceImpl.getRoles(1, 10);
+        List<Role> roles = rolesDAOImpl.findAll();
 
         request.setAttribute("roles", roles);
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
@@ -45,18 +45,18 @@ public class RegistrationServlet extends HttpServlet {
         String email = request.getParameter("email");
         String role_id = request.getParameter("role_id");
 
-        Role role = rolesServiceImpl.getRoleById(Integer.parseInt(role_id));
+        Role role = rolesDAOImpl.findById(Integer.parseInt(role_id));
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
         user.setRoles(Arrays.asList(role));
         user.setEmail(email);
 
-        usersServiceImpl.createUser(user);
+        usersDAOImpl.save(user);
 
         request.setAttribute("user", user);
 
-        List<Role> roles = rolesServiceImpl.getRoles(1, 10);
+        List<Role> roles = rolesDAOImpl.findAll();
         request.setAttribute("roles", roles);
 
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);

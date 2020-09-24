@@ -4,6 +4,8 @@
     Author     : nguyenvanan
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,25 +16,45 @@
     <body>
         <jsp:include page="../fragments/menu.jsp"></jsp:include>
         <p>Number of questions: ${totalElement}</p>
-        <table border="0">
-            <thead>
-                <tr>
-                    <th>Question</th>
-                    <th>Date Created</th>
-                </tr>
-            </thead>
-            <tbody>
+        <form method="GET" action="${pageContext.request.contextPath}/manage-quiz">
 
-            <c:if test="${not empty questions}">
-                <c:forEach items="${questions}" var="item">
+            <table border="0">
+                <thead>
                     <tr>
-                        <td>${item.content}</td>
-                        <td>${item.dateCreated}</td>
+                        <th>Question</th>
+                        <th>Date Created</th>
                     </tr>
-                </c:forEach>
-            </c:if>
-        </tbody>
-    </table>
+                </thead>
+                <tbody>
 
-</body>
+                    <c:if test="${not empty questions}">
+                        <c:forEach items="${questions}" var="item">
+                            <tr>
+                                <td>${item.content}</td>
+                                <td>
+                                    <fmt:setLocale value="en_US" />
+                                    <fmt:formatDate value="${item.dateCreated}" pattern="dd-MMM-yyyy" />
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:if>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>
+                            <select name="limit" onchange="this.form.submit()">
+                                <option value="2">2</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="submit" name="page" value="1" />
+                            <input type="submit" name="page" value="2" />
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+    </body>
 </html>

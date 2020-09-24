@@ -17,4 +17,6 @@ public interface AskDAO {
     List<Ask> findByQuiz(int page, int limit, int quiz_id);
 
     void saveInQuiz(Ask ask, int quiz_id);
+
+    void update(Ask ask);
 }

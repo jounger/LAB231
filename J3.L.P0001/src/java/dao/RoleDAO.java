@@ -14,7 +14,7 @@ import model.Role;
  */
 public interface RoleDAO {
 
-    List<Role> find(int page, int limit);
+    List<Role> findAll();
 
     Role findById(int id);
 }

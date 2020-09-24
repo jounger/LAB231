@@ -14,7 +14,7 @@ import model.Question;
  */
 public interface QuestionDAO {
 
-    List<Question> find(int page, int limit);
+    List<Question> findByUser(int page, int limit, int user_id);
     
     List<Question> findByRandom(int page, int limit);
 

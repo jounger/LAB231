@@ -13,9 +13,9 @@
     </head>
     <body>
         <jsp:include page="../fragments/menu.jsp"></jsp:include>
-        <p>Welcome ${sessionScope.LOGGED_USER.username}</p>
+        <p>Welcome ${sessionScope.AUTH_USER.username}</p>
         <p>Time remaining: <span style="color:red">10:00</span></p>
-        <form method="POST" action="${pageContext.request.contextPath}/quiz?qa=${qa.id}">
+        <form method="POST" action="${pageContext.request.contextPath}/take-quiz">
             <h5>${question.content}</h5>
             <input type="checkbox" name="answers" value="${question.options[0].id}" /> ${question.options[0].content}
             <input type="checkbox" name="answers" value="${question.options[1].id}" /> ${question.options[1].content}

@@ -15,5 +15,7 @@ public interface QuizDAO {
 
     Quiz findById(int id);
 
-    void save(Quiz quiz);
+    Quiz findCurrentQuiz();
+
+    int save(Quiz quiz);
 }

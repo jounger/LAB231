@@ -8,9 +8,7 @@ package dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import model.Role;
 import model.User;
 import utils.DBConnection;
@@ -28,37 +26,6 @@ public class UserDAOImpl implements UserDAO {
 
     public UserDAOImpl() {
         this.conn = DBConnection.getConnection();
-    }
-
-    @Override
-    public List<User> find(int page, int limit) {
-        List<User> users = new ArrayList<>();
-        try {
-            String sql = "SELECT u.id, u.username, u.email, u.role_id FROM [User] u ORDER BY u.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
-            PreparedStatement pstm = this.conn.prepareStatement(sql);
-            pstm.setInt(1, (page - 1) * limit);
-            pstm.setInt(2, limit);
-
-            ResultSet rs = pstm.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String username = rs.getString("username");
-                String email = rs.getString("username");
-                int role_id = rs.getInt("role_id");
-
-                User user = new User();
-                user.setId(id);
-                user.setUsername(username);
-                user.setEmail(email);
-
-                Role role = rolesDAOImpl.findById(role_id);
-                user.setRoles(Arrays.asList(role));
-                users.add(user);
-            }
-        } catch (Exception e) {
-        }
-        return users;
-
     }
 
     @Override

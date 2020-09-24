@@ -8,4 +8,4 @@
 <a href="${pageContext.request.contextPath}/make-quiz">Make Quiz</a>
 <a href="${pageContext.request.contextPath}/manage-quiz">Manage Quiz</a>
 <a href="${pageContext.request.contextPath}/logout">Logout</a> | 
-<a>User: ${sessionScope.LOGGED_USER.username}</a>
+<a>User: ${sessionScope.AUTH_USER.username}</a>

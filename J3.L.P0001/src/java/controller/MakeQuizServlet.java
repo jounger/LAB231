@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Option;
 import model.Question;
 import model.User;
-import service.impl.QuestionServiceImpl;
+import dao.impl.QuestionDAOImpl;
 import utils.SecurityStore;
 
 /**
@@ -26,7 +26,7 @@ import utils.SecurityStore;
 @WebServlet(name = "MakeQuizServlet", urlPatterns = {"/make-quiz"})
 public class MakeQuizServlet extends HttpServlet {
     
-    private final QuestionServiceImpl questionServiceImpl = new QuestionServiceImpl();
+    private final QuestionDAOImpl questionDAOImpl = new QuestionDAOImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -72,7 +72,7 @@ public class MakeQuizServlet extends HttpServlet {
         q.setOptions(options);
         q.setUser(currentUser);
         
-        questionServiceImpl.createQuestion(q);
+        questionDAOImpl.save(q);
 
         request.setAttribute("question", q);
         request.setAttribute("message", "CREATE QUESTION SUCCESSFUL!");

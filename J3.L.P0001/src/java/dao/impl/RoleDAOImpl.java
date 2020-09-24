@@ -27,13 +27,11 @@ public class RoleDAOImpl implements RoleDAO {
     }
 
     @Override
-    public List<Role> find(int page, int limit) {
+    public List<Role> findAll() {
         List<Role> roles = new ArrayList<>();
         try {
-            String sql = "SELECT r.id, r.name FROM [Role] r ORDER BY r.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
+            String sql = "SELECT r.id, r.name FROM [Role] r";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
-            pstm.setInt(1, (page - 1) * limit);
-            pstm.setInt(2, limit);
 
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {

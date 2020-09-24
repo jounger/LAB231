@@ -5,7 +5,6 @@
  */
 package dao;
 
-import java.util.List;
 import model.User;
 
 /**
@@ -13,8 +12,6 @@ import model.User;
  * @author nguyenvanan
  */
 public interface UserDAO {
-
-    List<User> find(int page, int limit);
 
     User findById(int id);
 

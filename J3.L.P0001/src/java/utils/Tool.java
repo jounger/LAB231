@@ -21,4 +21,23 @@ public class Tool {
         }
         return false;
     }
+
+    public static boolean isNull(String s) {
+        if (s == null || s.length() == 0 || s.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    public static int toInteger(String s, int defaultValue) {
+        if (isNull(s)) {
+            return defaultValue;
+        } else {
+            try {
+                return Integer.parseInt(s);
+            } catch (NumberFormatException e) {
+                return defaultValue;
+            }
+        }
+    }
 }

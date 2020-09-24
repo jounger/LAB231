@@ -12,41 +12,41 @@ CREATE TABLE [User] (
 	username nvarchar(255),
 	password nvarchar(255),
 	email nvarchar(255),
-	role_id int UNIQUE FOREIGN KEY REFERENCES [Role](id)
+	role_id int FOREIGN KEY REFERENCES [Role](id)
 );
 
 CREATE TABLE Quiz (
 	id int IDENTITY(1,1) PRIMARY KEY,
 	quantity int,
 	date_started datetime,
-	[user_id] int UNIQUE FOREIGN KEY REFERENCES [User](id)
+	[user_id] int FOREIGN KEY REFERENCES [User](id)
 );
 
 CREATE TABLE Question (
 	id int IDENTITY(1,1) PRIMARY KEY,
 	content nvarchar(255),
 	date_created datetime,
-	[user_id] int UNIQUE FOREIGN KEY REFERENCES [User](id)
+	[user_id] int FOREIGN KEY REFERENCES [User](id)
 );
 
 CREATE TABLE [Option] (
 	id int IDENTITY(1,1) PRIMARY KEY,
 	content int,
 	is_correct bit,
-	question_id int UNIQUE FOREIGN KEY REFERENCES Question(id)
+	question_id int FOREIGN KEY REFERENCES Question(id)
 );
 
 CREATE TABLE Ask (
 	id int IDENTITY(1,1) PRIMARY KEY,
-	question_id int UNIQUE FOREIGN KEY REFERENCES Question(id),
+	question_id int FOREIGN KEY REFERENCES Question(id),
 	date_answered datetime,
-	quiz_id int UNIQUE FOREIGN KEY REFERENCES Quiz(id)
+	quiz_id int FOREIGN KEY REFERENCES Quiz(id)
 );
 
 CREATE TABLE Answer (
   id int IDENTITY(1,1) PRIMARY KEY,
-  option_id int UNIQUE FOREIGN KEY REFERENCES [Option](id),
-  ask_id int UNIQUE FOREIGN KEY REFERENCES Ask(id)
+  option_id int FOREIGN KEY REFERENCES [Option](id),
+  ask_id int FOREIGN KEY REFERENCES Ask(id)
 );
 
 INSERT INTO [Role] VALUES ('TEACHER'), ('STUDENT');

@@ -20,6 +20,9 @@ public class Quiz {
     private Date dateStarted;
     private User user;
 
+    private Date dateStop;
+    private double score;
+
     public Quiz() {
     }
 
@@ -61,6 +64,22 @@ public class Quiz {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Date getDateStop() {
+        return dateStop;
+    }
+
+    public void setDateStop(Date dateStop) {
+        this.dateStop = dateStop;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
     }
 
 }
