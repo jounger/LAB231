@@ -13,10 +13,9 @@
     </head>
     <body>
         <jsp:include page="../fragments/menu.jsp"></jsp:include>
-        <p>Your score ${quiz.score} (${quiz.score * 10}%) - ${quiz.score >= 4 ? 'Passed' : 'Failed'}</p>
-        <p>Take another test</p>
-        <form action="${pageContext.request.contextPath}/take-quiz">
-            <input type="submit" value="Start" />
+        <p>Your score ${quiz.id}: ${quiz.score * 10} (${quiz.score * 100}%) - ${quiz.score >= 0.4 ? 'Passed' : 'Failed'}</p>
+        <form method="GET" action="${pageContext.request.contextPath}/take-quiz">
+            Take another test <input type="submit" value="Start" />
         </form>
     </body>
 </html>

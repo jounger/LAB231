@@ -36,8 +36,8 @@ public class AskDAOImpl implements AskDAO {
     public List<Ask> findByQuiz(int page, int limit, int quiz_id) {
         List<Ask> asks = new ArrayList<>();
         try {
-            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM [Ask]) "
-                    + "SELECT * FROM Ordered WHERE quiz_id=? RowNumber BETWEEN ? AND ?;";
+            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM [Ask] WHERE quiz_id=?) "
+                    + "SELECT * FROM Ordered WHERE RowNumber BETWEEN ? AND ?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, quiz_id);
             pstm.setInt(2, (page - 1) * limit);
@@ -73,6 +73,7 @@ public class AskDAOImpl implements AskDAO {
             pstm.setInt(2, quiz_id);
             int executeUpdate = pstm.executeUpdate();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -84,6 +85,7 @@ public class AskDAOImpl implements AskDAO {
             pstm.setInt(1, ask.getId());
             int executeUpdate = pstm.executeUpdate();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

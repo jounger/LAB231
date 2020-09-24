@@ -43,8 +43,8 @@ public class Question {
         return options;
     }
 
-    public void setOptions(List<Option> answers) {
-        this.options = answers;
+    public void setOptions(List<Option> options) {
+        this.options = options;
     }
 
     public Date getDateCreated() {

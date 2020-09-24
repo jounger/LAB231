@@ -4,6 +4,7 @@
     Author     : nguyenvanan
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,6 +14,13 @@
     </head>
     <body>
         <jsp:include page="../fragments/menu.jsp"></jsp:include>
-        <h1>Home Page</h1>
+        <c:choose>
+            <c:when test="${not empty sessionScope.AUTH_USER.username}">
+                <p>Welcome ${sessionScope.AUTH_USER.username}</p>
+            </c:when>
+            <c:otherwise>
+                <p>You're not logged in</p>
+            </c:otherwise>
+        </c:choose>
     </body>
 </html>

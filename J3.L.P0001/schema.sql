@@ -31,7 +31,7 @@ CREATE TABLE Question (
 
 CREATE TABLE [Option] (
 	id int IDENTITY(1,1) PRIMARY KEY,
-	content int,
+	content nvarchar(255),
 	is_correct bit,
 	question_id int FOREIGN KEY REFERENCES Question(id)
 );

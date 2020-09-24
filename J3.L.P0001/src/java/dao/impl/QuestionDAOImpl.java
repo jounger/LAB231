@@ -35,8 +35,8 @@ public class QuestionDAOImpl implements QuestionDAO {
     public List<Question> findByUser(int page, int limit, int user_id) {
         List<Question> questions = new ArrayList<>();
         try {
-            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM [Question]) "
-                    + "SELECT * FROM Ordered WHERE user_id=? AND RowNumber BETWEEN ? AND ?;";
+            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM [Question] WHERE user_id=?) "
+                    + "SELECT * FROM Ordered WHERE RowNumber BETWEEN ? AND ?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, user_id);
             int pageRequest = ((page - 1) * limit) + 1;
@@ -68,7 +68,7 @@ public class QuestionDAOImpl implements QuestionDAO {
     public List<Question> findByRandom(int page, int limit) {
         List<Question> questions = new ArrayList<>();
         try {
-            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM [Question]) "
+            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY NEWID()) AS RowNumber FROM [Question]) "
                     + "SELECT * FROM Ordered WHERE RowNumber BETWEEN ? AND ?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             int pageRequest = ((page - 1) * limit) + 1;
@@ -97,11 +97,11 @@ public class QuestionDAOImpl implements QuestionDAO {
     }
 
     @Override
-    public Question findById(int role_id) {
+    public Question findById(int question_id) {
         try {
             String sql = "SELECT q.id, q.content, q.date_created, q.user_id FROM Question q WHERE q.id=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
-            pstm.setInt(1, role_id);
+            pstm.setInt(1, question_id);
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {
                 int id = rs.getInt("id");
@@ -132,13 +132,15 @@ public class QuestionDAOImpl implements QuestionDAO {
             pstm.setInt(2, question.getUser().getId());
             int executeUpdate = pstm.executeUpdate();
             ResultSet rs = pstm.getGeneratedKeys();
-            int questionId = rs.getInt(1);
-            // SAVE question's options
-            for (Option ans : question.getOptions()) {
-                optionDAOImpl.saveInQuestion(ans, questionId);
+            if (rs.next()) {
+                long id = rs.getLong(1);
+                // SAVE question's options
+                for (Option ans : question.getOptions()) {
+                    optionDAOImpl.saveInQuestion(ans, (int) id);
+                }
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 

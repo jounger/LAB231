@@ -27,16 +27,16 @@ public class OptionDAOImpl implements OptionDAO {
     }
 
     @Override
-    public void saveInQuestion(Option answer, int question_id) {
+    public void saveInQuestion(Option option, int question_id) {
         try {
             String sql = "INSERT INTO [Option](content, is_correct, question_id) VALUES(?,?,?)";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
-            pstm.setString(1, answer.getContent());
-            pstm.setBoolean(2, answer.isCorrect());
+            pstm.setString(1, option.getContent());
+            pstm.setBoolean(2, option.isCorrect());
             pstm.setInt(3, question_id);
             int executeUpdate = pstm.executeUpdate();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -57,6 +57,7 @@ public class OptionDAOImpl implements OptionDAO {
                 option.setId(id);
                 option.setContent(content);
                 option.setCorrect(correct);
+                options.add(option);
             }
         } catch (Exception e) {
         }

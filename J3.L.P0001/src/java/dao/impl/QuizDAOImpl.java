@@ -42,9 +42,9 @@ public class QuizDAOImpl implements QuizDAO {
                 int id = rs.getInt("id");
                 int quantity = rs.getInt("quantity");
                 Date dateStarted = rs.getDate("date_started");
-                Date dateStop = rs.getDate("date_stop");
+                Date dateStop = new Date(rs.getTimestamp("date_stop").getTime());
 
-                List<Ask> asks = askDAOImpl.findByQuiz(0, quantity, id);
+                List<Ask> asks = askDAOImpl.findByQuiz(1, quantity, id);
 
                 Quiz quiz = new Quiz();
                 quiz.setId(id);
@@ -63,7 +63,7 @@ public class QuizDAOImpl implements QuizDAO {
     public Quiz findCurrentQuiz() {
         try {
             String sql = "SELECT TOP (1) q.id, q.quantity, q.date_started, DATEADD(mi, q.quantity, q.date_started) AS date_stop FROM Quiz q WHERE "
-                    + "GETDATE() BETWEEN q.date_started AND DATEADD(mi, q.quantity, q.date_started);";
+                    + "GETDATE() BETWEEN q.date_started AND DATEADD(mi, q.quantity, q.date_started) ORDER BY q.date_started DESC;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
 
             ResultSet rs = pstm.executeQuery();
@@ -71,7 +71,7 @@ public class QuizDAOImpl implements QuizDAO {
                 int id = rs.getInt("id");
                 int quantity = rs.getInt("quantity");
                 Date dateStarted = rs.getDate("date_started");
-                Date dateStop = rs.getDate("date_stop");
+                Date dateStop = new Date(rs.getTimestamp("date_stop").getTime());
 
                 List<Ask> asks = askDAOImpl.findByQuiz(1, quantity, id);
 
@@ -97,9 +97,16 @@ public class QuizDAOImpl implements QuizDAO {
             pstm.setInt(2, quiz.getUser().getId());
             int executeUpdate = pstm.executeUpdate();
             ResultSet rs = pstm.getGeneratedKeys();
-            int id = rs.getInt(1);
-            return id;
+            if (rs.next()) {
+                long id = rs.getLong(1);
+                for (Ask ask : quiz.getAsks()) {
+                    askDAOImpl.saveInQuiz(ask, (int) id);
+                }
+                return (int) id;
+            }
+
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return -1;
     }

@@ -12,6 +12,7 @@ import dao.impl.OptionDAOImpl;
 import dao.impl.QuestionDAOImpl;
 import dao.impl.QuizDAOImpl;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,6 +58,9 @@ public class TakeQuizServlet extends HttpServlet {
         for (Answer ans : answers) {
             if (ans.getOption().isCorrect()) {
                 count++;
+            } else {
+                count = 0;
+                break;
             }
         }
         return count;
@@ -67,54 +71,65 @@ public class TakeQuizServlet extends HttpServlet {
             throws ServletException, IOException {
         String quizId = request.getParameter("quiz_id");
         Quiz currentQuiz;
-        if (Tool.isNull(quizId)) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        if (!Tool.isNull(quizId)) {
             currentQuiz = quizDAOImpl.findById(Integer.parseInt(quizId));
-            if (currentQuiz.getDateStop().after(new Date())) {
-                int score = 0;
-                for (Ask ask : currentQuiz.getAsks()) {
-                    int countAns = countCorrectAnswers(ask.getAnswers());
-                    int countOpt = countCorrectOptions(ask.getQuestion().getOptions());
-                    if (countAns == countOpt) {
-                        score++;
+            if (currentQuiz != null) {
+                if (currentQuiz.getDateStop().after(new Date(timestamp.getTime()))
+                        && currentQuiz.getAsks().get(currentQuiz.getAsks().size() - 1).getAnswers().isEmpty()) {
+                    for (Ask ask : currentQuiz.getAsks()) {
+                        // FIND an ask haven't answer yet
+                        if (ask.getAnswers().isEmpty()) {
+                            request.setAttribute("question", ask.getQuestion());
+                            break;
+                        }
                     }
+                    request.setAttribute("quiz", currentQuiz);
+                    this.getServletContext().getRequestDispatcher("/WEB-INF/views/quiz.jsp").forward(request, response);
+                    return;
+                } else {
+                    int score = 0;
+                    for (Ask ask : currentQuiz.getAsks()) {
+                        int countAns = countCorrectAnswers(ask.getAnswers());
+                        int countOpt = countCorrectOptions(ask.getQuestion().getOptions());
+                        if (countAns == countOpt) {
+                            score++;
+                        }
+                    }
+                    double finalScore = (double) score / (double) currentQuiz.getQuantity();
+                    currentQuiz.setScore(finalScore);
+                    request.setAttribute("quiz", currentQuiz);
+                    this.getServletContext().getRequestDispatcher("/WEB-INF/views/result-quiz.jsp").forward(request, response);
+                    return;
                 }
-                double finalScore = score / currentQuiz.getQuantity();
-                currentQuiz.setScore(finalScore);
-                request.setAttribute("quiz", currentQuiz);
-                this.getServletContext().getRequestDispatcher("/WEB-INF/views/result-quiz.jsp").forward(request, response);
-                return;
             }
         } else {
             currentQuiz = quizDAOImpl.findCurrentQuiz();
-        }
-        if (currentQuiz != null) {
-            for (Ask ask : currentQuiz.getAsks()) {
-                // FIND an ask haven't answer yet
-                if (ask.getAnswers().isEmpty()) {
-                    request.setAttribute("question", ask.getQuestion());
-                    break;
+            if (currentQuiz != null){
+                if(currentQuiz.getDateStop().after(new Date(timestamp.getTime()))
+                    && currentQuiz.getAsks().get(currentQuiz.getAsks().size() - 1).getAnswers().isEmpty()) {
+                response.sendRedirect(this.getServletContext().getContextPath() + "/take-quiz?quiz_id=" + currentQuiz.getId());
+                return;
                 }
             }
-            this.getServletContext().getRequestDispatcher("/WEB-INF/views/quiz.jsp").forward(request, response);
-        } else {
-            this.getServletContext().getRequestDispatcher("/WEB-INF/views/take-quiz.jsp").forward(request, response);
         }
+        this.getServletContext().getRequestDispatcher("/WEB-INF/views/take-quiz.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String quizId = request.getParameter("quiz_id");
-        Quiz currentQuiz;
-        if (Tool.isNull(quizId)) {
+        Quiz currentQuiz = null;
+        if (!Tool.isNull(quizId)) {
             currentQuiz = quizDAOImpl.findById(Integer.parseInt(quizId));
-            if (currentQuiz.getDateStop().after(new Date())) {
-                response.sendRedirect(this.getServletContext().getContextPath() + "/take-quiz?quiz_id=" + currentQuiz.getId());
-            }
-        } else {
-            currentQuiz = quizDAOImpl.findCurrentQuiz();
         }
         if (currentQuiz != null) {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            if (currentQuiz.getDateStop().before(new Date(timestamp.getTime()))) {
+                response.sendRedirect(this.getServletContext().getContextPath() + "/take-quiz?quiz_id=" + currentQuiz.getId());
+                return;
+            }
 //            for (Ask ask : currentQuiz.getAsks()) {
             for (int i = 0; i < currentQuiz.getAsks().size(); i++) {
                 Ask ask = currentQuiz.getAsks().get(i);
@@ -130,12 +145,10 @@ public class TakeQuizServlet extends HttpServlet {
                             askDAOImpl.update(ask); // UPDATE Answered time
                         }
                     }
-                    if (i == currentQuiz.getAsks().size() - 1) {
-                        response.sendRedirect(this.getServletContext().getContextPath() + "/take-quiz?quiz_id=" + currentQuiz.getId());
-                    }
                     break;
                 }
             }
+            response.sendRedirect(this.getServletContext().getContextPath() + "/take-quiz?quiz_id=" + currentQuiz.getId());
         } else {
             String quantity = request.getParameter("quantity");
             if (Tool.isNull(quantity) || Tool.toInteger(quantity, 0) < 1) {
@@ -160,8 +173,9 @@ public class TakeQuizServlet extends HttpServlet {
                 int savedQuizId = quizDAOImpl.save(quiz);
                 if (savedQuizId != -1) {
                     response.sendRedirect(this.getServletContext().getContextPath() + "/take-quiz?quiz_id=" + savedQuizId);
+                    return;
                 }
-                this.getServletContext().getRequestDispatcher("/WEB-INF/views/quiz.jsp").forward(request, response);
+                this.getServletContext().getRequestDispatcher("/WEB-INF/views/take-quiz.jsp").forward(request, response);
             }
         }
     }
