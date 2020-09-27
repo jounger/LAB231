@@ -33,7 +33,7 @@ public class ManageQuizServlet extends HttpServlet {
         String limit = request.getParameter("limit");
 
         int pageReq = page == null ? 1 : Integer.parseInt(page);
-        int limitReq = limit == null ? 10 : Integer.parseInt(limit);
+        int limitReq = limit == null ? 5 : Integer.parseInt(limit);
 
         User user = SecurityStore.getAuth(request.getSession());
         List<Question> questions = questionDAOImpl.findByUser(pageReq, limitReq, user.getId());
