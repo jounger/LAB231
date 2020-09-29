@@ -11,16 +11,19 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home Page</title>
+        <style><%@include file="/static/css/main.css"%></style>
     </head>
     <body>
-        <jsp:include page="../fragments/menu.jsp"></jsp:include>
-        <c:choose>
-            <c:when test="${not empty sessionScope.AUTH_USER.username}">
-                <p>Welcome ${sessionScope.AUTH_USER.username}</p>
-            </c:when>
-            <c:otherwise>
-                <p>You're not logged in</p>
-            </c:otherwise>
-        </c:choose>
+        <div class="main">
+            <jsp:include page="../fragments/menu.jsp"></jsp:include>
+            <c:choose>
+                <c:when test="${not empty sessionScope.AUTH_USER.username}">
+                    <p>Welcome ${sessionScope.AUTH_USER.username}</p>
+                </c:when>
+                <c:otherwise>
+                    <p>You're not logged in</p>
+                </c:otherwise>
+            </c:choose>
+        </div>
     </body>
 </html>

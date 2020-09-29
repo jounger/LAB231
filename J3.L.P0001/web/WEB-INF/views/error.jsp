@@ -10,9 +10,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Error Page</title>
+        <style><%@include file="/static/css/main.css"%></style>
     </head>
     <body>
-        <jsp:include page="../fragments/menu.jsp"></jsp:include>
-        <p>${title}</p>
+        <div class="main">
+            <jsp:include page="../fragments/menu.jsp"></jsp:include>
+            <p>${title}</p>
+        </div>
     </body>
 </html>

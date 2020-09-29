@@ -10,14 +10,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Take Quiz Page</title>
+        <style><%@include file="/static/css/main.css"%></style>
     </head>
     <body>
-        <jsp:include page="../fragments/menu.jsp"></jsp:include>
-        <p>Welcome ${sessionScope.AUTH_USER.username}</p>
-        <p>Enter number of questions:</p>
-        <form method="POST" action="${pageContext.request.contextPath}/take-quiz">
-            <input type="number" name="quantity" value="${quiz.quantity}" /> ${ERROR_MESSAGE}
-            <button type="submit" name="submit">Start</button>
-        </form>
+        <div class="main">
+            <jsp:include page="../fragments/menu.jsp"></jsp:include>
+            <p>Welcome ${sessionScope.AUTH_USER.username}</p>
+            <p>Enter number of questions:</p>
+            <form method="POST" action="${pageContext.request.contextPath}/take-quiz">
+                <input type="number" name="quantity" value="${quiz.quantity}" /> ${ERROR_MESSAGE}
+                <button type="submit" name="submit">Start</button>
+            </form>
+        </div>
     </body>
 </html>

@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Router {
 
-    public static final List<String> NOT_AUTH = Arrays.asList("/home", "/login", "/logout", "/registration", "/error");
+    public static final List<String> NOT_AUTH = Arrays.asList("/static/", "/home", "/login", "/logout", "/registration", "/error");
     public static final List<String> TEACHER = Arrays.asList("/quiz", "/take-quiz", "/result-quiz", "/make-quiz", "/manage-quiz");
     public static final List<String> STUDENT = Arrays.asList("/quiz", "/take-quiz", "/result-quiz");
 }

@@ -1,0 +1,44 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Sep 21, 2020, 9:42:18 PM
+    Author     : nguyenvanan
+*/
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+body {
+    background-image: url("${pageContext.request.contextPath}/static/images/bg.jpg")
+}
+
+.main {
+    max-width: 620px;
+    min-height: 300px;
+    background: #fff;
+    margin: auto;
+    padding: 15px;
+    border-radius: 20px 20px 0 0;
+}
+
+.menu {
+    height: 35px;
+    background-image: url("${pageContext.request.contextPath}/static/images/menu_bg.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: space-around;
+}
+
+.menu a {
+    text-decoration: none;
+    padding: 7px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: sans-serif;
+    color: #712525;
+}

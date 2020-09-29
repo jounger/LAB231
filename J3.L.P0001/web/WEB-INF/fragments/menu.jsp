@@ -4,7 +4,7 @@
     Author     : nguyenvanan
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div>
+<div class="menu">
     <a href="${pageContext.request.contextPath}/home">Home</a>
     <a href="${pageContext.request.contextPath}/take-quiz">Take Quiz</a>
     <a href="${pageContext.request.contextPath}/make-quiz">Make Quiz</a>

@@ -10,33 +10,36 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login Page</title>
+        <style><%@include file="/static/css/main.css"%></style>
     </head>
     <body>
-        <jsp:include page="../fragments/menu.jsp"></jsp:include>
-            <h1>Login Form</h1>
-            <form method="POST" action="${pageContext.request.contextPath}/login">
-            <table border="0">
-                <tr>
-                    <td>Username:</td>
-                    <td>
-                        <input type="text" name="username" value="${user.username}" />
-                <c:if test="${not empty errorMessage}">
-                    <c:out value="${errorMessage}"/>
-                </c:if>
-                </td>
-                </tr>
-                <tr>
-                    <td>Password:</td>
-                    <td><input type="password" name="password" value="${user.password}" /></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <button type="submit" name="submit">Login</button>
-                        <a href="${pageContext.request.contextPath}/registration">Register</a>
+        <div class="main">
+            <jsp:include page="../fragments/menu.jsp"></jsp:include>
+                <h1>Login Form</h1>
+                <form method="POST" action="${pageContext.request.contextPath}/login">
+                <table border="0">
+                    <tr>
+                        <td>Username:</td>
+                        <td>
+                            <input type="text" name="username" value="${user.username}" />
+                    <c:if test="${not empty errorMessage}">
+                        <c:out value="${errorMessage}"/>
+                    </c:if>
                     </td>
-                </tr>
-            </table>
-        </form>
+                    </tr>
+                    <tr>
+                        <td>Password:</td>
+                        <td><input type="password" name="password" value="${user.password}" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <button type="submit" name="submit">Login</button>
+                            <a href="${pageContext.request.contextPath}/registration">Register</a>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </body>
 </html>
