@@ -5,6 +5,7 @@
  */
 package controller;
 
+import common.Constant;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +18,7 @@ import model.Role;
 import model.User;
 import dao.impl.RoleDAOImpl;
 import dao.impl.UserDAOImpl;
+import utils.Tool;
 
 /**
  *
@@ -45,19 +47,25 @@ public class RegistrationServlet extends HttpServlet {
         String email = request.getParameter("email");
         String role_id = request.getParameter("role_id");
 
-        Role role = rolesDAOImpl.findById(Integer.parseInt(role_id));
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setRoles(Arrays.asList(role));
-        user.setEmail(email);
+        if (!Tool.isNull(username, password, email, role_id)) {
 
-        usersDAOImpl.save(user);
+            Role role = rolesDAOImpl.findById(Integer.parseInt(role_id));
+            User user = new User();
+            user.setUsername(username);
+            user.setPassword(password);
+            user.setRoles(Arrays.asList(role));
+            user.setEmail(email);
 
-        request.setAttribute("user", user);
+            usersDAOImpl.save(user);
 
-        List<Role> roles = rolesDAOImpl.findAll();
-        request.setAttribute("roles", roles);
+            request.setAttribute("user", user);
+
+            List<Role> roles = rolesDAOImpl.findAll();
+            request.setAttribute("roles", roles);
+            request.setAttribute(Constant.SUCCESS_MESSAGE_ATTR, "Successful register new account");
+        } else {
+            request.setAttribute(Constant.ERROR_MESSAGE_ATTR, "You must fulfill all the field");
+        }
 
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
     }

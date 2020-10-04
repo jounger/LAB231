@@ -10,11 +10,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import model.Ask;
 import model.Quiz;
 import utils.DBConnection;
+import utils.Tool;
 
 /**
  *
@@ -42,7 +44,7 @@ public class QuizDAOImpl implements QuizDAO {
                 int id = rs.getInt("id");
                 int quantity = rs.getInt("quantity");
                 Date dateStarted = rs.getDate("date_started");
-                Date dateStop = new Date(rs.getTimestamp("date_stop").getTime());
+                LocalDateTime dateStop = Tool.convertToLocalDatetimeViaTimestamp(rs.getTimestamp("date_stop"));
 
                 List<Ask> asks = askDAOImpl.findByQuiz(1, quantity, id);
 
@@ -71,7 +73,7 @@ public class QuizDAOImpl implements QuizDAO {
                 int id = rs.getInt("id");
                 int quantity = rs.getInt("quantity");
                 Date dateStarted = rs.getDate("date_started");
-                Date dateStop = new Date(rs.getTimestamp("date_stop").getTime());
+                LocalDateTime dateStop = Tool.convertToLocalDatetimeViaTimestamp(rs.getTimestamp("date_stop"));
 
                 List<Ask> asks = askDAOImpl.findByQuiz(1, quantity, id);
 

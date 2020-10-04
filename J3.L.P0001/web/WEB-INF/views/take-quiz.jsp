@@ -11,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Take Quiz Page</title>
         <style><%@include file="/static/css/main.css"%></style>
+        <script><%@include file="/static/script/main.js"%></script>
     </head>
     <body>
         <div class="main">
@@ -18,7 +19,7 @@
             <p>Welcome ${sessionScope.AUTH_USER.username}</p>
             <p>Enter number of questions:</p>
             <form method="POST" action="${pageContext.request.contextPath}/take-quiz">
-                <input type="number" name="quantity" value="${quiz.quantity}" /> ${ERROR_MESSAGE}
+                <input type="number" name="quantity" value="${quiz.quantity}" />
                 <button type="submit" name="submit">Start</button>
             </form>
         </div>

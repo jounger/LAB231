@@ -12,9 +12,8 @@ import dao.impl.OptionDAOImpl;
 import dao.impl.QuestionDAOImpl;
 import dao.impl.QuizDAOImpl;
 import java.io.IOException;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -71,10 +70,10 @@ public class TakeQuizServlet extends HttpServlet {
             throws ServletException, IOException {
         String quizId = request.getParameter("quiz_id");
         if (!Tool.isNull(quizId)) {
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            LocalDateTime now = LocalDateTime.now();
             Quiz currentQuiz = quizDAOImpl.findById(Integer.parseInt(quizId));
             if (currentQuiz != null) {
-                if (currentQuiz.getDateStop().after(new Date(timestamp.getTime()))
+                if (currentQuiz.getDateStop().isAfter(now)
                         && currentQuiz.getAsks().get(currentQuiz.getAsks().size() - 1).getAnswers().isEmpty()) {
                     for (Ask ask : currentQuiz.getAsks()) {
                         // FIND an ask haven't answer yet
@@ -112,9 +111,9 @@ public class TakeQuizServlet extends HttpServlet {
         String quizId = request.getParameter("quiz_id");
         String quantity = request.getParameter("quantity");
         if (!Tool.isNull(quizId)) {
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            LocalDateTime now = LocalDateTime.now();
             Quiz currentQuiz = quizDAOImpl.findById(Integer.parseInt(quizId));
-            if (currentQuiz != null && currentQuiz.getDateStop().after(new Date(timestamp.getTime()))) {
+            if (currentQuiz != null && currentQuiz.getDateStop().plusSeconds(10).isAfter(now)) {
                 for (int i = 0; i < currentQuiz.getAsks().size(); i++) {
                     Ask ask = currentQuiz.getAsks().get(i);
                     // FIND an ask haven't answer yet

@@ -5,6 +5,7 @@
  */
 package controller;
 
+import common.Constant;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import model.Question;
 import model.User;
 import dao.impl.QuestionDAOImpl;
 import utils.SecurityStore;
+import utils.Tool;
 
 /**
  *
@@ -25,7 +27,7 @@ import utils.SecurityStore;
  */
 @WebServlet(name = "MakeQuizServlet", urlPatterns = {"/make-quiz"})
 public class MakeQuizServlet extends HttpServlet {
-    
+
     private final QuestionDAOImpl questionDAOImpl = new QuestionDAOImpl();
 
     @Override
@@ -46,36 +48,52 @@ public class MakeQuizServlet extends HttpServlet {
 
         User currentUser = SecurityStore.getAuth(request.getSession());
         List<Option> options = new ArrayList<>();
+        Question q = new Question();
+
         Option opt1 = new Option();
-        opt1.setContent(option1);
-
         Option opt2 = new Option();
-        opt2.setContent(option2);
-
         Option opt3 = new Option();
-        opt3.setContent(option3);
-
         Option opt4 = new Option();
-        opt4.setContent(option4);
-        // Add to answers list
-        options.add(opt1);
-        options.add(opt2);
-        options.add(opt3);
-        options.add(opt4);
 
-        for (String ans : answers) {
-            options.get(Integer.parseInt(ans)).setCorrect(true);
+        if (!Tool.isNull(question)) {
+            q.setContent(question);
         }
 
-        Question q = new Question();
-        q.setContent(question);
+        if (!Tool.isNull(option1)) {
+            opt1.setContent(option1);
+            options.add(opt1);
+        }
+        if (!Tool.isNull(option2)) {
+            opt2.setContent(option2);
+            options.add(opt2);
+        }
+        if (!Tool.isNull(option3)) {
+            opt3.setContent(option3);
+            options.add(opt3);
+        }
+        if (!Tool.isNull(option4)) {
+            opt4.setContent(option4);
+            options.add(opt4);
+        }
+        if (!Tool.isNull(answers)) {
+            for (String ans : answers) {
+                options.get(Integer.parseInt(ans)).setCorrect(true);
+            }
+        }
+
         q.setOptions(options);
         q.setUser(currentUser);
-        
-        questionDAOImpl.save(q);
 
         request.setAttribute("question", q);
-        request.setAttribute("message", "CREATE QUESTION SUCCESSFUL!");
+
+        if (Tool.isNull(question, option1, option2, option3, option4)) {
+            request.setAttribute(Constant.ERROR_MESSAGE_ATTR, "You must fulfill question & options");
+        } else if (Tool.isNull(answers)) {
+            request.setAttribute(Constant.ERROR_MESSAGE_ATTR, "You must check at least one answer");
+        } else {
+            questionDAOImpl.save(q);
+            request.setAttribute(Constant.SUCCESS_MESSAGE_ATTR, "CREATE QUESTION SUCCESSFUL!");
+        }
 
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/make-quiz.jsp").forward(request, response);
     }

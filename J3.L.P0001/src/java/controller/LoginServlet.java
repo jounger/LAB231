@@ -5,6 +5,7 @@
  */
 package controller;
 
+import common.Constant;
 import dao.impl.UserDAOImpl;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.User;
 import utils.SecurityStore;
+import utils.Tool;
 
 /**
  *
@@ -35,15 +37,19 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        if (username != null && password != null) {
+        if (!Tool.isNull(username, password)) {
             User user = userDAOImpl.findByUsername(username);
             if (user != null && user.getPassword().equals(password)) {
                 System.out.println("Login Success");
                 SecurityStore.saveAuth(request.getSession(), user);
-                request.setAttribute("user", user);
+                
+                response.sendRedirect(this.getServletContext().getContextPath() + "/home");
+                return;
             } else {
-                System.out.println("Login Fail");
+                request.setAttribute(Constant.ERROR_MESSAGE_ATTR, "Username or password is not correct");
             }
+        } else {
+            request.setAttribute(Constant.ERROR_MESSAGE_ATTR, "You must fulfill all the field");
         }
 
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);

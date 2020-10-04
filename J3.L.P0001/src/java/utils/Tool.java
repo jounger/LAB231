@@ -5,6 +5,10 @@
  */
 package utils;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +33,18 @@ public class Tool {
         return false;
     }
 
+    public static boolean isNull(String... arr) {
+        if (arr == null) {
+            return true;
+        }
+        for (String s : arr) {
+            if (s == null || s.length() == 0 || s.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static int toInteger(String s, int defaultValue) {
         if (isNull(s)) {
             return defaultValue;
@@ -39,5 +55,13 @@ public class Tool {
                 return defaultValue;
             }
         }
+    }
+
+    public static LocalDateTime convertToLocalDatetimeViaInstant(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
+
+    public static LocalDateTime convertToLocalDatetimeViaTimestamp(Timestamp timestamp) {
+        return timestamp.toLocalDateTime();
     }
 }

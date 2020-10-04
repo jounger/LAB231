@@ -12,4 +12,5 @@ package common;
 public class Constant {
     public static final String AUTH_USER_ATTR = "AUTH_USER";
     public static final String ERROR_MESSAGE_ATTR = "ERROR_MESSAGE";
+    public static final String SUCCESS_MESSAGE_ATTR = "SUCCESS_MESSAGE";
 }

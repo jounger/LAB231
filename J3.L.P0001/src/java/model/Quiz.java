@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class Quiz {
     private Date dateStarted;
     private User user;
 
-    private Date dateStop;
+    private LocalDateTime dateStop;
     private double score;
 
     public Quiz() {
@@ -66,11 +67,11 @@ public class Quiz {
         this.user = user;
     }
 
-    public Date getDateStop() {
+    public LocalDateTime getDateStop() {
         return dateStop;
     }
 
-    public void setDateStop(Date dateStop) {
+    public void setDateStop(LocalDateTime dateStop) {
         this.dateStop = dateStop;
     }
 

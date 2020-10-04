@@ -11,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login Page</title>
         <style><%@include file="/static/css/main.css"%></style>
+        <script><%@include file="/static/script/main.js"%></script>
     </head>
     <body>
         <div class="main">
@@ -20,12 +21,7 @@
                 <table border="0">
                     <tr>
                         <td>Username:</td>
-                        <td>
-                            <input type="text" name="username" value="${user.username}" />
-                    <c:if test="${not empty errorMessage}">
-                        <c:out value="${errorMessage}"/>
-                    </c:if>
-                    </td>
+                        <td><input type="text" name="username" value="${user.username}" /></td>
                     </tr>
                     <tr>
                         <td>Password:</td>

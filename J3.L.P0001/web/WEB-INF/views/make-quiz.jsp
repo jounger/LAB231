@@ -11,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Make Quiz Page</title>
         <style><%@include file="/static/css/main.css"%></style>
+        <script><%@include file="/static/script/main.js"%></script>
     </head>
     <body>
         <div class="main">
