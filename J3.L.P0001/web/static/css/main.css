@@ -13,16 +13,20 @@ and open the template in the editor.
 }
 
 body {
-    background-image: url("${pageContext.request.contextPath}/static/images/bg.jpg")
+    background-image: url("${pageContext.request.contextPath}/static/images/bg.jpg");
+    font-family: sans-serif;
 }
 
 .main {
-    max-width: 620px;
+    max-width: 550px;
     min-height: 300px;
     background: #fff;
     margin: auto;
     padding: 15px;
-    border-radius: 20px 20px 0 0;
+    background-image: url("${pageContext.request.contextPath}/static/images/top_box.gif");
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius: 15px 15px 0 0;
 }
 
 .menu {
@@ -31,14 +35,35 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 .menu a {
-    text-decoration: none;
     padding: 7px;
     font-size: 16px;
     font-weight: 600;
-    font-family: sans-serif;
     color: #712525;
+}
+
+a {
+    text-decoration: none;
+}
+
+.content {
+    margin-top: 40px;
+    padding: 0px 20px;
+}
+
+.title {
+    color: blue;
+}
+
+.highlight {
+    color: blue;
+    font-weight: bold;
+}
+
+.notice {
+    color: red;
+    font-weight: bold;
 }

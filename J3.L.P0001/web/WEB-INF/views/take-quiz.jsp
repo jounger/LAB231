@@ -15,13 +15,28 @@
     </head>
     <body>
         <div class="main">
-            <jsp:include page="../fragments/menu.jsp"></jsp:include>
-            <p>Welcome ${sessionScope.AUTH_USER.username}</p>
-            <p>Enter number of questions:</p>
-            <form method="POST" action="${pageContext.request.contextPath}/take-quiz">
-                <input type="number" name="quantity" value="${quiz.quantity}" />
-                <button type="submit" name="submit">Start</button>
-            </form>
+            <jsp:include page="../fragments/menu.jsp" />
+            <div class="content">
+                <p>Welcome <label class="highlight">${sessionScope.AUTH_USER.username}</label></p>
+                <form method="POST" action="${pageContext.request.contextPath}/take-quiz">
+                    <table border="0">
+                        <tbody>
+                            <tr>
+                                <td>Enter number of questions:</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><input type="number" name="quantity" value="${quiz.quantity}" /></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button type="submit" name="submit">Start</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
         </div>
     </body>
 </html>

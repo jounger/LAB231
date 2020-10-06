@@ -9,8 +9,5 @@
     <a href="${pageContext.request.contextPath}/take-quiz">Take Quiz</a>
     <a href="${pageContext.request.contextPath}/make-quiz">Make Quiz</a>
     <a href="${pageContext.request.contextPath}/manage-quiz">Manage Quiz</a>
-    <c:if test="${not empty sessionScope.AUTH_USER.username}">
-        <a href="${pageContext.request.contextPath}/logout">Logout</a> | 
-        <a>User: ${sessionScope.AUTH_USER.username}</a>
-    </c:if>
+    <a href="${pageContext.request.contextPath}/logout" style="opacity: ${sessionScope.AUTH_USER.username == null ? 0 : 1};">Logout</a> 
 </div>

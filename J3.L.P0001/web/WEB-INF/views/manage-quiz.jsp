@@ -13,51 +13,55 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Manage Quiz Page</title>
         <style><%@include file="/static/css/main.css"%></style>
+        <style><%@include file="/static/css/manage-quiz.css"%></style>
     </head>
     <body>
         <div class="main">
-            <jsp:include page="../fragments/menu.jsp"></jsp:include>
-            <p>Number of questions: ${totalElement}</p>
-            <form method="GET" action="${pageContext.request.contextPath}/manage-quiz">
+            <jsp:include page="../fragments/menu.jsp" />
+            <div class="content">
+                <p>Number of questions: <label class="highlight">${totalElements}</label></p>
+                <form method="GET" action="${pageContext.request.contextPath}/manage-quiz">
 
-                <table border="0">
-                    <thead>
-                        <tr>
-                            <th>Question</th>
-                            <th>Date Created</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                    <table border="0">
+                        <thead>
+                            <tr class="highlight">
+                                <th>Question</th>
+                                <th>Date Created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                        <c:if test="${not empty questions}">
-                            <c:forEach items="${questions}" var="item">
-                                <tr>
-                                    <td>${item.content}</td>
-                                    <td>
-                                        <fmt:setLocale value="en_US" />
-                                        <fmt:formatDate value="${item.dateCreated}" pattern="dd-MMM-yyyy" />
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </c:if>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td>
-                                <select name="limit" onchange="this.form.submit()">
-                                    <option value="2">2</option>
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="submit" name="page" value="1" />
-                                <input type="submit" name="page" value="2" />
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </form>
+                            <c:if test="${not empty questions}">
+                                <c:forEach items="${questions}" var="item">
+                                    <tr>
+                                        <td>${item.content}</td>
+                                        <td>
+                                            <fmt:setLocale value="en_US" />
+                                            <fmt:formatDate value="${item.dateCreated}" pattern="dd-MMM-yyyy" />
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:if>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>
+                                    <select name="limit" onchange="this.form.submit()">
+                                        <c:forEach items="${[2, 5, 10]}" var="item">
+                                            <option value="${item}" ${limit == item ? 'selected' : ''}>${item} items</option>
+                                        </c:forEach>
+                                    </select>
+                                </td>
+                                <td>
+                                    <c:forEach begin="1" end="${totalPages}" var="item">
+                                        <input type="submit" name="page" value="${item}" />
+                                    </c:forEach>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </form>
+            </div>
         </div>
     </body>
 </html>

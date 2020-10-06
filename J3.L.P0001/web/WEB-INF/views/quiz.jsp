@@ -15,19 +15,21 @@
     </head>
     <body>
         <div class="main">
-            <jsp:include page="../fragments/menu.jsp"></jsp:include>
-            <p>Welcome ${sessionScope.AUTH_USER.username}</p>
-            <p>Time remaining: <span style="color:red" id="timer">00:00</span></p>
-            <form method="POST" action="${pageContext.request.contextPath}/take-quiz?quiz_id=${quiz.id}">
-                <h5>${question.content}</h5>
-                <input type="checkbox" name="answers" value="${question.options[0].id}" /> ${question.options[0].content} <br>
-                <input type="checkbox" name="answers" value="${question.options[1].id}" /> ${question.options[1].content} <br>
-                <input type="checkbox" name="answers" value="${question.options[2].id}" /> ${question.options[2].content} <br>
-                <input type="checkbox" name="answers" value="${question.options[3].id}" /> ${question.options[3].content} <br>
+            <jsp:include page="../fragments/menu.jsp" />
+            <div class="content">
+                <p>Welcome <label class="highlight">${sessionScope.AUTH_USER.username}</label></p>
+                <p>Time remaining: <span class="notice" id="timer">00:00</span></p>
+                <form method="POST" action="${pageContext.request.contextPath}/take-quiz?quiz_id=${quiz.id}">
+                    <p>${question.content}</p>
+                    <input type="checkbox" name="answers" value="${question.options[0].id}" /> ${question.options[0].content} <br>
+                    <input type="checkbox" name="answers" value="${question.options[1].id}" /> ${question.options[1].content} <br>
+                    <input type="checkbox" name="answers" value="${question.options[2].id}" /> ${question.options[2].content} <br>
+                    <input type="checkbox" name="answers" value="${question.options[3].id}" /> ${question.options[3].content} <br>
 
-                <button type="submit" name="submit" id="submit">Next</button>
-            </form>
+                    <button type="submit" name="submit" id="submit">Next</button>
+                </form>
+            </div>
         </div>
     </body>
-        <script><%@include file="/static/script/quiz.js"%></script>
+    <script><%@include file="/static/script/quiz.js"%></script>
 </html>

@@ -21,4 +21,6 @@ public interface QuestionDAO {
     Question findById(int id);
     
     void save(Question question);
+    
+    int countByUser(int user_id);
 }

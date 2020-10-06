@@ -14,8 +14,10 @@
     </head>
     <body>
         <div class="main">
-            <jsp:include page="../fragments/menu.jsp"></jsp:include>
-            <p>${title}</p>
+            <jsp:include page="../fragments/menu.jsp" />
+            <div class="content">
+                <p>${title}</p>
+            </div>
         </div>
     </body>
 </html>

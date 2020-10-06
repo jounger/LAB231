@@ -37,7 +37,15 @@ public class ManageQuizServlet extends HttpServlet {
 
         User user = SecurityStore.getAuth(request.getSession());
         List<Question> questions = questionDAOImpl.findByUser(pageReq, limitReq, user.getId());
-        System.out.println("Length " + questions.size());
+        
+        int totalElements = questionDAOImpl.countByUser(user.getId());
+        
+        int totalPages = (int) Math.ceil((double) totalElements / (double)limitReq);
+
+        request.setAttribute("totalElements", totalElements);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("page", pageReq);
+        request.setAttribute("limit", limitReq);
         request.setAttribute("questions", questions);
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/manage-quiz.jsp").forward(request, response);
     }

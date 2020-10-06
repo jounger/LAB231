@@ -23,18 +23,15 @@ import utils.DBConnection;
  */
 public class QuestionDAOImpl implements QuestionDAO {
 
-    private final Connection conn;
+    private Connection conn;
 
     private final OptionDAOImpl optionDAOImpl = new OptionDAOImpl();
-
-    public QuestionDAOImpl() {
-        this.conn = DBConnection.getConnection();
-    }
 
     @Override
     public List<Question> findByUser(int page, int limit, int user_id) {
         List<Question> questions = new ArrayList<>();
         try {
+            this.conn = DBConnection.getConnection();
             String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM [Question] WHERE user_id=?) "
                     + "SELECT * FROM Ordered WHERE RowNumber BETWEEN ? AND ?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
@@ -60,6 +57,8 @@ public class QuestionDAOImpl implements QuestionDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
         return questions;
     }
@@ -68,6 +67,7 @@ public class QuestionDAOImpl implements QuestionDAO {
     public List<Question> findByRandom(int page, int limit) {
         List<Question> questions = new ArrayList<>();
         try {
+            this.conn = DBConnection.getConnection();
             String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY NEWID()) AS RowNumber FROM [Question]) "
                     + "SELECT * FROM Ordered WHERE RowNumber BETWEEN ? AND ?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
@@ -91,7 +91,9 @@ public class QuestionDAOImpl implements QuestionDAO {
                 questions.add(question);
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
         return questions;
     }
@@ -99,6 +101,7 @@ public class QuestionDAOImpl implements QuestionDAO {
     @Override
     public Question findById(int question_id) {
         try {
+            this.conn = DBConnection.getConnection();
             String sql = "SELECT q.id, q.content, q.date_created, q.user_id FROM Question q WHERE q.id=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, question_id);
@@ -118,7 +121,9 @@ public class QuestionDAOImpl implements QuestionDAO {
                 return question;
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
         return null;
     }
@@ -126,6 +131,7 @@ public class QuestionDAOImpl implements QuestionDAO {
     @Override
     public void save(Question question) {
         try {
+            this.conn = DBConnection.getConnection();
             String sql = "INSERT INTO Question(content, date_created, user_id) VALUES(?,GETDATE(),?)";
             PreparedStatement pstm = this.conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setString(1, question.getContent());
@@ -141,7 +147,29 @@ public class QuestionDAOImpl implements QuestionDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
+    }
+
+    @Override
+    public int countByUser(int user_id) {
+        try {
+            this.conn = DBConnection.getConnection();
+            String sql = "SELECT count(q.id) as total_count FROM Question q WHERE q.user_id=?;";
+            PreparedStatement pstm = this.conn.prepareStatement(sql);
+            pstm.setInt(1, user_id);
+            ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                int total = rs.getInt("total_count");
+                return total;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
+        }
+        return 0;
     }
 
 }

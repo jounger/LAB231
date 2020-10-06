@@ -19,39 +19,41 @@
     <body>
         <div class="main">
             <jsp:include page="../fragments/menu.jsp" />
-            <h1>Registration Form</h1>
-            <form method="POST" action="${pageContext.request.contextPath}/registration">
-                <table border="0">
-                    <tr>
-                        <td>Username:</td>
-                        <td><input type="text" name="username" value="${user.username}" /></td>
-                    </tr>
-                    <tr>
-                        <td>Password:</td>
-                        <td><input type="password" name="password" value="${user.password}" /></td>
-                    </tr>
-                    <tr>
-                        <td>User Type:</td>
-                        <td style="width: 100px">
-                            <select name="role_id" class="capitalize">
-                                <c:if test="${not empty roles}">
-                                    <c:forEach items="${roles}" var="item">
-                                        <option value="${item.id}" ${user.roles[0].id == item.id ? 'selected' : ''}>${fn:toLowerCase(item.name)}</option>
-                                    </c:forEach>
-                                </c:if>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Email:</td>
-                        <td><input type="email" name="email" value="${user.email}" /></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><button type="submit" name="submit">Register</button></td>
-                    </tr>
-                </table>
-            </form>
+            <div class="content">
+                <h3 class="title">Registration Form</h3>
+                <form method="POST" action="${pageContext.request.contextPath}/registration">
+                    <table border="0">
+                        <tr>
+                            <td>User Name:</td>
+                            <td><input type="text" name="username" value="${user.username}" /></td>
+                        </tr>
+                        <tr>
+                            <td>Password:</td>
+                            <td><input type="password" name="password" value="${user.password}" /></td>
+                        </tr>
+                        <tr>
+                            <td>User Type:</td>
+                            <td style="width: 100px">
+                                <select name="role_id" class="capitalize">
+                                    <c:if test="${not empty roles}">
+                                        <c:forEach items="${roles}" var="item">
+                                            <option value="${item.id}" ${user.roles[0].id == item.id ? 'selected' : ''}>${fn:toLowerCase(item.name)}</option>
+                                        </c:forEach>
+                                    </c:if>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td><input type="email" name="email" value="${user.email}" /></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><button type="submit" name="submit">Register</button></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
         </div>
     </body>
 </html>

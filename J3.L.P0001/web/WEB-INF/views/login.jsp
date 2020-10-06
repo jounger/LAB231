@@ -15,27 +15,29 @@
     </head>
     <body>
         <div class="main">
-            <jsp:include page="../fragments/menu.jsp"></jsp:include>
-                <h1>Login Form</h1>
+            <jsp:include page="../fragments/menu.jsp" />
+            <div class="content">
+                <h3 class="title">Login Form</h3>
                 <form method="POST" action="${pageContext.request.contextPath}/login">
-                <table border="0">
-                    <tr>
-                        <td>Username:</td>
-                        <td><input type="text" name="username" value="${user.username}" /></td>
-                    </tr>
-                    <tr>
-                        <td>Password:</td>
-                        <td><input type="password" name="password" value="${user.password}" /></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <button type="submit" name="submit">Login</button>
-                            <a href="${pageContext.request.contextPath}/registration">Register</a>
-                        </td>
-                    </tr>
-                </table>
-            </form>
+                    <table border="0">
+                        <tr>
+                            <td>User Name:</td>
+                            <td><input type="text" name="username" value="${user.username}" /></td>
+                        </tr>
+                        <tr>
+                            <td>Password:</td>
+                            <td><input type="password" name="password" value="${user.password}" /></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <button type="submit" name="submit">Sign in</button>
+                                <a href="${pageContext.request.contextPath}/registration">Register</a>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
         </div>
     </body>
 </html>
