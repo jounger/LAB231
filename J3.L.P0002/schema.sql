@@ -12,7 +12,7 @@ CREATE TABLE [User] (
   phone nvarchar(10),
   sex int,
   age int,
-  card_number int
+  card_number nvarchar(255)
 );
 
 
@@ -33,6 +33,6 @@ CREATE TABLE Booking (
   [user_id] int FOREIGN KEY REFERENCES [User](id)
 );
 
-INSERT INTO [Flight] ([from], [to], departure_time, flight_detail, price) VALUES('HN', 'HCM', '2020-09-24 19:52:06.910', 1.5, 113);
+INSERT INTO [Flight] ([from], [to], departure_time, flight_detail, price) VALUES('HN', 'HCM', '2020-09-24 19:52:06.910', 1.5, 113), ('HN', 'HCM', '2020-09-24 22:52:06.910', 1.5, 113);
 
 INSERT INTO [User] (email, password, firstname, lastname, address, phone, sex, age, card_number) VALUES('nguyenvanan@gmail.com', '123', 'An', 'Nguyen', 'HN, VN', '09673900XX', 0, 22, 1644646);

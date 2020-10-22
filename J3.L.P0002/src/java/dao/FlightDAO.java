@@ -14,7 +14,11 @@ import model.Flight;
  */
 public interface FlightDAO {
 
-    List<Flight> findByRouteAndDate(int page, int limit, String from, String to, String depatureDate);
+    List<Flight> findByRouteAndDate(int page, int limit, String from, String to, String time);
 
     Flight findById(int id);
+
+    List<String> findAllDeparture();
+
+    List<String> findAllArrival();
 }

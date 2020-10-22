@@ -56,7 +56,7 @@ public class RegistrationServlet extends HttpServlet {
             user.setPhone(phone);
             user.setSex(Tool.toInteger(sex, 0));
             user.setAge(Tool.toInteger(age, 0));
-            user.setCardNumber(Tool.toInteger(cardNumber, 0));
+            user.setCardNumber(cardNumber);
 
             int id = usersDAOImpl.save(user);
             request.setAttribute("user", user);

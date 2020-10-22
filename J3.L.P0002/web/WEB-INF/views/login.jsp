@@ -21,8 +21,8 @@
                 <form method="POST" action="${pageContext.request.contextPath}/login">
                     <table border="0">
                         <tr>
-                            <td>User Name:</td>
-                            <td><input type="text" name="username" value="${user.username}" /></td>
+                            <td>Email:</td>
+                            <td><input type="text" name="email" value="${user.email}" /></td>
                         </tr>
                         <tr>
                             <td>Password:</td>

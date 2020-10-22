@@ -18,6 +18,7 @@ public class Flight {
     private String to;
 
     private LocalDateTime departureTime;
+    private LocalDateTime arrivalTime;
     private double flightDetail;
     private double price;
 
@@ -63,6 +64,14 @@ public class Flight {
 
     public void setDepartureTime(LocalDateTime departureTime) {
         this.departureTime = departureTime;
+    }
+
+    public LocalDateTime getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(LocalDateTime arrivalTime) {
+        this.arrivalTime = arrivalTime;
     }
 
     public double getFlightDetail() {

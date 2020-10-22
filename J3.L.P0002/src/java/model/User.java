@@ -21,12 +21,12 @@ public class User {
     private String phone;
     private int sex; // 0 is male, 1 is female
     private int age;
-    private int cardNumber;
+    private String cardNumber;
 
     public User() {
     }
 
-    public User(int id, String email, String password, String firstname, String lastname, String address, String phone, int sex, int age, int cardNumber) {
+    public User(int id, String email, String password, String firstname, String lastname, String address, String phone, int sex, int age, String cardNumber) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -111,11 +111,11 @@ public class User {
         this.age = age;
     }
 
-    public int getCardNumber() {
+    public String getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(int cardNumber) {
+    public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
     }
     

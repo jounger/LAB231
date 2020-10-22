@@ -32,16 +32,17 @@ public class UserDAOImpl implements UserDAO {
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {
                 int id = rs.getInt("id");
-                String username = rs.getString("username");
+                String email = rs.getString("email");
                 String password = rs.getString("password");
-                String email = rs.getString("username");
-                int role_id = rs.getInt("role_id");
+                String firstname = rs.getString("firstname");
+                String lastname = rs.getString("lastname");
+                String address = rs.getString("address");
+                String phone = rs.getString("phone");
+                int sex = rs.getInt("sex");
+                int age = rs.getInt("age");
+                String cardNumber = rs.getString("card_number");
 
-                User user = new User();
-                user.setId(id);
-                user.setPassword(password);
-                user.setEmail(email);
-
+                User user = new User(id, email, password, firstname, lastname, address, phone, sex, age, cardNumber);
                 return user;
             }
         } catch (Exception e) {
@@ -56,7 +57,7 @@ public class UserDAOImpl implements UserDAO {
     public int save(User user) {
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "INSERT INTO [User](email, password, firstname, lastname, address, phone, sex, age, cardNumber) VALUES(?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO [User](email, password, firstname, lastname, address, phone, sex, age, card_number) VALUES(?,?,?,?,?,?,?,?,?)";
             PreparedStatement pstm = this.conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setString(1, user.getEmail());
             pstm.setString(2, user.getPassword());
@@ -66,7 +67,7 @@ public class UserDAOImpl implements UserDAO {
             pstm.setString(6, user.getPhone());
             pstm.setInt(7, user.getSex());
             pstm.setInt(8, user.getAge());
-            pstm.setInt(9, user.getCardNumber());
+            pstm.setString(9, user.getCardNumber());
 
             int executeUpdate = pstm.executeUpdate();
 

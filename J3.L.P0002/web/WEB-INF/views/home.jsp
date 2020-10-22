@@ -17,14 +17,46 @@
         <div class="main">
             <jsp:include page="../fragments/menu.jsp" />
             <div class="content">
-                <c:choose>
-                    <c:when test="${not empty sessionScope.AUTH_USER.username}">
-                        <p>Welcome <label class="highlight">${sessionScope.AUTH_USER.username}</label></p>
-                    </c:when>
-                    <c:otherwise>
-                        <p>You're not logged in</p>
-                    </c:otherwise>
-                </c:choose>
+                <form method="POST" action="${pageContext.request.contextPath}/booking">
+                    <table border="0">
+                        <tr>
+                            <td><input type="radio" name="flight-type" value="round-trip" />Round Trip</td>
+                            <td><input type="radio" name="flight-type" value="one-way" />One Way</td>
+                        </tr>
+                        <tr>
+                            <td>From</td>
+                            <td>
+                                <select name="fromPlaces">
+                                    <c:forEach items="${fromPlaces}" var="item">
+                                        <option value="${item}">${item}</option>
+                                    </c:forEach>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To</td>
+                            <td>
+                                <select name="toPlaces">
+                                    <c:forEach items="${toPlaces}" var="item">
+                                        <option value="${item}">${item}</option>
+                                    </c:forEach>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Departure</td>
+                            <td><input type="date" name="departureDate" /></td>
+                        </tr>
+                        <tr>
+                            <td>Return</td>
+                            <td><input type="date" name="returnDate" /></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="submit" name="submit" value="Search" /></td>
+                        </tr>
+                    </table>
+                </form>
             </div>
         </div>
     </body>

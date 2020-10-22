@@ -19,46 +19,37 @@
             <jsp:include page="../fragments/menu.jsp" />
             <div class="content">
                 <p>Number of questions: <label class="highlight">${totalElements}</label></p>
-                <form method="GET" action="${pageContext.request.contextPath}/manage-quiz">
+                <form method="GET" action="${pageContext.request.contextPath}/manage-booking">
 
+                    <h3>eTicket Receipt</h3>
+                    <p>Prepared For</p>
+                    <p>${booking.user.firstname}, ${booking.user.lastname}</p>
+                    <p>RESERVATION CODE: ${booking.reservationCode}</p>
+                    <p>TICKET ISSUE DATE: <fmt:formatDate type="both" value="${booking.ticketIssueDate}" pattern="dd/MM/yyyy hh:mm:ss" /></p>
+
+                    <h3>Itinerary Detail</h3>
                     <table border="0">
                         <thead>
-                            <tr class="highlight">
-                                <th>Question</th>
-                                <th>Date Created</th>
+                            <tr>
+                                <th>TRAVEL DATE</th>
+                                <th>DEPARTURE</th>
+                                <th>ARRIVAL</th>
                             </tr>
                         </thead>
                         <tbody>
-
-                            <c:if test="${not empty questions}">
-                                <c:forEach items="${questions}" var="item">
-                                    <tr>
-                                        <td>${item.content}</td>
-                                        <td>
-                                            <fmt:setLocale value="en_US" />
-                                            <fmt:formatDate value="${item.dateCreated}" pattern="dd-MMM-yyyy" />
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </c:if>
-                        </tbody>
-                        <tfoot>
                             <tr>
-                                <td>
-                                    <select name="limit" onchange="this.form.submit()">
-                                        <c:forEach items="${[2, 5, 10]}" var="item">
-                                            <option value="${item}" ${limit == item ? 'selected' : ''}>${item} items</option>
-                                        </c:forEach>
-                                    </select>
-                                </td>
-                                <td>
-                                    <c:forEach begin="1" end="${totalPages}" var="item">
-                                        <input type="submit" name="page" value="${item}" />
-                                    </c:forEach>
-                                </td>
+                                <td><fmt:formatDate type="both" value="${booking.flight.departureTime}" pattern="dd/MM/yyyy hh:mm:ss" /></td>
+                                <td>${booking.from}</td>
+                                <td>${booking.to}</td>
                             </tr>
-                        </tfoot>
+                            <tr>
+                                <td></td>
+                                <td>Time: <fmt:formatDate type="time" value="${booking.flight.departureTime}" timeStyle="short" /></td>
+                                <td>Time: <fmt:formatDate type="time" value="${booking.flight.arrivalTime}" timeStyle="short" /></td>
+                            </tr>
+                        </tbody>
                     </table>
+
                 </form>
             </div>
         </div>
