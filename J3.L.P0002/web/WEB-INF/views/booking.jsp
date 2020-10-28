@@ -19,10 +19,12 @@
         <div class="main">
             <jsp:include page="../fragments/menu.jsp" />
             <div class="content">
+                <fmt:setLocale value="en_US" />
                 <form method="POST" action="${pageContext.request.contextPath}/booking">
                     <h2>1. Select Departing Flight</h2>
                     <h3>${fromPlace} to ${toPlace}</h3>
-                    <fmt:formatDate type="date" value="${departureDate}" pattern="dd/MM/yyyy" />
+                    <fmt:parseDate type="both" pattern="yyyy-MM-dd" value="${departureDate}" var="departureDateParsed"/>
+                    <fmt:formatDate type="date" value="${departureDateParsed}" pattern="dd/MM/yyyy" />
 
                     <table border="0">
                         <thead>
@@ -34,20 +36,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="departingFlights" var="item">
+                            <c:forEach items="${departingFlights}" var="item">
                                 <tr>
-                                    <td><fmt:formatDate type="time" value="${item.departureTime}" timeStyle="short" /></td>
-                                    <td><fmt:formatDate type="time" value="${item.arrivalTime}" timeStyle="short" /></td>
-                                    <td>${item.flightDetail}</td>
-                                    <td><label>$</label>${item.price}</td>
+                                    <td>
+                                        <fmt:parseDate type="both" pattern="yyyy-MM-dd'T'HH:mm:ss" value="${item.departureTime}" var="departureTimeParsed"/>
+                                        <fmt:formatDate type="time" value="${departureTimeParsed}" timeStyle="short" />
+                                    </td>
+                                    <td>
+                                        <fmt:parseDate type="both" pattern="yyyy-MM-dd'T'HH:mm:ss" value="${item.arrivalTime}" var="arrivalTimeParsed"/>
+                                        <fmt:formatDate type="time" value="${arrivalTimeParsed}" timeStyle="short" />
+                                    </td>
+                                    <td>${Integer.valueOf(Math.floor(item.flightDetail))}h${Integer.valueOf(item.flightDetail*60%60)}</td>
+                                    <td><input type="radio" name="departure-flight-id" value="${item.id}" />$${item.price}</td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
+                    <%--<c:forEach begin="1" end="${totalDepartingFlightPages}" var="item">
+                        <input type="submit" name="page" value="${item}" />
+                    </c:forEach>--%>
 
                     <h2>2. Select Return Flight</h2>
                     <h3>${toPlace} to ${fromPlace}</h3>
-                    <fmt:formatDate type="date" value="${returnDate}" pattern="dd/MM/yyyy" />
+                    <fmt:parseDate type="both" pattern="yyyy-MM-dd" value="${returnDate}" var="returnDateParsed"/>
+                    <fmt:formatDate type="date" value="${returnDateParsed}" pattern="dd/MM/yyyy" />
 
                     <table border="0">
                         <thead>
@@ -59,12 +71,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="returnFlights" var="item">
+                            <c:forEach items="${returnFlights}" var="item">
                                 <tr>
-                                    <td><fmt:formatDate type="time" value="${item.departureTime}" timeStyle="short" /></td>
-                                    <td><fmt:formatDate type="time" value="${item.arrivalTime}" timeStyle="short" /></td>
-                                    <td>${item.flightDetail}</td>
-                                    <td><label>$</label>${item.price}</td>
+                                    <td>
+                                        <fmt:parseDate type="both" pattern="yyyy-MM-dd'T'HH:mm:ss" value="${item.departureTime}" var="departureTimeParsed"/>
+                                        <fmt:formatDate type="time" value="${departureTimeParsed}" timeStyle="short" />
+                                    </td>
+                                    <td>
+                                        <fmt:parseDate type="both" pattern="yyyy-MM-dd'T'HH:mm:ss" value="${item.arrivalTime}" var="arrivalTimeParsed"/>
+                                        <fmt:formatDate type="time" value="${arrivalTimeParsed}" timeStyle="short" />
+                                    </td>
+                                    <td>${Integer.valueOf(Math.floor(item.flightDetail))}h${Integer.valueOf(item.flightDetail*60%60)}</td>
+                                    <td><input type="radio" name="return-flight-id" value="${item.id}" />$${item.price}</td>
                                 </tr>
                             </c:forEach>
                         </tbody>

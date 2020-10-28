@@ -13,7 +13,7 @@ and open the template in the editor.
 }
 
 body {
-    background-image: url("${pageContext.request.contextPath}/static/images/bg.jpg");
+    /*background-image: url("${pageContext.request.contextPath}/static/images/bg.jpg");*/
     font-family: sans-serif;
 }
 
@@ -23,7 +23,7 @@ body {
     background: #fff;
     margin: auto;
     padding: 15px;
-    background-image: url("${pageContext.request.contextPath}/static/images/top_box.gif");
+    /*background-image: url("${pageContext.request.contextPath}/static/images/top_box.gif");*/
     background-size: contain;
     background-repeat: no-repeat;
     border-radius: 15px 15px 0 0;
@@ -31,7 +31,7 @@ body {
 
 .menu {
     height: 35px;
-    background-image: url("${pageContext.request.contextPath}/static/images/menu_bg.gif");
+    /*background-image: url("${pageContext.request.contextPath}/static/images/menu_bg.gif");*/
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
@@ -66,4 +66,8 @@ a {
 .notice {
     color: red;
     font-weight: bold;
+}
+
+.remove {
+    display: none;
 }

@@ -23,8 +23,8 @@
                         <tr>
                             <td></td>
                             <td>
-                                <input type="radio" name="search-type" value="reservation-code" />
-                                <input type="radio" name="search-type" value="all-booking" />
+                                <input type="radio" name="search-type" value="reservation-code" checked/>Reservation code
+                                <input type="radio" name="search-type" value="all-booking" />All bookings
                             </td>
                         </tr>
                         <tr>

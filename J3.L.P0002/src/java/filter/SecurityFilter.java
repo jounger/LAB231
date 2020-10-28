@@ -40,7 +40,11 @@ public class SecurityFilter implements Filter {
         System.out.println("Path: " + path);
 
         User user = SecurityStore.getAuth(req.getSession());
-        if (Tool.includes(Router.NOT_AUTH, path) || (Tool.includes(Router.AUTH, path) && user != null)) {
+        if (Tool.includes(Router.NOT_AUTH, path)) {
+            chain.doFilter(request, response);
+            return;
+        }
+        if (Tool.includes(Router.AUTH, path) && user != null) {
             chain.doFilter(request, response);
             return;
         }

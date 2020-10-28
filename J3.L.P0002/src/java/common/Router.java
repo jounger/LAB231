@@ -15,5 +15,5 @@ import java.util.List;
 public class Router {
 
     public static final List<String> NOT_AUTH = Arrays.asList("/static/", "/home", "/login", "/logout", "/registration", "/error");
-    public static final List<String> AUTH = Arrays.asList("/booking", "/manage-booking", "/search-booking", "/search-result");
+    public static final List<String> AUTH = Arrays.asList("/booking", "/manage-booking", "/search-booking");
 }

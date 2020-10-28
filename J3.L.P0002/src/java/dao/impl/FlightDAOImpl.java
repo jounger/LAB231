@@ -29,8 +29,8 @@ public class FlightDAOImpl implements FlightDAO {
         List<Flight> flights = new ArrayList<>();
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM [Flight] f WHERE f.[from]=? AND f.[to]=? AND f.departure_date>=?) "
-                    + "SELECT *, DATEADD(mi, f.flight_detail*60, f.departure_time) AS arrival_time FROM Ordered WHERE RowNumber BETWEEN ? AND ?;";
+            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM [Flight] f WHERE f.[from]=? AND f.[to]=? AND f.departure_time>=?) "
+                    + "SELECT *, DATEADD(mi, flight_detail*60, departure_time) AS arrival_time FROM Ordered WHERE RowNumber BETWEEN ? AND ?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setString(1, flight_from);
             pstm.setString(2, flight_to);

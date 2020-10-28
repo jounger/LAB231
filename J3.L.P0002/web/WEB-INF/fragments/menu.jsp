@@ -19,5 +19,5 @@
 <div class="menu">
     <a href="${pageContext.request.contextPath}/home">Home</a>
     <a href="${pageContext.request.contextPath}/booking">Book</a>
-    <a href="${pageContext.request.contextPath}/manage-quiz">Manage Booking</a>
+    <a href="${pageContext.request.contextPath}/manage-booking">Manage Booking</a>
 </div>
