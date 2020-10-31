@@ -14,14 +14,13 @@ import javax.naming.NamingException;
  *
  * @author nguyenvanan
  */
-public class SQLServerConnection {
+public class MySQLConnection {
 
-    // context.xml only avaiable on tomcat
     public static Connection getSQLServerConnection() throws ClassNotFoundException, SQLException, NamingException {
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        String uri = Env.getVariable("datasource.url");
-        String username = Env.getVariable("datasource.username");
-        String password = Env.getVariable("datasource.password");
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        String uri= "jdbc:mysql://127.0.0.1:3306/P0001?useUnicode=true&useSSL=false&characterEncoding=UTF-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=GMT";
+        String username = "root";
+        String password = "12345678";
         Connection conn = DriverManager.getConnection(uri, username, password);
         return conn;
     }

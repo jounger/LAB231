@@ -17,7 +17,8 @@ public class DBConnection {
 
     public static Connection getConnection() {
         try {
-            return SQLServerConnection.getSQLServerConnection();
+//            return SQLServerConnection.getSQLServerConnection();
+            return MySQLConnection.getSQLServerConnection();
         } catch (ClassNotFoundException | SQLException | NamingException ex) {
             ex.printStackTrace();
             return null;

@@ -21,18 +21,15 @@ import utils.DBConnection;
  */
 public class AnswerDAOImpl implements AnswerDAO {
 
-    private final Connection conn;
+    private Connection conn;
 
     private final OptionDAOImpl optionDAOImpl = new OptionDAOImpl();
-
-    public AnswerDAOImpl() {
-        this.conn = DBConnection.getConnection();
-    }
 
     @Override
     public List<Answer> findAllByAsk(int ask_id) {
         List<Answer> answers = new ArrayList<>();
         try {
+            this.conn = DBConnection.getConnection();
             String sql = "SELECT a.id, a.option_id, a.ask_id FROM Answer a WHERE a.ask_id=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, ask_id);
@@ -48,6 +45,9 @@ public class AnswerDAOImpl implements AnswerDAO {
                 answers.add(ans);
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
         return answers;
     }
@@ -55,12 +55,16 @@ public class AnswerDAOImpl implements AnswerDAO {
     @Override
     public void saveInAsk(Answer answer, int ask_id) {
         try {
+            this.conn = DBConnection.getConnection();
             String sql = "INSERT INTO Answer(option_id, ask_id) VALUES(?, ?);";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, answer.getOption().getId());
             pstm.setInt(2, ask_id);
             int executeUpdate = pstm.executeUpdate();
         } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
     }
 

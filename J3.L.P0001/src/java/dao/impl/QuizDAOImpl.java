@@ -24,17 +24,14 @@ import utils.Tool;
  */
 public class QuizDAOImpl implements QuizDAO {
 
-    private final Connection conn;
+    private Connection conn;
 
     private final AskDAOImpl askDAOImpl = new AskDAOImpl();
-
-    public QuizDAOImpl() {
-        this.conn = DBConnection.getConnection();
-    }
 
     @Override
     public Quiz findById(int quiz_id) {
         try {
+            this.conn = DBConnection.getConnection();
             String sql = "SELECT q.id, q.quantity, q.date_started, DATEADD(mi, q.quantity, q.date_started) AS date_stop FROM Quiz q WHERE q.id=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, quiz_id);
@@ -57,6 +54,9 @@ public class QuizDAOImpl implements QuizDAO {
                 return quiz;
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
         return null;
     }
@@ -64,6 +64,7 @@ public class QuizDAOImpl implements QuizDAO {
     @Override
     public Quiz findCurrentQuiz() {
         try {
+            this.conn = DBConnection.getConnection();
             String sql = "SELECT TOP (1) q.id, q.quantity, q.date_started, DATEADD(mi, q.quantity, q.date_started) AS date_stop FROM Quiz q WHERE "
                     + "GETDATE() BETWEEN q.date_started AND DATEADD(mi, q.quantity, q.date_started) ORDER BY q.date_started DESC;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
@@ -86,6 +87,8 @@ public class QuizDAOImpl implements QuizDAO {
                 return quiz;
             }
         } catch (Exception e) {
+        } finally {
+            DBConnection.closeConnect(conn);
         }
         return null;
     }
@@ -93,6 +96,7 @@ public class QuizDAOImpl implements QuizDAO {
     @Override
     public int save(Quiz quiz) {
         try {
+            this.conn = DBConnection.getConnection();
             String sql = "INSERT INTO Quiz(quantity, date_started, user_id) VALUES(?,GETDATE(),?)";
             PreparedStatement pstm = this.conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setInt(1, quiz.getQuantity());
@@ -109,6 +113,8 @@ public class QuizDAOImpl implements QuizDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
         return -1;
     }

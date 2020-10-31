@@ -20,17 +20,14 @@ import dao.RoleDAO;
  */
 public class RoleDAOImpl implements RoleDAO {
 
-    private final Connection conn;
-
-    public RoleDAOImpl() {
-        this.conn = DBConnection.getConnection();
-    }
+    private Connection conn;
 
     @Override
     public List<Role> findAll() {
         List<Role> roles = new ArrayList<>();
         try {
-            String sql = "SELECT r.id, r.name FROM [Role] r";
+            this.conn = DBConnection.getConnection();
+            String sql = "SELECT r.id, r.name FROM Role r";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
 
             ResultSet rs = pstm.executeQuery();
@@ -43,7 +40,9 @@ public class RoleDAOImpl implements RoleDAO {
                 roles.add(role);
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
         return roles;
     }
@@ -51,7 +50,8 @@ public class RoleDAOImpl implements RoleDAO {
     @Override
     public Role findById(int role_id) {
         try {
-            String sql = "SELECT r.id, r.name FROM [Role] r WHERE r.id=?;";
+            this.conn = DBConnection.getConnection();
+            String sql = "SELECT r.id, r.name FROM Role r WHERE r.id=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, role_id);
 
@@ -65,6 +65,9 @@ public class RoleDAOImpl implements RoleDAO {
                 return role;
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
         return null;
     }

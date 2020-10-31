@@ -32,7 +32,7 @@ public class QuestionDAOImpl implements QuestionDAO {
         List<Question> questions = new ArrayList<>();
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM [Question] WHERE user_id=?) "
+            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM Question WHERE user_id=?) "
                     + "SELECT * FROM Ordered WHERE RowNumber BETWEEN ? AND ?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, user_id);
@@ -68,7 +68,7 @@ public class QuestionDAOImpl implements QuestionDAO {
         List<Question> questions = new ArrayList<>();
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY NEWID()) AS RowNumber FROM [Question]) "
+            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY NEWID()) AS RowNumber FROM Question) "
                     + "SELECT * FROM Ordered WHERE RowNumber BETWEEN ? AND ?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             int pageRequest = ((page - 1) * limit) + 1;

@@ -20,16 +20,13 @@ import java.util.List;
  */
 public class OptionDAOImpl implements OptionDAO {
 
-    private final Connection conn;
-
-    public OptionDAOImpl() {
-        this.conn = DBConnection.getConnection();
-    }
+    private Connection conn;
 
     @Override
     public void saveInQuestion(Option option, int question_id) {
         try {
-            String sql = "INSERT INTO [Option](content, is_correct, question_id) VALUES(?,?,?)";
+            this.conn = DBConnection.getConnection();
+            String sql = "INSERT INTO Option(content, is_correct, question_id) VALUES(?,?,?)";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setString(1, option.getContent());
             pstm.setBoolean(2, option.isCorrect());
@@ -37,6 +34,8 @@ public class OptionDAOImpl implements OptionDAO {
             int executeUpdate = pstm.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
     }
 
@@ -44,7 +43,8 @@ public class OptionDAOImpl implements OptionDAO {
     public List<Option> findAllByQuestion(int question_id) {
         List<Option> options = new ArrayList<>();
         try {
-            String sql = "SELECT o.id, o.content, o.is_correct FROM [Option] o WHERE o.question_id=?;";
+            this.conn = DBConnection.getConnection();
+            String sql = "SELECT o.id, o.content, o.is_correct FROM Option o WHERE o.question_id=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, question_id);
 
@@ -60,6 +60,9 @@ public class OptionDAOImpl implements OptionDAO {
                 options.add(option);
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
         return options;
     }
@@ -67,7 +70,8 @@ public class OptionDAOImpl implements OptionDAO {
     @Override
     public Option findById(int option_id) {
         try {
-            String sql = "SELECT o.id, o.content, o.is_correct FROM [Option] o WHERE o.id=?;";
+            this.conn = DBConnection.getConnection();
+            String sql = "SELECT o.id, o.content, o.is_correct FROM Option o WHERE o.id=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, option_id);
 
@@ -83,6 +87,9 @@ public class OptionDAOImpl implements OptionDAO {
                 return option;
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
         return null;
     }

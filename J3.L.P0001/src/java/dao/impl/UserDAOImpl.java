@@ -20,18 +20,15 @@ import dao.UserDAO;
  */
 public class UserDAOImpl implements UserDAO {
 
-    private final Connection conn;
+    private Connection conn;
 
     private final RoleDAOImpl rolesDAOImpl = new RoleDAOImpl();
-
-    public UserDAOImpl() {
-        this.conn = DBConnection.getConnection();
-    }
 
     @Override
     public User findById(int user_id) {
         try {
-            String sql = "SELECT u.id, u.username, u.email, u.role_id FROM [User] u WHERE u.id=?;";
+            this.conn = DBConnection.getConnection();
+            String sql = "SELECT u.id, u.username, u.email, u.role_id FROM User u WHERE u.id=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, user_id);
 
@@ -52,6 +49,9 @@ public class UserDAOImpl implements UserDAO {
                 return user;
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
         return null;
     }
@@ -59,7 +59,8 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User findByUsername(String user_username) {
         try {
-            String sql = "SELECT u.id, u.username, u.password, u.email, u.role_id FROM [User] u WHERE u.username=?;";
+            this.conn = DBConnection.getConnection();
+            String sql = "SELECT u.id, u.username, u.password, u.email, u.role_id FROM User u WHERE u.username=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setString(1, user_username);
 
@@ -82,6 +83,9 @@ public class UserDAOImpl implements UserDAO {
                 return user;
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
         return null;
     }
@@ -89,7 +93,8 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void save(User user) {
         try {
-            String sql = "INSERT INTO [User](username, password, email, role_id) VALUES(?,?,?,?)";
+            this.conn = DBConnection.getConnection();
+            String sql = "INSERT INTO User(username, password, email, role_id) VALUES(?,?,?,?)";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setString(1, user.getUsername());
             pstm.setString(2, user.getPassword());
@@ -97,6 +102,9 @@ public class UserDAOImpl implements UserDAO {
             pstm.setInt(4, user.getRoles().get(0).getId());
             int executeUpdate = pstm.executeUpdate();
         } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
     }
 

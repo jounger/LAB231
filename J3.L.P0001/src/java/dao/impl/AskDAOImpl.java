@@ -23,19 +23,16 @@ import utils.DBConnection;
  */
 public class AskDAOImpl implements AskDAO {
 
-    private final Connection conn;
+    private Connection conn;
 
     private final QuestionDAOImpl questionDAOImpl = new QuestionDAOImpl();
     private final AnswerDAOImpl answerDAOImpl = new AnswerDAOImpl();
-
-    public AskDAOImpl() {
-        this.conn = DBConnection.getConnection();
-    }
 
     @Override
     public List<Ask> findByQuiz(int page, int limit, int quiz_id) {
         List<Ask> asks = new ArrayList<>();
         try {
+            this.conn = DBConnection.getConnection();
             String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM [Ask] WHERE quiz_id=?) "
                     + "SELECT * FROM Ordered WHERE RowNumber BETWEEN ? AND ?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
@@ -60,6 +57,9 @@ public class AskDAOImpl implements AskDAO {
                 asks.add(ask);
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
         return asks;
     }
@@ -67,6 +67,7 @@ public class AskDAOImpl implements AskDAO {
     @Override
     public void saveInQuiz(Ask ask, int quiz_id) {
         try {
+            this.conn = DBConnection.getConnection();
             String sql = "INSERT INTO Ask(question_id, date_answered, quiz_id) VALUES(?,GETDATE(),?);";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, ask.getQuestion().getId());
@@ -74,18 +75,23 @@ public class AskDAOImpl implements AskDAO {
             int executeUpdate = pstm.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
     }
 
     @Override
     public void update(Ask ask) {
         try {
+            this.conn = DBConnection.getConnection();
             String sql = "UPDATE Ask SET date_answered=GETDATE() WHERE id=?";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, ask.getId());
             int executeUpdate = pstm.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
         }
     }
 
