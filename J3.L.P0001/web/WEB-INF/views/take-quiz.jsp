@@ -11,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Take Quiz Page</title>
         <style><%@include file="/static/css/main.css"%></style>
+        <style><%@include file="/static/css/take-quiz.css"%></style>
         <script><%@include file="/static/script/main.js"%></script>
     </head>
     <body>
@@ -26,7 +27,7 @@
                                 <td></td>
                             </tr>
                             <tr>
-                                <td><input type="number" name="quantity" value="${quiz.quantity}" /></td>
+                                <td><input type="number" name="quantity" value="${quantity}" /></td>
                                 <td></td>
                             </tr>
                             <tr>

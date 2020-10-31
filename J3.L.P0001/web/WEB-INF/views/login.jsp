@@ -17,24 +17,31 @@
         <div class="main">
             <jsp:include page="../fragments/menu.jsp" />
             <div class="content">
-                <h3 class="title">Login Form</h3>
                 <form method="POST" action="${pageContext.request.contextPath}/login">
                     <table border="0">
-                        <tr>
+                        <thead>
+                            <tr>
+                                <td><h4 class="title">Login Form</h4></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
                             <td>User Name:</td>
-                            <td><input type="text" name="username" value="${user.username}" /></td>
-                        </tr>
-                        <tr>
-                            <td>Password:</td>
-                            <td><input type="password" name="password" value="${user.password}" /></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <button type="submit" name="submit">Sign in</button>
-                                <a href="${pageContext.request.contextPath}/registration">Register</a>
-                            </td>
-                        </tr>
+                            <td><input type="text" name="username" value="${username}" /></td>
+                            </tr>
+                            <tr>
+                                <td>Password:</td>
+                                <td><input type="password" name="password" value="${password}" /></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <button type="submit" name="submit">Sign in</button>
+                                    <a href="${pageContext.request.contextPath}/registration">Register</a>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </form>
             </div>

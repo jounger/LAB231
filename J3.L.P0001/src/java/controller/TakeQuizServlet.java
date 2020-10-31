@@ -110,6 +110,9 @@ public class TakeQuizServlet extends HttpServlet {
             throws ServletException, IOException {
         String quizId = request.getParameter("quiz_id");
         String quantity = request.getParameter("quantity");
+        
+        request.setAttribute("quantity", quantity);
+
         if (!Tool.isNull(quizId)) {
             LocalDateTime now = LocalDateTime.now();
             Quiz currentQuiz = quizDAOImpl.findById(Integer.parseInt(quizId));
@@ -134,28 +137,34 @@ public class TakeQuizServlet extends HttpServlet {
 
                 response.sendRedirect(this.getServletContext().getContextPath() + "/take-quiz?quiz_id=" + currentQuiz.getId());
                 return;
+            } else {
+                request.setAttribute(Constant.ERROR_MESSAGE_ATTR, "Quiz does not exist");
             }
         }
         if (!Tool.isNull(quantity) && Tool.toInteger(quantity, 0) > 0) {
             int qty = Integer.parseInt(quantity);
             // GET (QTY) RANDOM QUESTIONS
             List<Question> questions = questionDAOImpl.findByRandom(1, qty);
-            User user = SecurityStore.getAuth(request.getSession());
-            List<Ask> asks = new ArrayList<>();
+            if(questions.size() > 0 && questions.size() == qty) {
+                User user = SecurityStore.getAuth(request.getSession());
+                List<Ask> asks = new ArrayList<>();
 
-            for (Question question : questions) {
-                Ask ask = new Ask();
-                ask.setQuestion(question);
-                asks.add(ask);
-            }
-            Quiz quiz = new Quiz();
-            quiz.setQuantity(qty);
-            quiz.setUser(user);
-            quiz.setAsks(asks);
-            int savedQuizId = quizDAOImpl.save(quiz);
-            if (savedQuizId != -1) {
-                response.sendRedirect(this.getServletContext().getContextPath() + "/take-quiz?quiz_id=" + savedQuizId);
-                return;
+                for (Question question : questions) {
+                    Ask ask = new Ask();
+                    ask.setQuestion(question);
+                    asks.add(ask);
+                }
+                Quiz quiz = new Quiz();
+                quiz.setQuantity(qty);
+                quiz.setUser(user);
+                quiz.setAsks(asks);
+                int savedQuizId = quizDAOImpl.save(quiz);
+                if (savedQuizId != -1) {
+                    response.sendRedirect(this.getServletContext().getContextPath() + "/take-quiz?quiz_id=" + savedQuizId);
+                    return;
+                }
+            } else {
+                request.setAttribute(Constant.ERROR_MESSAGE_ATTR, "No enough question for your request");
             }
         } else {
             request.setAttribute(Constant.ERROR_MESSAGE_ATTR, "Number of questions must be number and greater than 0");

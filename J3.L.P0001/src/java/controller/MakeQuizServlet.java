@@ -45,54 +45,48 @@ public class MakeQuizServlet extends HttpServlet {
         String option3 = request.getParameter("option3");
         String option4 = request.getParameter("option4");
         String[] answers = request.getParameterValues("answers");
+        
+        request.setAttribute("question", question);
+        request.setAttribute("option1", option1);
+        request.setAttribute("option2", option2);
+        request.setAttribute("option3", option3);
+        request.setAttribute("option4", option4);
+        request.setAttribute("answers", answers);
 
-        User currentUser = SecurityStore.getAuth(request.getSession());
-        List<Option> options = new ArrayList<>();
-        Question q = new Question();
+        if (!Tool.isNull(question, option1, option2, option3, option4) && !Tool.isNull(answers)) {
+            boolean isExist = questionDAOImpl.isExist(question);
+            if(isExist) {
+                request.setAttribute(Constant.ERROR_MESSAGE_ATTR, "Question has been exist");
+            } else {
+                User currentUser = SecurityStore.getAuth(request.getSession());
+                List<Option> options = new ArrayList<>();
+                Question q = new Question();
+                q.setContent(question);
 
-        Option opt1 = new Option();
-        Option opt2 = new Option();
-        Option opt3 = new Option();
-        Option opt4 = new Option();
+                Option opt1 = new Option();
+                Option opt2 = new Option();
+                Option opt3 = new Option();
+                Option opt4 = new Option();
 
-        if (!Tool.isNull(question)) {
-            q.setContent(question);
-        }
+                opt1.setContent(option1);
+                options.add(opt1);
+                opt2.setContent(option2);
+                options.add(opt2);
+                opt3.setContent(option3);
+                options.add(opt3);
+                opt4.setContent(option4);
+                options.add(opt4);
+                for (String ans : answers) {
+                    options.get(Integer.parseInt(ans)).setCorrect(true);
+                }
+                q.setOptions(options);
+                q.setUser(currentUser);
 
-        if (!Tool.isNull(option1)) {
-            opt1.setContent(option1);
-            options.add(opt1);
-        }
-        if (!Tool.isNull(option2)) {
-            opt2.setContent(option2);
-            options.add(opt2);
-        }
-        if (!Tool.isNull(option3)) {
-            opt3.setContent(option3);
-            options.add(opt3);
-        }
-        if (!Tool.isNull(option4)) {
-            opt4.setContent(option4);
-            options.add(opt4);
-        }
-        if (!Tool.isNull(answers)) {
-            for (String ans : answers) {
-                options.get(Integer.parseInt(ans)).setCorrect(true);
+                questionDAOImpl.save(q);
+                request.setAttribute(Constant.SUCCESS_MESSAGE_ATTR, "Create success full new question");
             }
-        }
-
-        q.setOptions(options);
-        q.setUser(currentUser);
-
-        request.setAttribute("question", q);
-
-        if (Tool.isNull(question, option1, option2, option3, option4)) {
-            request.setAttribute(Constant.ERROR_MESSAGE_ATTR, "You must fulfill question & options");
-        } else if (Tool.isNull(answers)) {
-            request.setAttribute(Constant.ERROR_MESSAGE_ATTR, "You must check at least one answer");
         } else {
-            questionDAOImpl.save(q);
-            request.setAttribute(Constant.SUCCESS_MESSAGE_ATTR, "CREATE QUESTION SUCCESSFUL!");
+            request.setAttribute(Constant.ERROR_MESSAGE_ATTR, "You must fulfill question & options");
         }
 
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/make-quiz.jsp").forward(request, response);

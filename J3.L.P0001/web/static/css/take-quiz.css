@@ -8,17 +8,6 @@ and open the template in the editor.
     Author     : nguyenvanan
 */
 
-table {
-    width: 100%;
-}
-
-th {
-    text-align: left;
-}
-th:first-child {
-    width: 70%;
-}
-
-th:nth-child(2), td:nth-child(2) {
-    padding-left: 20px;
+input[name="quantity"] {
+    width: 75px;
 }

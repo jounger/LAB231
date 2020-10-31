@@ -23,4 +23,6 @@ public interface QuestionDAO {
     void save(Question question);
     
     int countByUser(int user_id);
+    
+    boolean isExist(String question);
 }

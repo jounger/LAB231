@@ -172,4 +172,23 @@ public class QuestionDAOImpl implements QuestionDAO {
         return 0;
     }
 
+    @Override
+    public boolean isExist(String question) {
+        try {
+            this.conn = DBConnection.getConnection();
+            String sql = "SELECT * FROM Question q WHERE q.content=?;";
+            PreparedStatement pstm = this.conn.prepareStatement(sql);
+            pstm.setString(1, question);
+            ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeConnect(conn);
+        }
+        return false;
+    }
+
 }

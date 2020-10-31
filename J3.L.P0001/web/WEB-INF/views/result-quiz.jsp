@@ -17,9 +17,7 @@
             <jsp:include page="../fragments/menu.jsp" />
             <div class="content">
                 <p>Your score <label class="highlight">${quiz.score * 10} (${quiz.score * 100}%) - ${quiz.score >= 0.4 ? 'Passed' : 'Failed'}</label></p>
-                <form method="GET" action="${pageContext.request.contextPath}/take-quiz">
-                    Take another test <input type="submit" value="Start" />
-                </form>
+                <p>Take another test <a href="${pageContext.request.contextPath}/take-quiz"><button>Start</button></a></p>
             </div>
         </div>
     </body>

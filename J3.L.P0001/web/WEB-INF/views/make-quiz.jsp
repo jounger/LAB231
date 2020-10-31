@@ -22,36 +22,32 @@
                     <table border="0">
                         <tr>
                             <td>Question:</td>
-                            <td><textarea name="question" rows="5" cols="50">${question.content}</textarea></td>
+                            <td><textarea name="question" rows="7" cols="45">${question}</textarea></td>
                         </tr>
                         <tr>
                             <td>Option1:</td>
-                            <td><textarea name="option1" rows="4" cols="50">${question.options[0].content}</textarea></td>
+                            <td><textarea name="option1" rows="3" cols="45">${options1}</textarea></td>
                         </tr>
                         <tr>
                             <td>Option2:</td>
-                            <td><textarea name="option2" rows="4" cols="50">${question.options[1].content}</textarea></td>
+                            <td><textarea name="option2" rows="3" cols="45">${options2}</textarea></td>
                         </tr>
                         <tr>
                             <td>Option3:</td>
-                            <td><textarea name="option3" rows="4" cols="50">${question.options[2].content}</textarea></td>
+                            <td><textarea name="option3" rows="3" cols="45">${options3}</textarea></td>
                         </tr>
                         <tr>
                             <td>Option4:</td>
-                            <td><textarea name="option4" rows="4" cols="50">${question.options[3].content}</textarea></td>
+                            <td><textarea name="option4" rows="3" cols="45">${options4}</textarea></td>
                         </tr>
                         <tr>
                             <td>Answer(s):</td>
                             <td>
-                                <input type="checkbox" name="answers" value="0" ${question.options[0].correct ? 'checked' : ''} /> Option 1
-                                <input type="checkbox" name="answers" value="1" ${question.options[1].correct ? 'checked' : ''} /> Option 2
-                                <input type="checkbox" name="answers" value="2" ${question.options[2].correct ? 'checked' : ''} /> Option 3
-                                <input type="checkbox" name="answers" value="3" ${question.options[3].correct ? 'checked' : ''} /> Option 4
+                                <input type="checkbox" name="answers" value="0" /> Option 1
+                                <input type="checkbox" name="answers" value="1" /> Option 2
+                                <input type="checkbox" name="answers" value="2" /> Option 3
+                                <input type="checkbox" name="answers" value="3" /> Option 4
                             </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><button type="submit" name="submit">Save</button> <span>${message}</span></td>
                         </tr>
                     </table>
                 </form>

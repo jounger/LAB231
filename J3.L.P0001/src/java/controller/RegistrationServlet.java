@@ -33,10 +33,7 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Role> roles = rolesDAOImpl.findAll();
-
-        request.setAttribute("roles", roles);
-        this.getServletContext().getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     @Override
@@ -46,27 +43,37 @@ public class RegistrationServlet extends HttpServlet {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         String role_id = request.getParameter("role_id");
+        
+        request.setAttribute("username", username);
+        request.setAttribute("password", password);
+        request.setAttribute("email", email);
+        request.setAttribute("role_id", role_id);
 
         if (!Tool.isNull(username, password, email, role_id)) {
+            User isExist = usersDAOImpl.findByUsername(username);
+            if(isExist != null) {
+                request.setAttribute(Constant.ERROR_MESSAGE_ATTR, "User has been exist");
+            } else {
+                Role role = rolesDAOImpl.findById(Integer.parseInt(role_id));
+                User user = new User();
+                user.setUsername(username);
+                user.setPassword(password);
+                user.setRoles(Arrays.asList(role));
+                user.setEmail(email);
 
-            Role role = rolesDAOImpl.findById(Integer.parseInt(role_id));
-            User user = new User();
-            user.setUsername(username);
-            user.setPassword(password);
-            user.setRoles(Arrays.asList(role));
-            user.setEmail(email);
-
-            usersDAOImpl.save(user);
-
-            request.setAttribute("user", user);
-
-            List<Role> roles = rolesDAOImpl.findAll();
-            request.setAttribute("roles", roles);
-            request.setAttribute(Constant.SUCCESS_MESSAGE_ATTR, "Successful register new account");
+                usersDAOImpl.save(user);
+                request.setAttribute(Constant.SUCCESS_MESSAGE_ATTR, "Successful register new account");
+            }
         } else {
             request.setAttribute(Constant.ERROR_MESSAGE_ATTR, "You must fulfill all the field");
         }
-
+        processRequest(request, response);
+    }
+    
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        List<Role> roles = rolesDAOImpl.findAll();
+        request.setAttribute("roles", roles);
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
     }
 

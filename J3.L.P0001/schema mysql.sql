@@ -59,3 +59,4 @@ CREATE TABLE answer (
 
 INSERT INTO `role`(name) VALUES ('TEACHER'), ('STUDENT');
 INSERT INTO `user`(username ,password ,email ,role_id) VALUES('teacher', '123', 'teacher@mail.com', 1), ('student', '123', 'student@mail.com', 2);
+INSERT INTO `question`(content, date_created, user_id) VALUES ('The name of capital of Vietnam after year of 1975?', NOW(), 1);

@@ -15,6 +15,7 @@ and open the template in the editor.
 body {
     background-image: url("${pageContext.request.contextPath}/static/images/bg.jpg");
     font-family: sans-serif;
+    color: #4c6b99;
 }
 
 .main {
@@ -39,14 +40,16 @@ body {
 }
 
 .menu a {
-    padding: 7px;
-    font-size: 16px;
+    padding: 10px 0;
+    margin-right: 23px;
+    font-size: 15px;
     font-weight: 600;
-    color: #712525;
+    color: #62584d;
 }
 
 a {
     text-decoration: none;
+    color: #4c6b99;
 }
 
 .content {
@@ -55,15 +58,44 @@ a {
 }
 
 .title {
-    color: blue;
+    color: #183380;
 }
 
 .highlight {
     color: blue;
-    font-weight: bold;
 }
 
 .notice {
     color: red;
     font-weight: bold;
+}
+
+.remove {
+    display: none;
+}
+
+/* Modal */
+
+.modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgba(0,0,0,0.4);
+}
+
+.modal .modal-box {
+    color: black;
+    background: white;
+    margin: 100px auto;
+    width: 200px;
+    height: 100px;
+    z-index: 2;
+}
+
+#modal-content {
+    padding: 20px 10px;
 }

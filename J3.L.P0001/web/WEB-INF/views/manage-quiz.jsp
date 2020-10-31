@@ -26,7 +26,7 @@
                         <thead>
                             <tr class="highlight">
                                 <th>Question</th>
-                                <th>Date Created</th>
+                                <th>DateCreated</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,13 +45,6 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td>
-                                    <select name="limit" onchange="this.form.submit()">
-                                        <c:forEach items="${[2, 5, 10]}" var="item">
-                                            <option value="${item}" ${limit == item ? 'selected' : ''}>${item} items</option>
-                                        </c:forEach>
-                                    </select>
-                                </td>
                                 <td>
                                     <c:forEach begin="1" end="${totalPages}" var="item">
                                         <input type="submit" name="page" value="${item}" />

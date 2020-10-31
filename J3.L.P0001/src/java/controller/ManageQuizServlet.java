@@ -16,6 +16,7 @@ import model.Question;
 import dao.impl.QuestionDAOImpl;
 import model.User;
 import utils.SecurityStore;
+import utils.Tool;
 
 /**
  *
@@ -30,10 +31,9 @@ public class ManageQuizServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String page = request.getParameter("page");
-        String limit = request.getParameter("limit");
 
-        int pageReq = page == null ? 1 : Integer.parseInt(page);
-        int limitReq = limit == null ? 5 : Integer.parseInt(limit);
+        int pageReq = Tool.toInteger(page, 1);
+        int limitReq = 5;
 
         User user = SecurityStore.getAuth(request.getSession());
         List<Question> questions = questionDAOImpl.findByUser(pageReq, limitReq, user.getId());
