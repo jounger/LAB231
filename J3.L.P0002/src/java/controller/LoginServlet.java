@@ -37,12 +37,15 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        
+        request.setAttribute("email", email);
+        request.setAttribute("password", password);
+        
         if (!Tool.isNull(email, password)) {
             User user = userDAOImpl.findByEmail(email);
             if (user != null && user.getPassword().equals(password)) {
                 System.out.println("Login Success");
                 SecurityStore.saveAuth(request.getSession(), user);
-                
                 response.sendRedirect(this.getServletContext().getContextPath() + "/home");
                 return;
             } else {

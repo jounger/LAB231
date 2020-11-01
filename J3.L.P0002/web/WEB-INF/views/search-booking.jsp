@@ -13,12 +13,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home Page</title>
         <style><%@include file="/static/css/main.css"%></style>
+        <script><%@include file="/static/script/main.js"%></script>
+        <script><%@include file="/static/script/search.js"%></script>
     </head>
     <body>
         <div class="main">
             <jsp:include page="../fragments/menu.jsp" />
             <div class="content">
-                <form method="POST" action="${pageContext.request.contextPath}/manage-booking">
+                <form method="GET" action="${pageContext.request.contextPath}/manage-booking">
                     <table border="0">
                         <tr>
                             <td></td>
@@ -27,7 +29,7 @@
                                 <input type="radio" name="search-type" value="all-booking" />All bookings
                             </td>
                         </tr>
-                        <tr>
+                        <tr id="reservation-code">
                             <td>Enter Reservation code</td>
                             <td><input type="text" name="reservation-code" /></td>
                         </tr>

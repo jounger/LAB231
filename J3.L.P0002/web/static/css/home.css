@@ -1,0 +1,20 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 2, 2020, 1:05:00 AM
+    Author     : nguyenvanan
+*/
+
+.content {
+    height: 100%;
+    background-image: url("${pageContext.request.contextPath}/static/images/bg_top_img.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+form table {
+    background: #fff;
+}

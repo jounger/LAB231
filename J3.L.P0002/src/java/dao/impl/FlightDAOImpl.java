@@ -5,6 +5,7 @@
  */
 package dao.impl;
 
+import common.Constant;
 import dao.FlightDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,15 +30,29 @@ public class FlightDAOImpl implements FlightDAO {
         List<Flight> flights = new ArrayList<>();
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM [Flight] f WHERE f.[from]=? AND f.[to]=? AND f.departure_time>=?) "
+            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM Flight f WHERE f.from=? AND f.to=? AND f.departure_time>=?) "
                     + "SELECT *, DATEADD(mi, flight_detail*60, departure_time) AS arrival_time FROM Ordered WHERE RowNumber BETWEEN ? AND ?;";
-            PreparedStatement pstm = this.conn.prepareStatement(sql);
+            String mysql = "SELECT *, ADDTIME(departure_time, flight_detail*60*60) AS arrival_time FROM Flight f WHERE f.from=? AND f.to=? AND f.departure_time>=? ORDER BY f.id LIMIT ? OFFSET ?;";
+
+            PreparedStatement pstm = null;
+            switch (Constant.DATABASE) {
+                case "MYSQL": {
+                    pstm = this.conn.prepareStatement(mysql);
+                    int pageRequest = ((page - 1) * limit);
+                    pstm.setInt(4, limit);
+                    pstm.setInt(5, pageRequest);
+                }
+                break;
+                default:{
+                    pstm = this.conn.prepareStatement(sql);
+                    int pageRequest = ((page - 1) * limit) + 1;
+                    pstm.setInt(4, pageRequest);
+                    pstm.setInt(5, pageRequest + limit - 1);
+                }
+            }
             pstm.setString(1, flight_from);
             pstm.setString(2, flight_to);
             pstm.setString(3, flight_time);
-            int pageRequest = ((page - 1) * limit) + 1;
-            pstm.setInt(4, pageRequest);
-            pstm.setInt(5, pageRequest + limit - 1);
 
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
@@ -66,7 +81,7 @@ public class FlightDAOImpl implements FlightDAO {
     public Flight findById(int flight_id) {
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "SELECT *, DATEADD(mi, f.flight_detail*60, f.departure_time) AS arrival_time FROM [Flight] f WHERE f.id=?;";
+            String sql = "SELECT *, DATEADD(mi, f.flight_detail*60, f.departure_time) AS arrival_time FROM Flight f WHERE f.id=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, flight_id);
 
@@ -98,7 +113,7 @@ public class FlightDAOImpl implements FlightDAO {
         List<String> list = new ArrayList<>();
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "SELECT DISTINCT f.[from] FROM [Flight] f;";
+            String sql = "SELECT DISTINCT f.from FROM Flight f;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
 
             ResultSet rs = pstm.executeQuery();
@@ -119,7 +134,7 @@ public class FlightDAOImpl implements FlightDAO {
         List<String> list = new ArrayList<>();
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "SELECT DISTINCT f.[to] FROM [Flight] f;";
+            String sql = "SELECT DISTINCT f.to FROM Flight f;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
 
             ResultSet rs = pstm.executeQuery();

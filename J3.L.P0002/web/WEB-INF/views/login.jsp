@@ -22,11 +22,11 @@
                     <table border="0">
                         <tr>
                             <td>Email:</td>
-                            <td><input type="text" name="email" value="${user.email}" /></td>
+                            <td><input type="text" name="email" value="${email}" /></td>
                         </tr>
                         <tr>
                             <td>Password:</td>
-                            <td><input type="password" name="password" value="${user.password}" /></td>
+                            <td><input type="password" name="password" value="${password}" /></td>
                         </tr>
                         <tr>
                             <td></td>

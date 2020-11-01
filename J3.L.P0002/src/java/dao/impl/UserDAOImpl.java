@@ -25,7 +25,7 @@ public class UserDAOImpl implements UserDAO {
     public User findByEmail(String user_email) {
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "SELECT * FROM [User] u WHERE u.email=?;";
+            String sql = "SELECT * FROM User u WHERE u.email=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setString(1, user_email);
 
@@ -57,7 +57,7 @@ public class UserDAOImpl implements UserDAO {
     public int save(User user) {
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "INSERT INTO [User](email, password, firstname, lastname, address, phone, sex, age, card_number) VALUES(?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO User(email, password, firstname, lastname, address, phone, sex, age, card_number) VALUES(?,?,?,?,?,?,?,?,?)";
             PreparedStatement pstm = this.conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setString(1, user.getEmail());
             pstm.setString(2, user.getPassword());

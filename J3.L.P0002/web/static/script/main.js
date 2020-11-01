@@ -12,4 +12,11 @@ window.onload = function () {
     } else if (successMessage) {
         alert(successMessage);
     }
-}
+    // Active navigation
+    document.querySelectorAll('.main-menu a').forEach(x => {
+        var path = x.getAttribute('href');
+        if(path.includes(location.pathname)) {
+            x.childNodes[0].setAttribute('class', 'active');
+        }
+    });
+};

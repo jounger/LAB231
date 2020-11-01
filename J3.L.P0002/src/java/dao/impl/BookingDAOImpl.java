@@ -5,6 +5,7 @@
  */
 package dao.impl;
 
+import common.Constant;
 import dao.BookingDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,13 +34,27 @@ public class BookingDAOImpl implements BookingDAO {
         List<Booking> bookings = new ArrayList<>();
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM [Booking] b WHERE b.user_id=?) "
+            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM Booking b WHERE b.user_id=?) "
                     + "SELECT * FROM Ordered WHERE RowNumber BETWEEN ? AND ?;";
-            PreparedStatement pstm = this.conn.prepareStatement(sql);
+            String mysql = "SELECT * FROM Booking b WHERE b.user_id=? ORDER BY b.id LIMIT ? OFFSET ?;";
+
+            PreparedStatement pstm = null;
+            switch (Constant.DATABASE) {
+                case "MYSQL": {
+                    pstm = this.conn.prepareStatement(mysql);
+                    int pageRequest = ((page - 1) * limit);
+                    pstm.setInt(2, limit);
+                    pstm.setInt(3, pageRequest);
+                }
+                break;
+                default: {
+                    pstm = this.conn.prepareStatement(sql);
+                    int pageRequest = ((page - 1) * limit) + 1;
+                    pstm.setInt(2, pageRequest);
+                    pstm.setInt(3, pageRequest + limit - 1);
+                }
+            }
             pstm.setInt(1, user_id);
-            int pageRequest = ((page - 1) * limit) + 1;
-            pstm.setInt(2, pageRequest);
-            pstm.setInt(3, pageRequest + limit - 1);
 
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
@@ -70,7 +85,7 @@ public class BookingDAOImpl implements BookingDAO {
     public Booking findByCode(String code) {
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "SELECT * FROM [Booking] b WHERE b.reservation_code = ?;";
+            String sql = "SELECT * FROM Booking b WHERE b.reservation_code = ?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setString(1, code);
 
@@ -103,9 +118,8 @@ public class BookingDAOImpl implements BookingDAO {
     public int saveInUser(int user_id, Booking booking) {
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "INSERT INTO [Booking](reservation_code, ticket_issue_date, flight_id, user_id) VALUES(?,?,?,?)";
+            String sql = "INSERT INTO Booking(reservation_code, ticket_issue_date, flight_id, user_id) VALUES(?,?,?,?)";
             PreparedStatement pstm = this.conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
             int executeUpdate = pstm.executeUpdate();
 
             ResultSet rs = pstm.getGeneratedKeys();

@@ -12,24 +12,26 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home Page</title>
         <style><%@include file="/static/css/main.css"%></style>
+        <style><%@include file="/static/css/home.css"%></style>
+        <script><%@include file="/static/script/main.js"%></script>
         <script><%@include file="/static/script/home.js"%></script>
     </head>
     <body>
         <div class="main">
             <jsp:include page="../fragments/menu.jsp" />
             <div class="content">
-                <form method="GET" action="${pageContext.request.contextPath}/booking">
+                <form method="POST" action="${pageContext.request.contextPath}/home">
                     <table border="0">
                         <tr>
-                            <td><input type="radio" name="flight-type" value="round-trip" checked/>Round Trip</td>
-                            <td><input type="radio" name="flight-type" value="one-way" />One Way</td>
+                            <td><input type="radio" name="flight-type" value="round-trip" ${(flightType == null || flightType == "round-trip") ? "checked": ""}/>Round Trip</td>
+                            <td><input type="radio" name="flight-type" value="one-way" ${flightType == "one-way" ? "checked": ""} />One Way</td>
                         </tr>
                         <tr>
                             <td>From</td>
                             <td>
                                 <select name="fromPlace">
                                     <c:forEach items="${fromPlaces}" var="item">
-                                        <option value="${item}">${item}</option>
+                                        <option value="${item}" ${fromPlace == item ? "selected" : ""}>${item}</option>
                                     </c:forEach>
                                 </select>
                             </td>
@@ -39,18 +41,18 @@
                             <td>
                                 <select name="toPlace">
                                     <c:forEach items="${toPlaces}" var="item">
-                                        <option value="${item}">${item}</option>
+                                        <option value="${item}" ${toPlace == item ? "selected" : ""}>${item}</option>
                                     </c:forEach>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>Departure</td>
-                            <td><input type="date" name="departureDate" /></td>
+                            <td><input type="date" name="departureDate" value="${departureDate}"/></td>
                         </tr>
                         <tr id="return-date">
                             <td>Return</td>
-                            <td><input type="date" name="returnDate" /></td>
+                            <td><input type="date" name="returnDate" value="${returnDate}"/></td>
                         </tr>
                         <tr>
                             <td></td>
