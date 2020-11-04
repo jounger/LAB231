@@ -1,0 +1,46 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package controller;
+
+import common.Constant;
+import dao.impl.ArticleDAOImpl;
+import java.io.IOException;
+import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import model.Article;
+import utils.Tool;
+
+/**
+ *
+ * @author nguyenvanan
+ */
+@WebServlet(name = "HomeServlet", urlPatterns = {"/home"})
+public class HomeServlet extends HttpServlet {
+
+    private final ArticleDAOImpl articleDAOImpl = new ArticleDAOImpl();
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String page = request.getParameter("page");
+        int pageReq = Tool.toInteger(page, 1);
+        int limitReq = 5;
+
+        request.setAttribute("page", pageReq);
+        request.setAttribute("limit", limitReq);
+
+        List<Article> articles = articleDAOImpl.find(pageReq, limitReq);
+        List<Article> articlesLast = articleDAOImpl.find(1, 5);
+        request.setAttribute("articles", articles);
+        request.setAttribute("articlesLast", articlesLast);
+
+        this.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
+    }
+}

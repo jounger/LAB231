@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/J3.L.P0004">
+  <Environment name="datasource.url" type="java.lang.String" value="jdbc:sqlserver://localhost:1433;instance=SQLEXPRESS;databaseName=P0004"/>
+  <Environment name="datasource.username" type="java.lang.String" value="root"/>
+  <Environment name="datasource.password" type="java.lang.String" value="Nguyenvanan98"/>
+</Context>
