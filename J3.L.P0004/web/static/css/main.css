@@ -10,9 +10,52 @@ and open the template in the editor.
 
 body {
     font-family: sans-serif;
-    color: #fff;
 }
 
 a {
     text-decoration: none;
+}
+
+.main {
+    background-image: url("${pageContext.request.contextPath}/static/images/bg.jpg");
+    background-size: contain;
+    background-repeat: repeat-y;
+}
+.header, .menu, .footer {
+    font-size: 0;
+}
+.header > img, .menu > img, .footer > img {
+    width: 100%;
+}
+
+.menu {
+    position: relative;
+}
+
+.menu a {
+    color: #fff;
+    font-size: 20px;
+    position: absolute;
+    top: 0%;
+    left: 10%;
+    padding: 8px 0;
+}
+
+.content {
+    width: 86%;
+    margin: 0 auto;
+}
+
+.content {
+    display: flex;
+}
+
+.content-body {
+    width: 70%;
+    border-right: 4px dashed #9e9e9e;
+    padding: 2%;
+}
+
+.side-bar {
+    padding: 2%;
 }

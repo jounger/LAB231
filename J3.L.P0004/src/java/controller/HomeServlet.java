@@ -29,16 +29,22 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String page = request.getParameter("page");
-        int pageReq = Tool.toInteger(page, 1);
-        int limitReq = 5;
 
-        request.setAttribute("page", pageReq);
-        request.setAttribute("limit", limitReq);
-
-        List<Article> articles = articleDAOImpl.find(pageReq, limitReq);
+        String articleId = request.getParameter("id");
+        
+        if (!Tool.isNull(articleId)) {
+            Article article = articleDAOImpl.findById(Tool.toInteger(articleId, 0));
+            if (article != null) {
+                request.setAttribute("article", article);
+            } else {
+                request.setAttribute(Constant.ERROR_MESSAGE_ATTR, "Article not found");
+            }
+        } else {
+            List<Article> articlesLast = articleDAOImpl.find(1, 1);
+            request.setAttribute("articles", articlesLast.get(0));
+        }
+        // Show in sidebar
         List<Article> articlesLast = articleDAOImpl.find(1, 5);
-        request.setAttribute("articles", articles);
         request.setAttribute("articlesLast", articlesLast);
 
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);

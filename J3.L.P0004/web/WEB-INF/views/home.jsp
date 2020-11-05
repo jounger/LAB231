@@ -19,7 +19,15 @@
         <div class="main">
             <jsp:include page="../fragments/menu.jsp" />
             <div class="content">
-                
+                <div class="content-body">
+                    <c:forEach items="${articles}" var="item">
+                        <div class="article">
+                            <h3>${item.title}</h3>
+                            <div>${item.content}</div>
+                            <span>${item.writer} | ${item.publishedDate}</span>
+                        </div>
+                    </c:forEach>
+                </div>
                 <div class="side-bar">
                     <h3>Digital News</h3>
                     <p>New lastest intro content</p>
@@ -37,6 +45,7 @@
                     </ul>
                 </div>
             </div>
+            <jsp:include page="../fragments/footer.jsp" />
         </div>
     </body>
 </html>

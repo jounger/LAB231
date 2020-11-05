@@ -15,17 +15,19 @@ public class Article {
 
     private int id;
     private String title;
+    private String image;
     private String introContent;
     private String content;
-    private Writer writer;
+    private String writer;
     private LocalDateTime publishedDate;
 
     public Article() {
     }
 
-    public Article(int id, String title, String introContent, String content, Writer writer, LocalDateTime publishedDate) {
+    public Article(int id, String title, String image, String introContent, String content, String writer, LocalDateTime publishedDate) {
         this.id = id;
         this.title = title;
+        this.image = image;
         this.introContent = introContent;
         this.content = content;
         this.writer = writer;
@@ -48,6 +50,14 @@ public class Article {
         this.title = title;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public String getIntroContent() {
         return introContent;
     }
@@ -64,11 +74,11 @@ public class Article {
         this.content = content;
     }
 
-    public Writer getWriter() {
+    public String getWriter() {
         return writer;
     }
 
-    public void setWriter(Writer writer) {
+    public void setWriter(String writer) {
         this.writer = writer;
     }
 
@@ -79,7 +89,5 @@ public class Article {
     public void setPublishedDate(LocalDateTime publishedDate) {
         this.publishedDate = publishedDate;
     }
-    
-    
-    
+
 }

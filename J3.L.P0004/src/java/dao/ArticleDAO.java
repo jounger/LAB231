@@ -13,8 +13,12 @@ import model.Article;
  * @author nguyenvanan
  */
 public interface ArticleDAO {
-
+    
     List<Article> find(int page, int limit);
+    
+    List<Article> findByTitle(int page, int limit, String title);
+    
+    int countBySearch(String search_title);
 
     Article findById(int id);
 }
