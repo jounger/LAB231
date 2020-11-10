@@ -41,7 +41,7 @@ public class HomeServlet extends HttpServlet {
             }
         } else {
             List<Article> articlesLast = articleDAOImpl.find(1, 1);
-            request.setAttribute("articles", articlesLast.get(0));
+            request.setAttribute("article", articlesLast.get(0));
         }
         // Show in sidebar
         List<Article> articlesLast = articleDAOImpl.find(1, 5);

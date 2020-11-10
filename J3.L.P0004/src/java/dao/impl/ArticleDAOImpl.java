@@ -41,7 +41,7 @@ public class ArticleDAOImpl implements ArticleDAO {
                 int id = rs.getInt("id");
                 String title = rs.getString("title");
                 String image = rs.getString("image");
-                String introContent = rs.getString("introContent");
+                String introContent = rs.getString("intro_content");
                 String content = rs.getString("content");
                 LocalDateTime publishedDate = Tool.convertToLocalDatetimeViaInstant(rs.getTimestamp("published_date"));
                 String writer = rs.getString("writer");
@@ -61,12 +61,12 @@ public class ArticleDAOImpl implements ArticleDAO {
         List<Article> list = new ArrayList<>();
         Connection conn = DBConnection.getConnection();
         try {
-            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM Article WHERE title like %?%) "
+            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM Article WHERE title like ?) "
                     + "SELECT * FROM Ordered WHERE RowNumber BETWEEN ? AND ?;";
 
             PreparedStatement pstm = conn.prepareStatement(sql);
             
-            pstm.setString(1, search_title);
+            pstm.setString(1, "%"+  search_title + "%");
             int pageRequest = ((page - 1) * limit) + 1;
             pstm.setInt(2, pageRequest);
             pstm.setInt(3, pageRequest + limit - 1);
@@ -76,7 +76,7 @@ public class ArticleDAOImpl implements ArticleDAO {
                 int id = rs.getInt("id");
                 String title = rs.getString("title");
                 String image = rs.getString("image");
-                String introContent = rs.getString("introContent");
+                String introContent = rs.getString("intro_content");
                 String content = rs.getString("content");
                 LocalDateTime publishedDate = Tool.convertToLocalDatetimeViaInstant(rs.getTimestamp("published_date"));
                 String writer = rs.getString("writer");
@@ -95,9 +95,9 @@ public class ArticleDAOImpl implements ArticleDAO {
     public int countBySearch(String search_title) {
         Connection conn = DBConnection.getConnection();
         try {
-            String sql = "SELECT count(a.id) as total_count FROM Article a WHERE a.title like %?%";
+            String sql = "SELECT count(a.id) as total_count FROM Article a WHERE a.title like ?";
             PreparedStatement pstm = conn.prepareStatement(sql);
-            pstm.setString(1, search_title);
+            pstm.setString(1, "%"+  search_title + "%");
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {
                 int total = rs.getInt("total_count");
@@ -124,7 +124,7 @@ public class ArticleDAOImpl implements ArticleDAO {
                 int id = rs.getInt("id");
                 String title = rs.getString("title");
                 String image = rs.getString("image");
-                String introContent = rs.getString("introContent");
+                String introContent = rs.getString("intro_content");
                 String content = rs.getString("content");
                 LocalDateTime publishedDate = Tool.convertToLocalDatetimeViaInstant(rs.getTimestamp("published_date"));
                 String writer = rs.getString("writer");

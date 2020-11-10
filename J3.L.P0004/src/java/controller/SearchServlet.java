@@ -8,6 +8,7 @@ package controller;
 import common.Constant;
 import dao.impl.ArticleDAOImpl;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +22,7 @@ import utils.Tool;
  *
  * @author nguyenvanan
  */
-@WebServlet(name = "ManageBookingServlet", urlPatterns = {"/search"})
+@WebServlet(name = "SearchServlet", urlPatterns = {"/search"})
 public class SearchServlet extends HttpServlet {
 
     private final ArticleDAOImpl articleDAOImpl = new ArticleDAOImpl();
@@ -34,32 +35,26 @@ public class SearchServlet extends HttpServlet {
         int pageReq = Tool.toInteger(page, 1);
         int limitReq = 5;
 
+        request.setAttribute("searchTitle", searchTitle);
         request.setAttribute("page", pageReq);
         request.setAttribute("limit", limitReq);
-
-        List<Article> articles = articleDAOImpl.find(pageReq, limitReq);
 
         // Set to sidebar
         List<Article> articlesLast = articleDAOImpl.find(1, 5);
         request.setAttribute("articlesLast", articlesLast);
-
-        if (!Tool.isNull(searchTitle)) {
-            List<Article> searchResults = articleDAOImpl.findByTitle(1, 5, searchTitle);
-            request.setAttribute("articles", searchResults);
-            
-            int totalElements = articleDAOImpl.countBySearch(searchTitle);
         
-            int totalPages = (int) Math.ceil((double) totalElements / (double)limitReq);
-
-            request.setAttribute("totalElements", totalElements);
-            request.setAttribute("totalPages", totalPages);
-            request.setAttribute("page", pageReq);
-            request.setAttribute("limit", limitReq);
-            
-            this.getServletContext().getRequestDispatcher("/WEB-INF/views/search-page.jsp").forward(request, response);
-        } else {
-            response.sendRedirect(this.getServletContext().getContextPath() + "/home");
+        List<Article> searchResults = new ArrayList<>();
+        int totalElements = 0;
+        int totalPages = 0;
+        if (!Tool.isNull(searchTitle)) {
+            searchResults = articleDAOImpl.findByTitle(1, 5, searchTitle);
+            totalElements = articleDAOImpl.countBySearch(searchTitle);
+            totalPages = (int) Math.ceil((double) totalElements / (double)limitReq);
         }
+        request.setAttribute("articles", searchResults);
+        request.setAttribute("totalElements", totalElements);
+        request.setAttribute("totalPages", totalPages);
+        this.getServletContext().getRequestDispatcher("/WEB-INF/views/search.jsp").forward(request, response);
 
     }
 }

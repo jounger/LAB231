@@ -19,9 +19,14 @@ public class SQLServerConnection {
     // context.xml only avaiable on tomcat
     public static Connection getSQLServerConnection() throws ClassNotFoundException, SQLException, NamingException {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        String uri = Env.getVariable("datasource.url");
-        String username = Env.getVariable("datasource.username");
-        String password = Env.getVariable("datasource.password");
+        // Only use for tomcat server
+//        String uri = Env.getVariable("datasource.url");
+//        String username = Env.getVariable("datasource.username");
+//        String password = Env.getVariable("datasource.password");
+        // User for glassfish
+        String uri = "jdbc:sqlserver://localhost:1433;instance=SQLEXPRESS;databaseName=P0001";
+        String username = "sa";
+        String password = "Nguyenvanan98";
         Connection conn = DriverManager.getConnection(uri, username, password);
         return conn;
     }

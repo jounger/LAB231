@@ -27,7 +27,7 @@ public class RoleDAOImpl implements RoleDAO {
         List<Role> roles = new ArrayList<>();
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "SELECT r.id, r.name FROM Role r";
+            String sql = "SELECT r.id, r.name FROM [Role] r";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
 
             ResultSet rs = pstm.executeQuery();
@@ -51,7 +51,7 @@ public class RoleDAOImpl implements RoleDAO {
     public Role findById(int role_id) {
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "SELECT r.id, r.name FROM Role r WHERE r.id=?;";
+            String sql = "SELECT r.id, r.name FROM [Role] r WHERE r.id=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, role_id);
 

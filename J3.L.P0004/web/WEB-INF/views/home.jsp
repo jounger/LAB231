@@ -4,6 +4,7 @@
     Author     : nguyenvanan
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,38 +14,36 @@
         <title>Home Page</title>
         <style><%@include file="/static/css/main.css"%></style>
         <style><%@include file="/static/css/home.css"%></style>
-        <script><%@include file="/static/script/main.js"%></script>
     </head>
     <body>
         <div class="main">
+            <jsp:include page="../fragments/preheader.jsp" />
+            <jsp:include page="../fragments/header.jsp" />
             <jsp:include page="../fragments/menu.jsp" />
             <div class="content">
-                <div class="content-body">
-                    <c:forEach items="${articles}" var="item">
-                        <div class="article">
-                            <h3>${item.title}</h3>
-                            <div>${item.content}</div>
-                            <span>${item.writer} | ${item.publishedDate}</span>
-                        </div>
-                    </c:forEach>
+                <div class="article">
+                    <c:choose>
+                        <c:when test="${not empty article}">
+                            <h3 class="title">${article.title}</h3>
+                            <img src="${pageContext.request.contextPath}/static/images/${article.image}" />
+                            <div class="text">${article.content}</div>
+                            <span>
+                                <fmt:setLocale value="en_US" />
+                                <fmt:parseDate type="both" pattern="yyyy-MM-dd'T'HH:mm:ss" value="${article.publishedDate}" var="publishedDateParsed"/>
+                                <span class="signature text title">
+                                    <img src="${pageContext.request.contextPath}/static/images/comment.gif" class="icon"/>
+                                    <img src="${pageContext.request.contextPath}/static/images/timeicon.gif" class="icon"/>
+                                    By ${article.writer} | <fmt:formatDate value="${publishedDateParsed}" pattern="MMM dd yyyy - hh:mm a" timeStyle="short" dateStyle="short"/> </span>
+                            </span>
+                        </c:when>
+                        <c:otherwise>
+                            <p>We do not have any news</p>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
-                <div class="side-bar">
-                    <h3>Digital News</h3>
-                    <p>New lastest intro content</p>
-
-                    <h3>Search</h3>
-                    <form action="${pageContext.request.contextPath}/article-detail">
-                        <input name="search-title" />
-                    </form>
-
-                    <h3>Last Articles</h3>
-                    <ul>
-                        <c:forEach items="${articlesLast}" var="item">
-                            <li><a href="${pageContext.request.contextPath}/article-detail?id=${item.id}">${item.title}</a></li>
-                        </c:forEach>
-                    </ul>
-                </div>
+                <jsp:include page="../fragments/sidebar.jsp" />
             </div>
+
             <jsp:include page="../fragments/footer.jsp" />
         </div>
     </body>

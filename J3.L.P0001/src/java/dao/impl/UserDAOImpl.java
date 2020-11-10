@@ -28,7 +28,7 @@ public class UserDAOImpl implements UserDAO {
     public User findById(int user_id) {
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "SELECT u.id, u.username, u.email, u.role_id FROM User u WHERE u.id=?;";
+            String sql = "SELECT u.id, u.username, u.email, u.role_id FROM [User] u WHERE u.id=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setInt(1, user_id);
 
@@ -60,7 +60,7 @@ public class UserDAOImpl implements UserDAO {
     public User findByUsername(String user_username) {
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "SELECT u.id, u.username, u.password, u.email, u.role_id FROM User u WHERE u.username=?;";
+            String sql = "SELECT u.id, u.username, u.password, u.email, u.role_id FROM [User] u WHERE u.username=?;";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setString(1, user_username);
 
@@ -94,7 +94,7 @@ public class UserDAOImpl implements UserDAO {
     public void save(User user) {
         try {
             this.conn = DBConnection.getConnection();
-            String sql = "INSERT INTO User(username, password, email, role_id) VALUES(?,?,?,?)";
+            String sql = "INSERT INTO [User](username, password, email, role_id) VALUES(?,?,?,?)";
             PreparedStatement pstm = this.conn.prepareStatement(sql);
             pstm.setString(1, user.getUsername());
             pstm.setString(2, user.getPassword());

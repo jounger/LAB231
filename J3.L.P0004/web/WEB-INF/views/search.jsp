@@ -1,57 +1,52 @@
 <%-- 
-    Document   : manage-quiz
-    Created on : Sep 21, 2020, 8:20:03 PM
+    Document   : home
+    Created on : Sep 23, 2020, 8:17:40 PM
     Author     : nguyenvanan
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Manage Quiz Page</title>
+        <title>Home Page</title>
         <style><%@include file="/static/css/main.css"%></style>
+        <style><%@include file="/static/css/search.css"%></style>
     </head>
     <body>
         <div class="main">
+            <jsp:include page="../fragments/preheader.jsp" />
+            <jsp:include page="../fragments/header.jsp" />
             <jsp:include page="../fragments/menu.jsp" />
             <div class="content">
-                <p>Number of questions: <label class="highlight">${totalElements}</label></p>
-                <form method="GET" action="${pageContext.request.contextPath}/manage-booking">
-
-                    <h3>eTicket Receipt</h3>
-                    <p>Prepared For</p>
-                    <p>${booking.user.firstname}, ${booking.user.lastname}</p>
-                    <p>RESERVATION CODE: ${booking.reservationCode}</p>
-                    <p>TICKET ISSUE DATE: <fmt:formatDate type="both" value="${booking.ticketIssueDate}" pattern="dd/MM/yyyy hh:mm:ss" /></p>
-
-                    <h3>Itinerary Detail</h3>
-                    <table border="0">
-                        <thead>
-                            <tr>
-                                <th>TRAVEL DATE</th>
-                                <th>DEPARTURE</th>
-                                <th>ARRIVAL</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><fmt:formatDate type="both" value="${booking.flight.departureTime}" pattern="dd/MM/yyyy hh:mm:ss" /></td>
-                                <td>${booking.from}</td>
-                                <td>${booking.to}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>Time: <fmt:formatDate type="time" value="${booking.flight.departureTime}" timeStyle="short" /></td>
-                                <td>Time: <fmt:formatDate type="time" value="${booking.flight.arrivalTime}" timeStyle="short" /></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </form>
+                <div class="article">
+                    <c:choose>
+                        <c:when test="${not empty articles}">
+                            <c:forEach items="${articles}" var="article">
+                                <h3 class="title"><a href="${pageContext.request.contextPath}/home?id=${article.id}">${article.title}</a></h3>
+                                <div class="box">
+                                    <img src="${pageContext.request.contextPath}/static/images/${article.image}" />
+                                    <div class="text">${article.introContent}</div>
+                                </div>
+                            </c:forEach>
+                            <c:if test="${totalPages >= 2}">
+                            <div class="paging">
+                                <c:forEach begin="1" end="${totalPages}" var="item">
+                                    <input type="submit" name="page" value="${item}" class="${page == item ? 'active' : ''}"/>
+                                </c:forEach>
+                            </div>
+                            </c:if>
+                        </c:when>
+                        <c:otherwise>
+                            <p>Search does not match any result</p>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                <jsp:include page="../fragments/sidebar.jsp" />
             </div>
+
+            <jsp:include page="../fragments/footer.jsp" />
         </div>
     </body>
 </html>

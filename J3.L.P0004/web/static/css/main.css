@@ -17,45 +17,97 @@ a {
 }
 
 .main {
-    background-image: url("${pageContext.request.contextPath}/static/images/bg.jpg");
-    background-size: contain;
+    background-image: url('${pageContext.request.contextPath}/static/images/bg.jpg');
     background-repeat: repeat-y;
+    margin: 0 auto;
+    width: 886px;
 }
-.header, .menu, .footer {
-    font-size: 0;
+
+.preheader {
+    background-image: url('${pageContext.request.contextPath}/static/images/preheader.jpg');
+    height: 71px;
+    background-repeat: no-repeat;
 }
-.header > img, .menu > img, .footer > img {
-    width: 100%;
+
+.header {
+    background-image: url('${pageContext.request.contextPath}/static/images/header.jpg');
+    height: 70px;
+    margin-top: -35px;
+}
+
+.header h3 {
+    color: #fff;
+    margin-left: 85px;
 }
 
 .menu {
-    position: relative;
+    background-image: url('${pageContext.request.contextPath}/static/images/menu.jpg');
+    height: 33px;
 }
 
-.menu a {
-    color: #fff;
-    font-size: 20px;
-    position: absolute;
-    top: 0%;
-    left: 10%;
+.menu p {
+    margin: 0;
+    margin-left: 85px;
     padding: 8px 0;
+    font-size: 13px;
+    font-weight: bold;
 }
 
-.content {
-    width: 86%;
-    margin: 0 auto;
+.menu p a {
+    color: #fff;
+}
+
+.footer {
+    background-image: url('${pageContext.request.contextPath}/static/images/footer.jpg');
+    height: 50px;
 }
 
 .content {
     display: flex;
+    justify-content: left;
+    margin: 0 auto;
+    width: 760px;
 }
 
-.content-body {
-    width: 70%;
-    border-right: 4px dashed #9e9e9e;
-    padding: 2%;
+.article {
+    width: 550px;
+    padding: 0 20px;
+    border-right: 2px dotted #e0e0e0;
 }
 
-.side-bar {
-    padding: 2%;
+.sidebar {
+    width: 220px;
+    padding: 0 20px;
+}
+
+.sidebar .search-box {
+    border: 2px dotted #42554e;
+    padding: 3px;
+}
+
+.sidebar .search-btn {
+    border: none;
+    background: none;
+}
+
+.title {
+    color: #42554e;
+    margin-bottom: 4px
+}
+
+.text {
+    font-size: 13px;
+}
+.sidebar ul {
+    padding: 0;
+    margin: 0;
+}
+.sidebar ul li {
+    list-style-type: none;
+    text-decoration: underline;
+    padding-bottom: 15px;
+}
+
+a {
+    color: #42554e;
 }

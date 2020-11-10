@@ -49,6 +49,10 @@
                                 <input type="checkbox" name="answers" value="3" /> Option 4
                             </td>
                         </tr>
+                        <tr>
+                            <td></td>
+                            <td><button type="submit">Save</button></td>
+                        </tr>
                     </table>
                 </form>
             </div>

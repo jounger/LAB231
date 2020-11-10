@@ -8,16 +8,18 @@ and open the template in the editor.
     Author     : nguyenvanan
 */
 
-.article > img {
-    width: 70%;
+.article img {
+    width: 40%;
 }
 
-.signature {
-    float: right;
+.article .box {
+    display: flex;
+}
+
+.active {
+    background: blue;
+}
+.paging {
     margin-top: 30px;
-}
-
-.icon {
-    height: 10px;
-    width: 10px;
+    float: right;
 }

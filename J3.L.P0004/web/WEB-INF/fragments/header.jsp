@@ -5,5 +5,6 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<div class="footer">
+<div class="header">
+    <h3>My Digital News</h3>
 </div>
