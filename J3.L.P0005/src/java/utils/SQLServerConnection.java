@@ -27,7 +27,7 @@ public class SQLServerConnection {
     
     public static Connection getSQLServerConnectionGlassFish() throws ClassNotFoundException, SQLException, NamingException {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        String uri = "jdbc:sqlserver://localhost:1433;instance=SQLEXPRESS;databaseName=P0002";
+        String uri = "jdbc:sqlserver://localhost:1433;instance=SQLEXPRESS;databaseName=P0005";
         String username = "sa";
         String password = "Nguyenvanan98";
         Connection conn = DriverManager.getConnection(uri, username, password);

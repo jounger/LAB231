@@ -36,24 +36,11 @@ public class BookingDAOImpl implements BookingDAO {
             this.conn = DBConnection.getConnection();
             String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM Booking b WHERE b.user_id=?) "
                     + "SELECT * FROM Ordered WHERE RowNumber BETWEEN ? AND ?;";
-            String mysql = "SELECT * FROM Booking b WHERE b.user_id=? ORDER BY b.id LIMIT ? OFFSET ?;";
 
-            PreparedStatement pstm = null;
-            switch (Constant.DATABASE) {
-                case "MYSQL": {
-                    pstm = this.conn.prepareStatement(mysql);
-                    int pageRequest = ((page - 1) * limit);
-                    pstm.setInt(2, limit);
-                    pstm.setInt(3, pageRequest);
-                }
-                break;
-                default: {
-                    pstm = this.conn.prepareStatement(sql);
-                    int pageRequest = ((page - 1) * limit) + 1;
-                    pstm.setInt(2, pageRequest);
-                    pstm.setInt(3, pageRequest + limit - 1);
-                }
-            }
+            PreparedStatement pstm = pstm = this.conn.prepareStatement(sql);
+            int pageRequest = ((page - 1) * limit) + 1;
+            pstm.setInt(2, pageRequest);
+            pstm.setInt(3, pageRequest + limit - 1);
             pstm.setInt(1, user_id);
 
             ResultSet rs = pstm.executeQuery();

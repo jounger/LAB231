@@ -1,0 +1,79 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Sep 21, 2020, 9:42:18 PM
+    Author     : nguyenvanan
+*/
+
+body {
+    font-family: sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #42554e;
+}
+
+.main {
+    background-image: url('${pageContext.request.contextPath}/static/images/img04.jpg');
+    margin: 0 auto;
+    width: 885px;
+}
+/* Header */
+.header {
+    height: 70px;
+}
+
+.header h3, .menu p {
+    margin-left: 85px;
+}
+/* Menu */
+.menu {
+    display: flex;
+    height: 33px;
+    background: #000;
+}
+
+.menu p {
+    padding: 8px 0;
+    font-size: 12px;
+    font-weight: bold;
+}
+.menu a {
+    color: #fff;
+}
+/* Content */
+.content {
+    display: flex;
+    justify-content: left;
+    margin: 0 auto;
+    width: 760px;
+}
+
+.article {
+    width: 550px;
+    border-right: 2px dotted #e0e0e0;
+}
+
+.sidebar {
+    width: 210px;
+}
+
+.article, .sidebar {
+    padding: 0 20px;
+}
+
+/* Other */
+.title {
+    color: #42554e;
+    margin-bottom: 5px
+}
+
+.text {
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+}

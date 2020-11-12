@@ -5,7 +5,6 @@
  */
 package controller;
 
-import common.Constant;
 import dao.impl.FlightDAOImpl;
 import java.io.IOException;
 import java.util.List;
