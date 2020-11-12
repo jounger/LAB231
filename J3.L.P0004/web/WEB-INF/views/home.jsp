@@ -27,14 +27,13 @@
                             <h3 class="title">${article.title}</h3>
                             <img src="${pageContext.request.contextPath}/static/images/${article.image}" />
                             <div class="text">${article.content}</div>
-                            <span>
-                                <fmt:setLocale value="en_US" />
-                                <fmt:parseDate type="both" pattern="yyyy-MM-dd'T'HH:mm:ss" value="${article.publishedDate}" var="publishedDateParsed"/>
-                                <span class="signature text title">
-                                    <img src="${pageContext.request.contextPath}/static/images/comment.gif" class="icon"/>
-                                    <img src="${pageContext.request.contextPath}/static/images/timeicon.gif" class="icon"/>
-                                    By ${article.writer} | <fmt:formatDate value="${publishedDateParsed}" pattern="MMM dd yyyy - hh:mm a" timeStyle="short" dateStyle="short"/> </span>
-                            </span>
+                            <hr class="line">
+                            <fmt:setLocale value="en_US" />
+                            <fmt:parseDate type="both" pattern="yyyy-MM-dd'T'HH:mm:ss" value="${article.publishedDate}" var="publishedDateParsed"/>
+                            <span class="signature text title">
+                                <img src="${pageContext.request.contextPath}/static/images/comment.gif" />
+                                <img src="${pageContext.request.contextPath}/static/images/timeicon.gif" />
+                                By ${article.writer} | <fmt:formatDate value="${publishedDateParsed}" pattern="MMM dd yyyy - hh:mm a" timeStyle="short" dateStyle="short"/> </span>
                         </c:when>
                         <c:otherwise>
                             <p>We do not have any news</p>
