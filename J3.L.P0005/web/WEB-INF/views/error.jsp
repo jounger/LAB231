@@ -15,7 +15,7 @@
     <body>
         <div class="main">
             <jsp:include page="../fragments/menu.jsp" />
-            <div class="content">
+            <div class="container">
                 <p>${title}</p>
             </div>
         </div>

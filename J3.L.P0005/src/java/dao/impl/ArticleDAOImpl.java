@@ -30,7 +30,7 @@ public class ArticleDAOImpl implements ArticleDAO {
         List<Article> list = new ArrayList<>();
         Connection conn = DBConnection.getConnection();
         try {
-            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM Article) "
+            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id DESC) AS RowNumber FROM Article) "
                     + "SELECT * FROM Ordered WHERE RowNumber BETWEEN ? AND ?;";
 
             PreparedStatement pstm = conn.prepareStatement(sql);
@@ -65,7 +65,7 @@ public class ArticleDAOImpl implements ArticleDAO {
         List<Article> list = new ArrayList<>();
         Connection conn = DBConnection.getConnection();
         try {
-            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNumber FROM Article WHERE category_id=?) "
+            String sql = "WITH Ordered AS(SELECT *, ROW_NUMBER() OVER (ORDER BY id DESC) AS RowNumber FROM Article WHERE category_id=?) "
                     + "SELECT * FROM Ordered WHERE RowNumber BETWEEN ? AND ?;";
 
             PreparedStatement pstm = conn.prepareStatement(sql);

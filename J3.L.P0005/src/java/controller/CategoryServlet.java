@@ -37,6 +37,7 @@ public class CategoryServlet extends HttpServlet {
         int pageReq = Tool.toInteger(page, 1);
         int limitReq = 5;
 
+        request.setAttribute("categoryId", id);
         request.setAttribute("page", pageReq);
 
         // Set to sidebar
@@ -49,7 +50,7 @@ public class CategoryServlet extends HttpServlet {
         int totalPages = 0;
         if (!Tool.isNull(id)) {
             int categoryId = Tool.toInteger(id, 0);
-            searchResults = articleDAOImpl.findByCategory(1, 5, categoryId);
+            searchResults = articleDAOImpl.findByCategory(pageReq, limitReq, categoryId);
             totalElements = articleDAOImpl.countByCategory(categoryId);
             totalPages = (int) Math.ceil((double) totalElements / (double)limitReq);
         }

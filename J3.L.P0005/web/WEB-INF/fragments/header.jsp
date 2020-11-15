@@ -6,5 +6,5 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="header">
-    <h3>My Digital News</h3>
+    <h1 class="title">my blogs</h1>
 </div>

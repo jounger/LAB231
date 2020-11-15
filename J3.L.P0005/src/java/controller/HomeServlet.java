@@ -47,7 +47,7 @@ public class HomeServlet extends HttpServlet {
             request.setAttribute("article", articlesLast.get(0));
         }
         // Show in footer
-        List<Article> articlesLast = articleDAOImpl.find(1, 5);
+        List<Article> articlesLast = articleDAOImpl.find(1, 3);
         request.setAttribute("articlesLast", articlesLast);
         // Show in sidebar
         List<Category> categories = categoryDAOImpl.findAll();

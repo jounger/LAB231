@@ -1,0 +1,48 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 2, 2020, 1:05:00 AM
+    Author     : nguyenvanan
+*/
+
+fieldset {
+    background-color: transparent;
+    border: 1px dashed gray;
+    padding: 20px;
+}
+
+legend {
+    background-color: #9a2a1c;
+    color: white;
+    font-size: 8px;
+    padding: 3px;
+    margin-left: -15px;
+}
+
+table tr td:first-child {
+    float: right;
+    vertical-align: top;
+}
+
+form {
+    width: fit-content;
+}
+
+form input {
+    width: 150px;
+    height: 10px;
+    border: 0.5px solid #eaeaea;
+}
+
+form button {
+    background-color: #9a2a1c;
+    color: #fff;
+    font-size: 10px;
+    border: navajowhite;
+    border-radius: 5px;
+    padding: 2px 5px;
+    float: right;
+}

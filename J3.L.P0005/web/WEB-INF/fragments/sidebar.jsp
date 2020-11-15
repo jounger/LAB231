@@ -8,7 +8,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="sidebar">
     <div>
-        <h3 class="title">Categories</h3>
+        <h4 class="title">Categories</h4>
+        <hr>
         <c:if test="${not empty categories}">
             <ul>
                 <c:forEach items="${categories}" var="item">

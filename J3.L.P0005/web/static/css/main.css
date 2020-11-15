@@ -14,66 +14,131 @@ body {
 
 a {
     text-decoration: none;
-    color: #42554e;
+    color: #000;
 }
 
 .main {
     background-image: url('${pageContext.request.contextPath}/static/images/img04.jpg');
     margin: 0 auto;
-    width: 885px;
+    width: 610px;
 }
 /* Header */
 .header {
-    height: 70px;
+    height: 80px;
 }
 
-.header h3, .menu p {
-    margin-left: 85px;
+.header h1 {
+    margin-left: 30px;
 }
 /* Menu */
 .menu {
     display: flex;
-    height: 33px;
+    height: 30px;
     background: #000;
+    width: 580px;
+    margin: 0 auto;
 }
 
 .menu p {
-    padding: 8px 0;
-    font-size: 12px;
+    padding: 6px 20px;
+    font-size: 13px;
     font-weight: bold;
 }
 .menu a {
+    color: #bfbfbf;
+}
+
+.menu a.active {
     color: #fff;
 }
-/* Content */
-.content {
-    display: flex;
-    justify-content: left;
+.menu a.active:after {
+    content: "";
+    width: 15px;
+    height: 6px;
+    background-image: url('${pageContext.request.contextPath}/static/images/img02.jpg');
+    background-repeat: no-repeat;
+    margin: 3px auto;
     margin: 0 auto;
-    width: 760px;
+    display: block;
+    margin-top: 1px;
+}
+/* Container */
+.container {
+    display: flex;
+    margin: 30px auto;
+    width: 580px;
 }
 
 .article {
-    width: 550px;
-    border-right: 2px dotted #e0e0e0;
+    width: 370px;
 }
 
 .sidebar {
-    width: 210px;
+    width: 140px;
 }
 
 .article, .sidebar {
     padding: 0 20px;
 }
 
+.article .content {
+    text-align: justify;
+    font-size: 10px;
+    margin-top: 20px;
+}
+
+.article img {
+    float: left;
+    width: 125px;
+    height: 125px;
+    margin-right: 20px;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar .title {
+    padding-left: 10px;
+}
+
+.sidebar ul {
+    list-style-image: url('${pageContext.request.contextPath}/static/images/img01.jpg');
+    font-size: 10px;
+    padding-left: 20px;
+}
+
 /* Other */
 .title {
-    color: #42554e;
-    margin-bottom: 5px
+    margin: 0;
+    font-family: 'Nova Mono', monospace;
 }
 
 .text {
-    padding: 0;
-    margin: 0;
-    font-size: 12px;
+    font-size: 10px;
+}
+
+.fs-italic {
+    font-style: italic;
+}
+
+.primary {
+    color: gray;
+}
+
+.secondary {
+    color: green;
+}
+
+.dot {
+  height: 3px;
+  width: 3px;
+  margin: 2px 6px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot.green {
+    background-color: green;
 }
