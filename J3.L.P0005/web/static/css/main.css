@@ -56,11 +56,8 @@ a {
     width: 15px;
     height: 6px;
     background-image: url('${pageContext.request.contextPath}/static/images/img02.jpg');
-    background-repeat: no-repeat;
-    margin: 3px auto;
     margin: 0 auto;
     display: block;
-    margin-top: 1px;
 }
 /* Container */
 .container {
@@ -70,7 +67,7 @@ a {
 }
 
 .article {
-    width: 370px;
+    width: 390px;
 }
 
 .sidebar {
@@ -90,7 +87,6 @@ a {
 .article img {
     float: left;
     width: 125px;
-    height: 125px;
     margin-right: 20px;
 }
 
@@ -141,4 +137,8 @@ ul li {
 
 .dot.green {
     background-color: green;
+}
+
+.info {
+    font-size: 8px;
 }

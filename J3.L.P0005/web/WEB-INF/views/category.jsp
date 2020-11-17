@@ -13,6 +13,8 @@
         <title>Home Page</title>
         <style><%@include file="/static/css/main.css"%></style>
         <style><%@include file="/static/css/category.css"%></style>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap" rel="stylesheet">
     </head>
     <body>
         <div class="main">
@@ -24,10 +26,10 @@
                         <c:when test="${not empty articles}">
                             <c:forEach items="${articles}" var="article">
                                 <div class="item">
-                                    <h3 class="title"><a href="${pageContext.request.contextPath}/home?id=${article.id}">${article.title}</a></h3>
+                                    <h2 class="title"><a href="${pageContext.request.contextPath}/home?id=${article.id}">${article.title}</a></h2>
                                     <div class="box">
                                         <img src="${pageContext.request.contextPath}/static/images/${article.image}" />
-                                        <div class="text">${article.introContent}</div>
+                                        <div class="text primary">${article.introContent}</div>
                                     </div>
                                 </div>
                             </c:forEach>
@@ -36,7 +38,7 @@
                                 <form method="GET" action="${pageContext.request.contextPath}/category">
                                     <input name="id" value="${categoryId}" class="d-none" />
                                     <c:forEach begin="1" end="${totalPages}" var="item">
-                                        <input type="submit" name="page" value="${item}" class="${page == item ? 'active' : ''}"/>
+                                        <input type="submit" name="page" value="${item}" class="${page == item ? 'active' : ''}" ${ page == item ? 'disabled': '' } />
                                     </c:forEach>
                                 </form>
                             </div>
@@ -49,8 +51,6 @@
                 </div>
                 <jsp:include page="../fragments/sidebar.jsp" />
             </div>
-
-            <jsp:include page="../fragments/footer.jsp" />
         </div>
     </body>
 </html>

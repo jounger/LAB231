@@ -27,11 +27,11 @@
                 <div class="article">
                     <c:choose>
                         <c:when test="${not empty article}">
-                            <span class="info fs-italic"><span class="secondary">Category ${article.category.name}</span><span class="dot green"></span>Full Category</span>
+                            <label class="info fs-italic"><span class="secondary">Category ${article.category.name}</span><span class="dot green"></span>Full Category</label>
                             <h2 class="title">${article.title}</h2>
-                            <span class="info fs-italic"><label class="primary">Posted on 
+                            <label class="info fs-italic"><span class="primary">Posted on
                                     <fmt:parseDate type="both" pattern="yyyy-MM-dd'T'HH:mm:ss" value="${article.publishedDate}" var="publishedDateParsed"/>
-                                    <fmt:formatDate value="${publishedDateParsed}" pattern="MMMM dd, yyyy"/></label><span class="dot"></span>Full Article </span>
+                                    <fmt:formatDate value="${publishedDateParsed}" pattern="MMMM dd, yyyy"/></span><span class="dot"></span>Full Article </label>
                             <div class="content text primary">
                                 <img src="${pageContext.request.contextPath}/static/images/${article.image}" />
                                 ${article.content}
@@ -52,8 +52,6 @@
                 </div>
                 <jsp:include page="../fragments/sidebar.jsp" />
             </div>
-
-            <jsp:include page="../fragments/footer.jsp" />
         </div>
     </body>
 </html>

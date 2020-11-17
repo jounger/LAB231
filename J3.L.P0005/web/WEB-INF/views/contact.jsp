@@ -14,6 +14,8 @@
         <style><%@include file="/static/css/main.css"%></style>
         <style><%@include file="/static/css/contact.css"%></style>
         <script><%@include file="/static/js/main.js"%></script>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap" rel="stylesheet">
     </head>
     <body>
         <div class="main">
@@ -23,7 +25,7 @@
                 <div class="article">
                     <form method="POST" action="${pageContext.request.contextPath}/contact" class="text">
                         <fieldset>
-                         <legend>All fields are required</legend>
+                         <legend class="info">All fields are required</legend>
                          <table border="0">
                              <tbody>
                                  <tr>
@@ -57,8 +59,6 @@
                 </div>
                 <jsp:include page="../fragments/sidebar.jsp" />
             </div>
-
-            <jsp:include page="../fragments/footer.jsp" />
         </div>
     </body>
 </html>
